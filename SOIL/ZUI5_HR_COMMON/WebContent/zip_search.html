@@ -1,0 +1,529 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="ko">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>통합주소검색</title>
+		
+		<script src="resources/sap-ui-cachebuster/sap-ui-core.js"
+				id="sap-ui-bootstrap"
+				data-sap-ui-libs="sap.m, sap.ui.commons, sap.ui.layout, sap.ui.table"
+				data-sap-ui-theme="sap_belize"
+				data-sap-ui-xx-bindingSyntax="complex"
+				data-sap-ui-preload="sync"
+				data-sap-ui-appCacheBuster="./"></script>
+		</script>
+		
+		<style>
+			.sapMInputBaseContentWrapper {
+				padding:3px; 
+				border: 2px solid #bfbfbf !important;
+			}
+			.PSNCFontFamily {
+			 	font-family: 'Malgun Gothic' !important; 
+			    font-size: 0.875rem !important;
+				font-weight : normal !important;
+				color: #000000 !important;
+			}
+			.PSNCPaddingLeft10px {
+				padding-left : 10px !important;
+			}
+			.PSNCToolbarNoBottomLine {
+				border-bottom: 0px solid #cccccc !important;
+			}
+			/* sap.m.Table 라인 색상 변경 */
+			.sapMListTblCell.cellBorderRight {
+				border-right: 1px solid #e9e9e9;
+				border-top : 1px solid #e9e9e9;
+			}
+			.sapMListTblCell.cellBorderLeft {
+				border-left: 1px solid #e9e9e9;
+				border-top : 1px solid #e9e9e9;
+			}
+			.sapMListTblHeader>.sapMTableTH {
+				text-align : center !important;
+			}
+		</style>
+		
+		
+		<script language="javascript">
+			var vTotalResult = 0; // 전체 검색 갯수
+			var BusyDialog = new sap.m.BusyDialog();
+			
+			var getUrlParameter = function getUrlParameter(sParam) {
+			    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+			        sURLVariables = sPageURL.split('&'),
+			        sParameterName,
+			        i;
+	
+			    for (i = 0; i < sURLVariables.length; i++) {
+			        sParameterName = sURLVariables[i].split('=');
+	
+			        if (sParameterName[0] === sParam) {
+			            return sParameterName[1] === undefined ? true : sParameterName[1];
+			        }
+			    }
+			};
+			
+			var CBFunction = getUrlParameter('CBF');
+			if(CBFunction === undefined) CBFunction = "fn_setAddress";
+	        
+
+
+	        
+	        function load(){
+				//oTable.setVisible(false);
+		        // 우편번호 찾기 화면을 넣을 element
+			    window.scrollTo(0,1);
+			}
+
+	        
+			// 검색
+			function getAddr(vIndex){
+				var vCurPage = 1 ;
+				if(vIndex && vIndex != "" ){
+					vCurPage = vIndex;
+				}else{
+					vTotalResult = 0 ;   // 검색 조회를 한경우 TotalResult 를 초기화
+				}
+				
+				var vKey = oAddInput.getValue();
+				var vJsonStr = { juso : [], common : {}};
+				if (!checkSearchedWord(vKey)) {
+					return ;
+				}
+
+				var onProcess = function(){
+					oTable.setVisible(true);
+					$.ajax({
+						 url :"http://www.juso.go.kr/addrlink/addrLinkApiJsonp.do"  //인터넷망
+						,type:"post"
+						,data: {"confmKey" :"U01TX0FVVEgyMDE5MDYxODExNDMyMzEwODgxODE=" , 
+							"keyword" : vKey , 
+							"resultType" : "json",
+							"currentPage" : vCurPage ,
+							"countPerPage": 10	
+						}
+						,dataType:"jsonp"
+						,crossDomain:true
+						,xhrFields: {
+							withCredentials: true
+						}
+						,success:function(jsonStr){
+							$("#list").html("");
+							var errCode = jsonStr.results.common.errorCode;
+							var errDesc = jsonStr.results.common.errorMessage;
+							if(errCode != "0"){
+								alert(errCode+"="+errDesc);
+							}else{
+								if(jsonStr != null){
+								//	vJsonStr = jsonStr;  
+									makeListJson(jsonStr,vCurPage);
+									if(vIndex && vIndex != "" ){
+										
+									}else{
+										vTotalResult = jsonStr.results.common.totalCount;
+								        // 도로명주소 검색 결과 (1180건)
+								        oResult.setText("ㆍ 도로명주소 검색 결과 (" + vTotalResult + "건)" );
+										onSetButtons();
+									}
+								}
+							}
+						}
+					    ,error: function(xhr,status, error){
+					    	BusyDialog.close();
+					    	alert("에러발생");
+					    }
+					});
+					
+					BusyDialog.close();
+				}
+				BusyDialog.open();
+				setTimeout(onProcess, 100);	
+			}
+			
+			function makeListJson(jsonStr,curPage){
+				var vData = { Data : []};
+				curPage = ( curPage - 1 ) * 10 ;
+				for(var i = 0; i < 10 ;i++){
+					var OneData = {};
+					OneData.Idx = curPage + i + 1;
+					OneData.zipNo = jsonStr.results.juso[i].zipNo ;
+					OneData.roadAddr = jsonStr.results.juso[i].roadAddr ;
+					OneData.siNm = jsonStr.results.juso[i].siNm ;
+					OneData.engAddr = jsonStr.results.juso[i].engAddr ;
+					OneData.jibunAddr  = jsonStr.results.juso[i].jibunAddr ;
+					vData.Data.push(OneData);
+				}
+				
+				oTable.getModel().setData(vData);
+			}
+			
+			
+			//특수문자, 특정문자열(sql예약어의 앞뒤공백포함) 제거
+			function checkSearchedWord(obj){
+				if(obj.length >0){
+					//특수문자 제거
+					var expText = /[%=><]/ ;
+					if(expText.test(obj) == true){
+						alert("특수문자를 입력 할수 없습니다.") ;
+						obj = obj.split(expText).join(""); 
+						return false;
+					}
+					
+					//특정문자열(sql예약어의 앞뒤공백포함) 제거
+					var sqlArray = new Array(
+						//sql 예약어
+						"OR", "SELECT", "INSERT", "DELETE", "UPDATE", "CREATE", "DROP", "EXEC",
+			             		 "UNION",  "FETCH", "DECLARE", "TRUNCATE" 
+					);
+					
+					var regex;
+					for(var i=0; i<sqlArray.length; i++){
+						regex = new RegExp( sqlArray[i] ,"gi") ;
+						
+						if (regex.test(obj) ) {
+						    alert("\"" + sqlArray[i]+"\"와(과) 같은 특정문자로 검색할 수 없습니다.");
+							obj =obj.replace(regex, "");
+							return false;
+						}
+					}
+				}
+				return true ;
+			}
+			
+			function onSetButtons(vRange, vDownyn) {
+				if(!vRange || vRange == ""){
+					vRange = 0;
+				}
+				
+				if(!vDownyn || vDownyn == "undefined" ){
+					vDownyn = ""; 
+				}
+				
+				var vLength = Math.ceil(vTotalResult/10); 
+				oLayout.setVisible(true);
+				if(vLength > 10){
+					oButton0.setVisible(true);
+					oButton11.setVisible(true);
+				}else{
+					oButton0.setVisible(false);
+					oButton11.setVisible(false);
+				} 
+				
+				for(var i = 1; i <= 10; i++){
+					if(i <= vLength - vRange ){
+						var vTempName =  i + vRange ;
+						eval("oButton"+i+".setVisible(true)");
+						eval("oButton"+i+".setText(" + vTempName + ")");
+						eval("oButton"+i+".addCustomData( new sap.ui.core.CustomData({key: 'Index', value : " + i + "}) )");
+						
+						if(vDownyn == "X"){
+							if(i == 10){
+								eval("oButton"+i+".setType( sap.m.ButtonType.Emphasized )");
+							}else{
+								eval("oButton"+i+".setType( sap.m.ButtonType.Default )");
+							} 
+						}else{
+							if(i == 1){
+								eval("oButton"+i+".setType( sap.m.ButtonType.Emphasized )");
+							}else{
+								eval("oButton"+i+".setType( sap.m.ButtonType.Default )");
+							} 
+						}
+						
+						
+					}else{
+						eval("oButton"+i+".setVisible(false)");
+					}
+				}
+			}
+			
+			function clickBtnIdx(oEvent) {
+				var vIdx = oEvent.getSource().getCustomData()[0].getValue();
+				var vCurPage = "";
+				for(var i =1; i <= 10 ; i++){
+					if(i == vIdx){
+						eval("oButton"+i+".setType( sap.m.ButtonType.Emphasized )");
+						vCurPage = eval("oButton"+i+".getText()");
+					}
+					else eval("oButton"+i+".setType( sap.m.ButtonType.Default )");
+				}
+				getAddr(vCurPage);
+			}
+			
+			// 다음 버튼 클릭 시
+			function clickNextBtn(oEvent) {
+				for(var i = 1; i <= 10; i++){
+					eval("var oTmpButton = oButton" +i + ";");
+					if(oTmpButton.getType() == sap.m.ButtonType.Emphasized ){
+						oTmpButton.setType(sap.m.ButtonType.Default);
+						var vText = oTmpButton.getText() * 1;
+						var vTResult = parseInt(vTotalResult / 10) ; // 현재 전체 수 / 10
+						var vQuota = parseInt(vText  / 10); // 몫
+						var vRemains  = vText % 10; // 나머지
+						if(vRemains == 0 || vText == vTResult){ // 10 번대 버튼 전체 Page No를 바꾸는 경우
+							if(vText == vTResult){ // 마지막위치에서 Next 버튼을 클릭한 경우
+							}else{ 
+								// Button Setting
+								onSetButtons((vQuota) * 10);
+								getAddr(vText+1);
+							}
+						}else{  // 1~9번대 버튼
+							var vIdx = i+1 ;
+							eval("var oNextButton = oButton" +vIdx + ";");
+							oNextButton.setType(sap.m.ButtonType.Emphasized);
+							getAddr(vText+1);
+						}
+						break;
+					}
+					
+				}
+			}
+			
+			// 이전 버튼 클릭 시
+			function clickPreBtn(oEvent) {
+				for(var i = 1; i <= 10; i++){
+					eval("var oTmpButton = oButton" +i + ";");
+					
+					if(oTmpButton.getType() == sap.m.ButtonType.Emphasized ){
+						oTmpButton.setType(sap.m.ButtonType.Default);
+						var vText = oTmpButton.getText() * 1 ;
+						var vQuota = parseInt(vText / 10); // 몫
+						var vRemains  = vText % 10; // 나머지
+						if(vRemains == 0 || vRemains > 1){ // 2 ~ 10 번대 버튼 전체 Page No를 바꾸지 않는 경우
+							var vIdx = i-1 ;
+							eval("var oPreButton = oButton" +vIdx + ";");
+							getAddr(vText-1);
+							oPreButton.setType(sap.m.ButtonType.Emphasized);
+						}else{  // 1번대 버튼
+							if(vQuota > 0){ // 전체 Pag No를 바꾸는 경우
+								onSetButtons((vQuota - 1) * 10 , "X");
+								getAddr(vText-1);
+							}
+						} 
+						break;
+					}
+				}
+			}
+			
+			function onSelectRow(oEvent){
+				var oContext = oEvent.getSource().getBindingContext();
+				var oModel = oTable.getModel();
+				var selectedData = oModel.getProperty(oContext.sPath);
+				
+                var param = "'" + selectedData.zipNo + "', '" + selectedData.roadAddr + "', '" + selectedData.siNm  + "', '" + selectedData.engAddr +"'";
+
+				$(opener.location).attr("href", "javascript:" + CBFunction + "(" + param + ");");
+                window.close();
+                
+			}
+			
+			// 화면 Layout 그리기
+			var oContentMatrix = new sap.ui.commons.layout.MatrixLayout({
+				columns : 5,
+				widths : [ "20px","50px","", "50px","20px"],
+			});
+			var oRow , oCell ;
+			
+			oRow = new sap.ui.commons.layout.MatrixLayoutRow();
+			oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+				content : new sap.ui.core.HTML({
+					content : "<div style='height : 10px;'/>"
+				})
+			});
+			oRow.addCell(oCell);
+			oContentMatrix.addRow(oRow);
+			
+			oRow = new sap.ui.commons.layout.MatrixLayoutRow();
+			oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+				content : new sap.m.Text({
+					text  : "",
+				}),
+				colSpan : 2
+			});
+			oRow.addCell(oCell);
+			
+			var oAddInput =  new sap.m.Input({ 
+				placeholder : "도로명 주소, 건물명 또는 지번입력",
+				change : function(){
+					getAddr();	
+				}
+			});
+			
+			oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+				content : new sap.m.Toolbar({
+					content : [ oAddInput , 
+					   new sap.m.Button({
+							icon : "sap-icon://search",
+							type : sap.m.ButtonType.Emphasized,
+							press : function(){
+								getAddr();
+							}
+					   }).addStyleClass("PSNCFontFamily"),
+					   new sap.m.Button({
+							icon : "sap-icon://decline",
+							type : sap.m.ButtonType.Emphasized,
+							press : function(){
+								oAddInput.setValue("");	
+							},
+					   }).addStyleClass("PSNCFontFamily"),
+						],
+					}).addStyleClass("PSNCToolbarNoBottomLine")
+			});
+			oRow.addCell(oCell);
+			oContentMatrix.addRow(oRow);
+			
+			oRow = new sap.ui.commons.layout.MatrixLayoutRow();
+			oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+				content : new sap.m.Text({
+					text  : ""
+				}),
+				colSpan : 2
+			});
+			oRow.addCell(oCell);
+			
+			oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+				content : new sap.m.Text({
+					text  : "검색어 예 : 도로명(반포대로 58), 건물명(독립기념관), 지번(삼성동 25)"
+				}).addStyleClass("PSNCFontFamily")
+			}).addStyleClass("PSNCPaddingLeft10px");
+			oRow.addCell(oCell);
+			oContentMatrix.addRow(oRow);
+			
+			oRow = new sap.ui.commons.layout.MatrixLayoutRow();
+			oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+				content : new sap.m.Text({
+					text  : ""
+				})
+			});
+			oRow.addCell(oCell);
+			
+			var oResult = new sap.m.Text({
+				text  : "",
+			}).addStyleClass("PSNCFontFamily");
+			oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+				content : oResult,
+				colSpan : 4
+			}).addStyleClass("PSNCPaddingLeft10px");
+			oRow.addCell(oCell);
+			oContentMatrix.addRow(oRow);
+			
+			
+			var oColumnList = new sap.m.ColumnListItem({
+				counter : 10,
+				type : sap.m.ListType.Navigation,
+				press : onSelectRow ,
+				cells : [
+					new sap.m.Text({
+					     text : "{Idx}" 
+					}).addStyleClass("PSNCFontFamily"),
+				    new sap.m.ObjectIdentifier({
+				    	title : "{roadAddr}",
+						text :  { path : "jibunAddr",
+								  formatter : function(fVal){
+									  return "[지번] " + fVal ;
+								  }	
+						}
+				    }).addStyleClass("PSNCFontFamily"),
+				    new sap.m.Text({
+					     text : "{zipNo}",
+					     textAlign : sap.ui.core.TextAlign.Begin,
+					}).addStyleClass("PSNCFontFamily"),
+				    
+				]
+			});  
+			
+			var oTable = new sap.m.Table(oController.PAGEID + "_ZipTable",{
+				// mode : "SingleSelectMaster" ,
+				inset : false,
+				// visible : false,
+				columns : [
+			          new sap.m.Column({
+			        	  header: new sap.m.Label({text : "No."}).addStyleClass("PSNCFontFamily"),
+			        	  demandPopin: true,
+			        	  hAlign : sap.ui.core.TextAlign.Center,
+			        	  styleClass : "cellBorderRight cellBorderLeft",
+			        	  width : "40px",
+			        	  minScreenWidth: "tablet"}),
+			          new sap.m.Column({
+			        	  header: new sap.m.Label({text : "도로명 주소"}).addStyleClass("PSNCFontFamily"),
+			        	  demandPopin: true,
+			        	  hAlign : sap.ui.core.TextAlign.Begin,
+			        	  styleClass : "cellBorderRight",
+			        	  minScreenWidth: "tablet"}),
+		        	  new sap.m.Column({
+			        	  header: new sap.m.Label({text : "우편번호"}).addStyleClass("PSNCFontFamily"),
+			        	  demandPopin: true,
+			        	  hAlign : sap.ui.core.TextAlign.Center,
+			        	  styleClass : "cellBorderRight",
+			        	  width : "100px",
+			        	  minScreenWidth: "tablet"}) ],
+			});
+			oTable.setModel(new sap.ui.model.json.JSONModel());
+			oTable.bindItems("/Data", oColumnList);
+			
+			
+			oRow = new sap.ui.commons.layout.MatrixLayoutRow();
+			oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+				content : new sap.m.Text({
+					text  : ""
+				})
+			});
+			oRow.addCell(oCell);
+			
+			oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+				content : oTable,
+				colSpan : 3
+			});
+			oRow.addCell(oCell);
+			oContentMatrix.addRow(oRow);
+			
+			var oLayout = new sap.ui.layout.HorizontalLayout({
+				allowWrapping :true,
+				visible : false
+			});
+			
+			var oButton0 = new sap.m.Button(oController.PAGEID +"_Button0", { 
+				icon : "sap-icon://navigation-left-arrow",
+				press : clickPreBtn,
+			});
+			
+			oLayout.addContent(oButton0);
+			
+			for(var i = 1; i <= 10; i++){
+				eval("var oButton" + i + " = new sap.m.Button(oController.PAGEID{ press : clickBtnIdx});");
+				eval("oLayout.addContent(oButton" +i+")");
+			}
+			
+			var oButton11 = new sap.m.Button(oController.PAGEID +"_Button11", { 
+				icon : "sap-icon://navigation-right-arrow",
+				press :  clickNextBtn}) ;
+			oLayout.addContent(oButton11);
+			
+			
+			oRow = new sap.ui.commons.layout.MatrixLayoutRow();
+			oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+				content : new sap.m.Text({
+					text  : ""
+				})
+			});
+			oRow.addCell(oCell);
+			
+			oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+				content : oLayout,
+				colSpan : 3,
+				vAlign : "Middle",
+				hAlign : "Center",
+			});
+			oRow.addCell(oCell);
+			oContentMatrix.addRow(oRow);
+			oContentMatrix.addStyleClass("WhiteBackground sapUiSizeCompact");
+			oContentMatrix.placeAt("content");
+					
+</script>
+</head>
+	<body id="body" class="sapUiBody" onload="load()">
+		<div id="content" style="background-color : white; height : 750px "></div>
+	</body>
+</html>

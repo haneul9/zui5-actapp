@@ -1,0 +1,62 @@
+.node {
+    cursor: pointer;
+}
+.node circle {
+    fill: #fff;
+    stroke: steelblue;
+    stroke-width: 0.5px;
+}
+
+.sap-dennisseah-orgchart .node .ename {
+    font: 13px 'Malgun Gothic';
+    font-weight : bold !important;
+} 
+
+.sap-dennisseah-orgchart .node .mytext {
+    font: 10.5px 'Malgun Gothic';
+    font-weight : normal !important;
+}
+
+.link { 
+    fill: none;
+    stroke: #f0f0f0;
+    stroke-width: 1.5px;
+}
+
+body {
+    overflow: hidden;
+}
+
+.sap-dennisseah-orgchart .node {
+    cursor: pointer;
+}
+.sap-dennisseah-orgchart .node circle {
+    fill: #fff;
+    stroke: steelblue;
+    stroke-width: 0.5px;
+}
+/* .sap-dennisseah-orgchart .node text {
+    font-family : 'Malgun Gothic';
+    font-size : 10px;
+    font-weight : bold;
+} */
+
+.sap-dennisseah-orgchart .link {
+    fill: none;
+    stroke: #f0f0f0;
+    stroke-width: 1.5px;
+    /*shape-rendering : crispEdges;*/
+}
+
+.sap-dennisseah-orgchart {
+    overflow: hidden;
+}
+
+.header{
+    font: 0.875rem 'Malgun Gothic';
+    font-weight : bold !important;
+}
+
+.sapMTB{
+	border-bottom : 0px solid white !important;
+}

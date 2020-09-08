@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+
+<!--  script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script  -->  
+<script type="text/javascript" src="/sap/bc/ui5_ui5/sap/zui5_hr_tile/zhr_status/plugin/aes.js"></script>
+<script type="text/javascript">
+
+      var key = "WeLS0732!@#";
+/*                           
+      console.log("평문 : " + message);
+                           
+      var encrypt = CryptoJS.AES.encrypt(message, key);
+      console.log("암호화 : " + encrypt);
+                           
+      var decrypted = CryptoJS.AES.decrypt(encrypt, key );
+      var decrpytText = decrypted.toString(CryptoJS.enc.Utf8);
+                           
+      console.log("복호화 문자열: " + decrpytText);
+*/
+var fn_encode = function(str){
+  var encrypt = CryptoJS.AES.encrypt(str, key);
+  document.all.j_empno.value = encrypt;
+
+  var decrypted = CryptoJS.AES.decrypt(encrypt, key );
+  var decrpytText = decrypted.toString(CryptoJS.enc.Utf8);  
+  document.all.empno2.value = decrpytText;
+  
+  return encrypt;
+}
+
+
+
+
+
+
+  var gogoGet = function(tp){
+    var empNo = document.all.empNo.value;
+    var urls = "";
+    if(tp == 1){ // 개발
+      urls = "http://misdev.lsnikko.com:8000/eis/mb/index.htm";
+    }else{
+      urls = "http://mis.lsnikko.com:8000/mis/mb/index.htm";
+    }
+    
+    urls = urls + "?j_empno=" + fn_encode(empNo)+ "&tp=hr";
+    window.open(urls, "lsnikko");
+  }
+
+//http://mis.lsnikko.com:8000/mis/mb/index.htm?tp=hr&j_empno=U2FsdGVkX1/W1bFrML+XTMVnkVSLH6gJrSi59zfmqe0=
+
+</script>
+ </head>
+ <body>
+
+<a href="javascript:void(0)" onclick="gogoGet(0)">링크 [운영]</a><br><br><br><br>
+<a href="javascript:void(0)" onclick="gogoGet(1)">링크 [개발]</a><br><br><br><br>
+
+
+
+암호화 전 사번 : <input type="text" name="empNo" value="B0031"><br>
+암호화 후 사번 : <input type="text" name="j_empno" style="width:400px;"><br>
+복호화 후 사번 : <input type="text" name="empno2">
+
+
+ </body>
+</html>

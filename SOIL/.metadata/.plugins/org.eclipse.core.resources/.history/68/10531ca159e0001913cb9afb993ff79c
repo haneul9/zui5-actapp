@@ -1,0 +1,121 @@
+sap.ui.jsfragment("ZUI5_HR_ApprovalBox.fragment.Detail01", {
+	/** Specifies the Controller belonging to this View. 
+	* In the case that it is not implemented, or that "null" is returned, this View does not have a Controller.
+	* @memberOf fragment.SelectMassn
+	*/
+
+	createContent : function(oController) {
+		
+		var oRow, oCell;
+		var oMatrix = new sap.ui.commons.layout.MatrixLayout({
+			columns : 3,
+			width : "100%",
+			widths : ["10px", "", "5px"]
+		});
+
+		oRow = new sap.ui.commons.layout.MatrixLayoutRow({height : "5px"});
+		oMatrix.addRow(oRow);
+		
+		oRow = new sap.ui.commons.layout.MatrixLayoutRow({height : "35px"});
+		oCell = new sap.ui.commons.layout.MatrixLayoutCell();	
+		oRow.addCell(oCell);
+		
+		oRow = new sap.ui.commons.layout.MatrixLayoutRow({height : "35px"});
+		oCell = new sap.ui.commons.layout.MatrixLayoutCell();	
+		oRow.addCell(oCell);
+		
+		oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+			content : [new sap.m.Toolbar({
+							content : [new sap.m.DatePicker({
+											valueFormat : "yyyy-MM-dd",
+								            displayFormat : "yyyy.MM.dd",
+								            value : "{Apbeg}",
+											textAlign : "Begin",
+											change : oController.onChangeDate,
+											width : "40%"
+									   }).addStyleClass("L2PFontFamily"),
+									   new sap.m.Text({text : "~" , textAlign : "Center"}).addStyleClass("L2PTextAlignCenter"), //.addStyleClass("L2PFontFamily L2PPaddingLeft5 L2PPaddingRight5 L2PPaddingTop4"),
+									   new sap.m.DatePicker({
+											valueFormat : "yyyy-MM-dd",
+											displayFormat : "yyyy.MM.dd",
+								            value : "{Apend}",
+											textAlign : "Begin",
+											change : oController.onChangeDate,
+											width : "40%"
+									   }).addStyleClass("L2PFontFamily"),
+									   new sap.m.Button({
+										   icon : "sap-icon://search",
+										   text : "검색",
+										   press : function(oEvent){
+											   oController.setWorkplace(oEvent);
+											   var oFilter = oController._ListCondJSonModel.getProperty("/Data");
+											   if(oFilter.ZreqForm && oFilter.Gubun){			
+												   var oNavigationList = sap.ui.getCore().byId(oController.PAGEID + "_NavigationList");
+												   var oNavigationItem = sap.ui.getCore().byId(oController.PAGEID + "_" + oFilter.ZreqForm + "_" + oFilter.Gubun);
+													
+												   oNavigationList.setSelectedItem(oNavigationItem);
+													
+												   oController.onSelectNavigationList(evt, "X");
+											   }
+												
+//											   var oTable = sap.ui.getCore().byId(oController.PAGEID + "_DetailTable");
+//											   oTable.getModel().setData({Data : []});
+//											   oTable.setVisibleRowCount(1);
+//											   
+//											   oController._ListCondJSonModel.setData("/Data/ZreqForx", "");
+//											   oController._ListCondJSonModel.setData("/Data/Gubun", "");
+											   
+											
+											
+										   }
+									   })]
+						}).addStyleClass("L2PToolbarNoBottomLine")],
+			hAlign : "Left",
+			vAlign : "Top"
+		});	
+		oRow.addCell(oCell);
+		oMatrix.addRow(oRow);
+
+		oRow = new sap.ui.commons.layout.MatrixLayoutRow({height : "5px"});
+		oCell = new sap.ui.commons.layout.MatrixLayoutCell({colSpan : 3}).addStyleClass("borderTop");
+		oRow.addCell(oCell);
+		oMatrix.addRow(oRow);
+		
+		oRow = new sap.ui.commons.layout.MatrixLayoutRow();
+		oCell = new sap.ui.commons.layout.MatrixLayoutCell();	
+		oRow.addCell(oCell);
+		
+		oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+			content : [new sap.tnt.NavigationList(oController.PAGEID + "_NavigationList", {
+							width : "100%",
+							items : [new sap.tnt.NavigationListItem(oController.PAGEID + "_ZreqForm1", {
+										text : "Work to do",
+										icon : "sap-icon://write-new",
+										key : "1",
+								     }),
+								     new sap.tnt.NavigationListItem(oController.PAGEID + "_ZreqForm2", {
+										text : "Work completed",
+										icon : "sap-icon://complete",
+										key : "2",
+									 }),
+								   ]
+					   })],
+			hAlign : "Center",
+			vAlign : "Top"
+		});	
+		oRow.addCell(oCell);
+		oMatrix.addRow(oRow);		
+		
+		
+		var oScrollContainer = new sap.m.ScrollContainer(oController.PAGEID + "_Detail1", {
+			width : "100%",
+			horizontal : false,
+			vertical : true,
+			height : (window.innerHeight - 117) + "px",
+			content : [oMatrix]
+		});
+		
+		return oScrollContainer;
+		
+	}
+});

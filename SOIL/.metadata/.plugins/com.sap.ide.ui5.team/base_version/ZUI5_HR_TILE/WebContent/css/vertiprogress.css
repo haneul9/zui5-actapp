@@ -1,0 +1,134 @@
+/* .L2PHprogressBase { */
+/* 	height : 100%; */
+/* 	white-space : nowrap ; */
+/* 	overflow : hidden; */
+/* 	position : relative; */
+/* 	padding : 1px; */
+/* } */
+
+/* .L2PHProgressBarF { */
+/* 	width : 7%; */
+/* } */
+
+/* .L2PHProgressBar { */
+/* 	width : 7%; */
+/* 	margin-left : 2% ; */
+/* } */
+
+
+.progress-bar {
+  float: left;
+  height: 150px;
+  margin-left: 25px;
+}
+
+.progress-track {
+  position: relative;
+  width: 40px;
+  height: 100%;
+  background: #ebebeb;
+}
+
+.progress-fill {
+  position: relative;
+  background: #825;
+  height: 50%;
+  width: 40px;
+  color: #fff;
+  text-align: center;
+  font-family: "Lato","Verdana",sans-serif;
+  font-size: 12px;
+  line-height: 20px;
+}
+
+.L2PTooltip {
+  /*  position: relative; */
+  /*  display: inline-block; */
+/*     border-bottom: 1px dotted black; */
+}
+
+.L2PTooltip .tooltiptext {
+    visibility: hidden;
+    width: 80px;
+    background-color: black; 
+    text-align: left;
+    border-radius: 6px;
+    padding: 5px 5px 5px 5px;
+	font-size : 11px;
+	font-family: 'Malgun Gothic' !important;
+    color : #ffffff !important;
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    left: -20%;
+    /*top: -10px;*/
+    top: 10px
+}
+
+.L2PTooltip .tooltiptextVal0{
+    visibility: hidden;
+    width: 60px;
+    background-color: black; 
+    text-align: left;
+    border-radius: 6px;
+    padding: 5px 5px 5px 5px;
+	font-size : 11px;
+	font-family: 'Malgun Gothic' !important;
+    color : #ffffff !important;
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    top : -50px ;
+}
+
+.L2PTooltip .tooltiptextLeft {
+    visibility: hidden;
+    width: 80px;
+    background-color: black; 
+    text-align: left;
+    border-radius: 6px;
+    padding: 5px 5px 5px 5px;
+	font-size : 11px;
+	font-family: 'Malgun Gothic' !important;
+    color : #ffffff !important;
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    /*top: 0px;*/
+    top: 10px;
+    right: 20%;
+}
+
+.L2PTooltip .tooltiptextLeftVal0{
+    visibility: hidden;
+    width: 80px;
+    background-color: black; 
+    text-align: left;
+    border-radius: 6px;
+    padding: 5px 5px 5px 5px;
+	font-size : 11px;
+	font-family: 'Malgun Gothic' !important;
+    color : #ffffff !important;
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    top: -30px;
+    right: 20%;
+}
+
+    
+.L2PTooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+.L2PTooltip:hover .tooltiptextVal0{
+    visibility: visible;
+}
+
+.L2PTooltip:hover .tooltiptextLeft {
+    visibility: visible;
+}
+
+.L2PTooltip:hover .tooltiptextLeftVal0{
+    visibility: visible;
+}

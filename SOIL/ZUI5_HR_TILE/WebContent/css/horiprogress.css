@@ -1,0 +1,43 @@
+/* L2PProgress 의 Style */
+
+.L2PProgressBase {
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.L2PProgressBar {
+	position: absolute;
+	float : left;
+    left: 0px;
+    top: 0px;
+    box-sizing: border-box;
+    text-align:center;
+   	font-size : 11px !important;
+	font-family : 'Noto Sans CJK KR Regular', sans-serif !important;
+	color : #787f88 !important;
+	line-height: 100%;
+    border: 0.06rem solid #transparent;
+}
+
+.L2PProgressLabel {
+	border : none;
+	background-color:transparent;
+}
+
+.L2PLabelBegin {
+	text-align: left;
+   	font-size : 11px !important;
+	font-family : 'Noto Sans CJK KR Regular', sans-serif !important;
+	color : #787f88 !important;
+    float: left;
+   /* padding-bottom : 5px; */
+}
+
+.L2PLabelEnd {
+	text-align: Right;
+   	font-size : 11px !important;
+	font-family : 'Noto Sans CJK KR Regular', sans-serif !important;
+	color : #787f88 !important;
+    float: right;
+}

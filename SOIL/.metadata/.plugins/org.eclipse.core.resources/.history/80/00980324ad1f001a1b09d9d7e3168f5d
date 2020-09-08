@@ -1,0 +1,28 @@
+sap.ui.jsfragment("ZUI5_HR_Scholarship.fragment.SchoolDialog", {
+	
+	createContent : function(oController) {
+		
+	       var oStandardListItem = new sap.m.StandardListItem(oController.PAGEID +"_StandardListItem",{
+				title : "{Schtx}",
+				info : "{Schcd}"
+			});
+	        
+			var oDialog = new sap.m.SelectDialog(oController.PAGEID + "_SchoolDialog", {
+				title : oBundleText.getText("LABEL_1154"),	// 1154:학교
+				contentWidth : "600px",
+				search : oController.onSearchSchool,
+				confirm : oController.onConfirmSchool,
+				cancel : oController.onCancelSchool,
+				items : {
+					path : "/SchoolListSet",
+					template : oStandardListItem
+				}     
+			});
+			oDialog.setModel(sap.ui.getCore().getModel("ZHR_SCHOOL_EXP_SRV"));
+			
+			
+		
+ 		return oDialog;
+	}
+
+});

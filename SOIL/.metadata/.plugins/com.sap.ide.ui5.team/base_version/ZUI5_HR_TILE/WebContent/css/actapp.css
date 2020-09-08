@@ -1,0 +1,566 @@
+.hrhass_actapp_firstVLayout{
+	height: 166px !important;
+	width: 488px !important;		
+}
+
+.hrhass_actapp_menuVLayout{
+	height: 136px !important;
+	width: 237px !important;		
+}
+
+.L2P_circular_range-guage-input {
+/*   position:absolute;  */
+/*   width:50px; */
+  text-align:center; 
+  margin-top:17px; 
+  border:0px transparent; 
+  background-color: transparent;    
+  font-size:1em;
+  font-weight: bold;
+  color: #333;
+  opacity: 0.9;
+  z-index: 2;
+}
+
+.L2PFontFamily {
+ 	font-family: 'Malgun Gothic' !important;; 
+    font-size: 0.875rem !important;
+	font-weight : normal !important;
+	color: #000000 !important;
+}
+
+.L2PAllFont {
+	font-size : 30px;
+	font-family : Verdana;
+	height: 50px;
+	line-height: 50px;
+}
+
+.L2PMenuFont {
+	font-size : 12px;
+	font-family : 'Malgun Gothic' !important;
+}
+
+.L2PMenuToobar {
+	cursor : pointer !important;
+	border-bottom : 1px solid #DDD;
+}
+
+.L2PMenuToobar:hover {
+	background-color: #e8f4f7;
+	cursor: pointer;
+	text-decoration: none;
+	color: #333333;
+}
+
+.L2PMenuLayout {
+	padding : 0px !important;
+}
+
+.L2PMenuText {
+	cursor : pointer !important;
+}
+
+.L2PStatusFont {
+	font-size : 12px !important;
+	font-family : 'Malgun Gothic' !important;;
+	color : #787f88 !important
+}
+
+.L2PPeopleStatusFont {
+	font-size : 11px !important;
+	font-family : 'Malgun Gothic' !important;;
+	color : #787f88 !important
+}
+
+.L2PPaddingTopBottom {
+	padding-top : 5px;
+	padding-bottom : 5px;
+}
+
+.L2PPaddingTop10 {
+	padding-top : 10px;
+}
+
+.L2PTitle1 {
+	height: 20px;
+	color : #787f88;
+	line-height : 20px;
+	display: inline-block;
+	font-size : 1rem;
+	font-family : 'Malgun Gothic' !important;
+	font-weight : bold !important;
+}
+
+.L2PTitle2 {
+	background-color: #00b7c8;
+	height: 20px;
+	padding-Left : 8px;
+	padding-Right : 20px;
+	color : white;
+	line-height : 20px;
+	display: inline-block;
+}
+
+.L2PTitle3 {
+	height: 20px;
+	color : #787f88;
+	line-height : 20px;
+	display: inline-block;
+	font-size : 0.9rem;
+	font-family : 'Malgun Gothic' !important;
+	font-weight : bold !important;
+}
+
+.L2PDummy1 {
+	height: 12px;
+	width : 170px;
+}
+
+.L2PDummy2 {
+	height: 4px;
+	width : 170px;
+}
+
+.L2PMenu {
+	padding-left : 10px;
+	width : 170px;
+	font-size : 13px;
+	font-family : 'Malgun Gothic' !important;
+	border-bottom : 1px solid #DDD;
+	height: 20px;
+	line-height: 20px;
+	padding-top:7px;
+}
+
+.L2PChipLink1 {
+	white-space: normal !important;
+	color: #333333;
+	font-size: 12px;
+	border-bottom: 1px groove #CCCCCC;
+	padding-bottom: 12px;
+	padding-right: 15px;
+	padding-top: 12px;
+	padding-left: 8px;
+	width: 218px !important;
+}
+.L2PChipLink1:hover {
+	background-color: #e8f4f7;
+	cursor: pointer;
+	text-decoration: none;
+	color: #333333;
+}
+
+.L2PChipLink2 {
+	white-space: normal !important;
+	color: #333333;
+	font-size: 12px;
+/* 	border-bottom: 1px groove #CCCCCC; */
+	padding-bottom: 12px;
+	padding-right: 15px;
+	padding-top: 12px;
+	padding-left: 8px;
+	width: 218px !important;
+	cursor : pointer !important;
+}
+.L2PChipLink2:hover {
+	background-color: #e8f4f7;
+	cursor: pointer;
+	text-decoration: none;
+	color: #333333;
+}
+
+html[data-sap-ui-browser*='cr'] .L2PChipLink1 {
+	border-bottom: 1px ridge #F0F0F0;
+}
+
+.L2PCursorPointer {
+	cursor : pointer !important;
+}
+
+.L2P_actapp_leftTile{
+	height: 65px;
+	width: 94%;
+	background-color: #00b0f0;
+	cursor:pointer;
+}
+
+.L2P_actapp_leftTile:hover{
+	background-color: #0088b8;
+}
+
+html[data-sap-ui-browser*='cr'] .L2P_actapp_leftTile{
+	height: 90px;
+	width: 94.5%;
+	background-color: #00b0f0;
+	cursor:pointer;
+}
+
+html[data-sap-ui-browser*='cr'] .L2P_actapp_leftTile:hover{
+	height: 90px;
+	width: 94.5%;
+	background-color: #0088b8;
+}
+
+.L2P_actapp_rightTile{
+	height: 90px;
+	width: 94%;
+	background-color: #00b0f0;
+	margin-left: 0px !important;
+	cursor:pointer;
+}
+
+.L2P_actapp_rightTile:hover{
+	background-color: #0088b8; 
+}
+
+.L2P_actapp__leftTileLabel{
+	color: white;
+	width: 100%;
+	text-align: center !important;
+	padding-top: 5px;
+	cursor:pointer;
+}
+
+.L2P_actapp_leaveRequestIcon{
+/* 	padding-left: 30%; */
+	padding-top: 10%;
+	outline:none !important;
+}
+
+.L2P_actapp_leaveRequestIcon:hover{
+	cursor: pointer;
+}
+
+.sapUi2LpbTitle {
+	font-family : 'Malgun Gothic' !important;
+	font-weight : bold !important;
+	max-width: 360px !important;
+}
+
+.sapMTBShrinkItem {
+  min-width: 0rem !important;
+}
+
+.L2PToolbarNoBottomLine {
+	border-bottom: 0px solid #cccccc !important;
+}
+
+.sapUiMltPadRight{
+	padding : 0px;
+}
+
+.L2PTilePadding{
+	margin-top : 0.625rem ;
+	margin-left : 0.94rem ;
+	margin-right : 0.94rem ;
+	margin-bottom : 0.625rem ;
+}
+
+.html.sapUiMedia-Std-Desktop .sapSuiteStackedMC.sapSuiteStackedMCSizeAuto, html.sapUiMedia-Std-Tablet .sapSuiteStackedMC.sapSuiteStackedMCSizeAuto, .sapSuiteStackedMC.sapSuiteStackedMCSizeM, .sapSuiteStackedMC.sapSuiteStackedMCSizeL{
+	width : 100% !important;
+}
+
+.L2PFontMainText{
+	font-size : 1.8rem !important;
+	font-family : 'Malgun Gothic' !important;
+ 	color : rgba(0, 133, 74, 1) !important; 
+}
+
+.L2PFontMSSMainText{
+	font-size : 1.9rem !important;
+	font-family : 'Malgun Gothic' !important;
+ 	color : rgba(0, 133, 74, 1) !important; 
+}
+
+.L2PFontMSSMainText2{
+	font-size : 1.9rem !important;
+	font-family : 'Malgun Gothic' !important;
+ 	color : rgba(0, 133, 74, 1) !important; 
+ 	font-weight : bold;
+}
+
+.L2PFontMSSMainText3{
+	font-size : 1.9rem !important;
+	font-family : 'Malgun Gothic' !important;
+ 	color : rgba(0, 133, 74, 1) !important; 
+ 	font-weight : bold;
+}
+
+.L2PFontMSSMainText4{
+	font-size : 1.9rem !important;
+	font-family : 'Malgun Gothic' !important;
+ 	color : rgba(0, 133, 74, 1) !important; 
+ 	font-weight : bold;
+}
+
+.L2PFontASSText{
+	font-size : 1.5rem !important;
+	font-family : 'Malgun Gothic' !important;
+ 	color : rgba(0, 133, 74, 1) !important; 
+}
+
+.L2PFontSubTitle{
+	font-size : 12px !important;
+	font-family : 'Malgun Gothic' !important;
+	color : #787f88 !important;
+}
+
+.L2PFontSubTitle2{
+	font-size : 12.5px !important;
+	font-family : 'Malgun Gothic' !important;
+	color : #787f88 !important;
+}
+
+.L2PFontSubTitle3{
+	font-size : 10px !important;
+	font-family : 'Malgun Gothic' !important;;
+	color : #787f88 !important;
+}
+
+.L2PFontPersonSubTitle{
+	font-size : 12px !important;
+	font-family : 'Malgun Gothic' !important;;
+	color : #787f88 !important;
+}
+
+.L2PFontPersonSubTitle2{
+	font-size : 13px !important;
+	font-family : 'Malgun Gothic' !important;;
+	color : #787f88 !important;
+}
+
+.L2PFontASSSubText{
+	font-size : 12px !important;
+	font-family : 'Malgun Gothic' !important;;
+ 	color : #787f88 !important; 
+}
+
+.L2PLineHeight{
+	line-height : 100% !important;
+}
+
+.L2PFont17{
+	font-family : 'Malgun Gothic' !important;;
+	font-size : 17px;
+	color : #646c76;
+}
+
+.L2PFont15{
+	font-family : 'Malgun Gothic' !important;;
+	font-size : 15px;
+	color : #646c76;
+}
+
+.L2PFont13{
+	font-family : 'Malgun Gothic' !important;;
+	font-size : 13px;
+	color : #646c76;
+}
+
+.L2PFontBold {
+	font-weight : bold !important;
+}
+
+.L2PPartnershipTile{
+	width: 359px; 
+	height : 175px;
+}
+
+.TileHeight{
+	height : 165px;
+}
+
+.sapUshellShellHeadEnd>.sapUshellShellIco>img, .sapUshellShellHeadBegin>.sapUshellShellIco>img{
+	max-height : 3rem !important;
+	max-width : 9rem !important;
+}
+
+.sapMGTHdrTxt>.sapMText{
+	color: #787f88;
+    font-weight: bolder;
+    /* font-family: "72-Web",Arial,Helvetica,sans-serif; */
+    font-size: 1rem;
+    font-family: 'Malgun Gothic' !important;
+    /*line-height: 20px;*/
+}
+
+/* ?뜝?룞?삕?뜝?룞?삕?뜝?룞?삕 ?뜝?룞?삕 ?뜝?룞?삕?뜝?룞?삕 */
+.sapMImageContentImageIcon.sapUiIcon {
+    font-size: 1.75rem;
+    color: #355e83;
+    padding-bottom: 0.35rem;
+}
+
+.L2PTilePaddingBottom10px {
+	 padding-bottom: 10px !important;
+}
+
+.L2PTilePaddingBottom4px {
+	 padding-bottom: 4px !important;
+}
+
+.backgroundYellow{
+	background-color : #FFFAC1;
+}
+
+.backgroundPurple{
+	background-color : #e6e6ff;
+}
+
+.backgroundMint{
+	background-color : #eafbf6;
+}
+
+.backgroundGray{
+	background-color : #f2f2f2;
+}
+
+.backgroundBlue{
+	background-color : #e6f2ff;
+}
+
+.paddingLeft6{
+	padding-left: 6px !important;
+}
+
+.paddingLeft8{
+	padding-left: 8px !important;
+}
+
+.ImageTileTitle{
+	height: 20px;
+	color : white;
+	line-height : 20px;
+	display: inline-block;
+	font-size : 1rem;
+	font-family : 'Malgun Gothic' !important;
+	font-weight : bold !important;
+	margin-top : 0.625rem ;
+	margin-left : 0.94rem ;
+}
+
+.ImageTileTitle_Black{
+	height: 20px;
+	color : black;
+	line-height : 20px;
+	display: inline-block;
+	font-size : 1rem;
+	font-family : 'Malgun Gothic' !important;
+	font-weight : bold !important;
+	margin-top : 0.625rem ;
+	margin-left : 0.94rem ;
+}
+
+.ImageTileTitle_Gray{
+	height: 20px;
+	color : #787f88;
+	line-height : 20px;
+	display: inline-block;
+	font-size : 1rem;
+	font-family : 'Malgun Gothic' !important;
+	font-weight : bold !important;
+	margin-top : 0.625rem ;
+	margin-left : 0.94rem ;
+}
+
+
+
+
+
+
+
+
+
+
+
+.sapMLnk{
+	font-family: 'Malgun Gothic' !important;
+	font-size: 0.875rem !important;
+}
+
+.sapMLnk:hover{
+	font-family: 'Malgun Gothic' !important;
+	font-size: 0.875rem !important;
+}
+
+.L2PInputTableLabel {	
+	background-color:rgb(229,229,229);
+    border:1px solid rgb(204,204,204);
+    padding-top: 4px !important;
+}
+
+.L2PInputTableData {	
+	background-color:rgb(255,255,255);
+	border:1px solid rgb(204,204,204);
+	padding-top: 4px !important;
+}
+
+.L2PPaddingLeft10 {
+    padding-left:10px;
+}
+
+.L2PPaddingBottom4 {
+    padding-bottom:4px !important;
+}
+
+.TileWidth{
+	width: 340px !important;
+}
+
+.TextRight{
+	float: right;
+	padding-right: 20px;
+}
+
+.L2PPositionA{
+	position : absolute ;
+}
+
+/* generictile subtitle, footer font蹂?寃? */
+.sapMGTSubHdrTxt{
+	font-size: 12.5px !important;
+    font-family: 'Malgun Gothic' !important;
+    color: #787f88 !important;
+}
+
+.sapMTileCntFtrTxt{
+	font-size: 12px !important;
+    font-family: 'Malgun Gothic' !important;
+    color: #787f88;
+    margin-left: 0;
+    margin-right: 15px;
+}
+
+.Tile{
+   width: 176px;
+   height: 176px;
+}
+
+.html.sap-desktop .sapMGTWithoutImageHoverOverlay, html.sap-desktop .sapMGTWithImageHoverOverlay{
+	position : fixed !important;
+}
+
+/*
+  링크 Line 정렬
+*/
+.sapUiMedia-Std-Desktop .sapUshellLineModeContainer .sapUshellLinkTile, .sapUiMedia-Std-Tablet .sapUshellLineModeContainer .sapUshellLinkTile{
+    display : inline-block !important;
+}
+
+.sapUiMedia-GenericTileDeviceSet-large .sapMGT.sapMGTLineMode{
+    padding : 0px !important;
+}
+
+.sapUshellLineModeContainer .sapUshellLinksInnerContainer{
+    margin-top : 0px !important;
+}
+
+/**************************************/
+
+
+
+
+
+
+

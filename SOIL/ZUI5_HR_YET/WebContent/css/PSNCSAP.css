@@ -1,0 +1,246 @@
+@charset "utf-8";
+/*
+------------------------------------------------------------
+SAP CSS overriding
+------------------------------------------------------------*/
+
+/* IconFilterTabbar All 너비 조정*/
+.sapMITBAll{
+	width : 95px;
+	font-size : 0.875rem;
+	font-family: 'Malgun Gothic' !important;
+}
+
+/* IconFilterTabbar Content Bottom 삭제*/
+.sapMITBContent{
+	border-bottom : 0px solid !important;
+}
+
+/* IconFilterTabbar Filter 간격 조정*/
+.sapMITBFilter{
+	margin-left : 40px !important;
+	margin-right : 40px !important;
+}
+
+/* Panel Bottom 삭제*/
+.sapMPanelContent:not(.sapMPanelBGTransparent){
+	border-bottom : 0px solid !important;
+}
+
+/* Matrix cell padding 삭제 */
+.sapUiMltPadRight{
+	padding : 0px;
+}
+
+/* Button Text font */
+.sapMBtnInner{
+	font-size: 0.875rem;
+	font-family: 'Malgun Gothic' !important;
+}
+
+/* Input Enabled Text font 조정 */
+.sapMInputBaseInner{
+	font-size: 0.875rem;
+	font-family: 'Malgun Gothic' !important;	
+}
+
+/* sap.m.dialog Text font 조정 */
+.sapUiSizeCompact .sapMILILabel{
+	font-size: 0.875rem;
+	font-family: 'Malgun Gothic' !important;	
+}
+
+/* select box text font 조정 */
+.sapMSlt>.sapMSltLabel{
+	font-size: 0.875rem !important;
+	font-family: 'Malgun Gothic' !important;	
+}
+
+.sapUiSizeCompact .sapMListTblCell.sapMListTblCellNoData{
+	font-size: 0.875rem;
+	font-family: 'Malgun Gothic' !important;	
+}
+
+/* sap.m.Table 라인 색상 변경 */
+.sapMListTblCell.cellBorderRight {
+	/*border-right: 1px solid #aaaaaa;*/
+	/*border-top: 1px solid #aaaaaa;*/
+	border-right: 1px solid #e9e9e9;
+	border-top : 1px solid #e9e9e9;
+}
+
+.sapMListShowSeparatorsAll .sapMLIBShowSeparator:last-child>td, .sapMListShowSeparatorsAll .sapMListTblSubRow:last-child>td{
+	border-bottom: 1px solid #e9e9e9;
+}
+
+/* sap.m.Table */
+.sapMListTbl {
+    width: 100%;
+  	border-collapse: separate;
+  	/* border-collapse: collapse; */
+    border-spacing: 0;
+    table-layout: fixed;
+    /*border-top: 1px solid #aaaaaa;*/
+}
+ 
+.sapMListTblCell.cellBorderLeft {
+	/*border-left: 1px solid #bfbfbf;*/
+	border-left: 1px solid #e9e9e9;
+}
+
+.sapMListTblCell.cellBorderTop{
+	border-top: 1px solid #e5e5e5;
+}
+
+.sapMListTblFooter>td {
+	border-top : 0px solid !important;
+	/*border-bottom : 1px solid #aaaaaa !important;*/
+	border-bottom : 1px solid #e9e9e9 !important;
+}
+
+/* .sapMListTblCell.cellBorderRight { */
+/* 	border-right: 1px solid #aaaaaa; */
+/* } */
+
+/* .sapMListTblFooter>td { */
+/* 	border-top : 0px solid !important; */
+/* 	border-bottom : 0px solid #aaaaaa !important; */
+/* 	border-right: 0px solid #aaaaaa !important; */
+/* } */
+.sapUiSizeCompact .sapMListTblCell.sapMListTblCellNoData{
+	border-right: 1px solid #e9e9e9;
+	border-left: 1px solid #e9e9e9;
+}
+
+.sapUiSizeCompact .sapMListTblSelCol{
+	border-top: 1px solid #e9e9e9;
+	border-left: 1px solid #e9e9e9;
+}
+
+.sapMListTblCell{
+	font-size: 0.875rem;
+	font-family: 'Malgun Gothic' !important;	
+}
+
+.sapMText{
+	font-family: 'Malgun Gothic' !important;
+}
+
+/* Messagetrip 줄맞춤*/
+.sapMMsgStripIcon{
+	top : 0.45rem !important;
+}
+
+/* MatrixLauout Content 의 padding 삭제 */
+.sapMITBContent{
+	padding : 0px !important;
+}
+
+/* sap.m.Panel padding 조절*/
+.sapMPanelContent{
+	padding : 0.5rem !important;
+}
+
+/* Toolbar bottom line 제거 */
+.sapMTB{
+	border-bottom-width : 0px !important;
+}
+
+/* ProgressIndicator Value Text 조절*/
+.sapMPIText{
+ 	font-family: 'Malgun Gothic' !important; 
+    font-size: 13px !important;
+	font-weight : normal !important;
+	color: rgb(217, 217, 217) !important;
+}
+
+/* sap.ui.table footer */
+.sapUiTableFtr {
+    border-bottom: 1px solid #e5e5e5;
+    border-left: 1px solid #e5e5e5;
+    border-right: 1px solid #e5e5e5;
+    box-sizing: border-box;
+    padding: 0;
+    min-height: 1.5rem;
+    background-color: #ffffff;
+    /* padding-top: 0.25rem; */
+    font-weight: bold;
+}
+
+/* m.table */
+.sapMListTbl th {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.sapUiTableCol {
+    vertical-align: middle;
+    box-sizing: border-box;
+    min-height: 2rem;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    color: #333333;
+}
+
+.sapUiSizeCompact .sapMTBShrinkItem, .sapUiSizeCondensed .sapUiTableCell .sapMTBShrinkItem {
+    min-width: 1rem;
+}
+
+.sapMPanel>.sapMPanelHdr, .sapMPanelWrappingDiv, .sapMPanelWrappingDivTb {
+    border-bottom: 0px solid #cccccc;
+}
+
+.sapUiCompFilterBar {
+	border-bottom: 0px !important;
+}
+
+.sapUiTableCtrlEmptyMsg{
+	font-size: 14px;
+}
+
+:not(.sapMBtnDisabled) .sapMBtnBack>.sapMBtnIcon{
+	color: white !important;
+}
+
+.sapUiMedia-Std-Desktop .sapUxAPObjectPageHeaderContent{
+	padding-left : 10px !important;
+}
+
+/*
+ 사원프로파일 css
+*/
+.sapUxAPObjectPageLayout {
+    position: relative !important;
+}
+
+.sapUxAPObjectPageSectionTitle{
+	font-size: 1.1rem !important;
+}
+
+.sapUxAPObjectPageSubSectionHeaderTitle{
+	font-size : 0.875rem !important;
+	font-family: 'Malgun Gothic' !important;
+}
+
+.sapUxAPObjectPageSubSectionHeader{
+	padding : 1rem 0 0 0.5rem !important;
+}
+
+.sapUiRespGrid.sapUiRespGridHSpace1{
+	padding : 0px !important;
+}
+
+.sapMSplitContainerHideMode>.sapMSplitContainerDetail .sapUiResponsiveMargin, .sapUiResponsiveMargin{
+	margin : 0px !important;
+}
+
+.sapUxAPBlockContainerDesktop{
+	padding : 0px !important;
+}
+
+.sapUiSizeCompact .sapUxAPBlockContainerDesktop{	
+	padding : 0px !important;
+}
+
+/*
+ 사원프로파일 css
+*/

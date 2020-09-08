@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>로그오프</title>
+		
+		<script src="resources/sap-ui-cachebuster/sap-ui-core.js"
+				id="sap-ui-bootstrap"
+				data-sap-ui-libs="sap.m, sap.ui.commons, sap.ui.ux3, sap.ui.layout, sap.ui.table, sap.suite.ui.commons, sap.ui.unified, sap.tnt, sap.uxap"
+				data-sap-ui-theme = "sap_belize_plus"
+				data-sap-ui-xx-bindingSyntax="complex"
+				data-sap-ui-preload="sync"
+				data-sap-ui-compatVersion="1.16"
+				data-sap-ui-appCacheBuster="./"></script>
+					
+		<script src="/sap/public/bc/ui2/logon/core.js"></script> 
+		<script src="/sap/public/bc/ui2/logon/cipher-core.js"></script>
+		<script src="/sap/public/bc/ui2/logon/enc-base64.js"></script>
+		<script src="/sap/public/bc/ui2/logon/enc-utf16.js"></script>
+		<script src="/sap/public/bc/ui2/logon/format-hex.js"></script>   
+		<script src="/sap/public/bc/ui2/logon/tripledes.js"></script>			
+
+	    <style>
+	    .LaunchpadBackground {
+				background-image: linear-gradient(to bottom,#2a4f67,#9ec5de);
+				background-repeat:no-repeat;
+				background-position:center;
+				background-size:cover
+			}
+		.L2PFontFamily {
+		 	font-family: 'Malgun Gothic' !important; 
+		    font-size: 20px !important;
+			font-weight : bold !important;
+			color: white !important;
+		}
+		.L2PFont15px {
+		 	font-family: 'Malgun Gothic' !important; 
+		    font-size: 15px !important;
+			font-weight : normal !important;
+			color: white !important;
+		}
+		.L2PToolbarNoBottomLine {
+			border-bottom: 0px solid #cccccc !important;
+		}
+				
+	    </style>			
+		<script>
+
+		var oMatrixLayout = new sap.ui.commons.layout.MatrixLayout({
+				columns : 3,
+				width : "100%",
+				widths : [,'400px',],
+			});
+		    
+			oRow = new sap.ui.commons.layout.MatrixLayoutRow({height : "100px"});
+			oCell = new sap.ui.commons.layout.MatrixLayoutCell({}); 
+			oRow.addCell(oCell);
+			oMatrixLayout.addRow(oRow);
+			
+			oRow = new sap.ui.commons.layout.MatrixLayoutRow({height : "50px"});
+			oCell = new sap.ui.commons.layout.MatrixLayoutCell({}); 
+			oRow.addCell(oCell);
+			
+			oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+				content : new sap.m.Image({
+					src : "/sap/bc/ui5_ui5/sap/zui5_hr_public/loginlogo.gif" ,
+				})
+			}); 
+			oRow.addCell(oCell);
+			oMatrixLayout.addRow(oRow);
+			
+			oRow = new sap.ui.commons.layout.MatrixLayoutRow({height : "50px"});
+			
+			oCell = new sap.ui.commons.layout.MatrixLayoutCell({}); 
+			oRow.addCell(oCell);
+			
+			oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+				colSpan : 2,
+				content : new sap.ui.commons.TextView({text : "안전하게 로그오프 하였습니다." }).addStyleClass("L2PFontFamily"),
+			}).addStyleClass(); 
+			oRow.addCell(oCell);
+			oMatrixLayout.addRow(oRow);
+			
+			oRow = new sap.ui.commons.layout.MatrixLayoutRow({height : "50px"});
+			oCell = new sap.ui.commons.layout.MatrixLayoutCell({}); 
+			oRow.addCell(oCell);
+			
+			oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+				vAlign : "Middle",
+				hAlign : "End",
+// 				content : new sap.m.Text({
+// 					text : "Close Page",
+// 				}).attachEvent("click",function(){
+// 					window.close();
+// 				})
+// 				content : new sap.m.Link({
+// 					text : "Close Page",
+// 					press : closeWindow,
+// 				}).addStyleClass("L2PFont15px")
+			}); 
+			oRow.addCell(oCell);
+			oMatrixLayout.addRow(oRow);
+			
+			oRow = new sap.ui.commons.layout.MatrixLayoutRow({});
+			oCell = new sap.ui.commons.layout.MatrixLayoutCell({}); 
+			oRow.addCell(oCell);
+			oMatrixLayout.addRow(oRow);
+			
+			oMatrixLayout.placeAt("content");
+			oMatrixLayout.addStyleClass("sapUiSizeCompact");
+			
+			$( window ).ready(function() {
+				onResize();
+			});
+			
+			$( window ).resize(function() {
+				onResize();
+			});
+			
+			function onResize(){
+				
+				oMatrixLayout.setHeight(window.innerHeight + "px");
+			}
+			
+			function closeWindow(){
+		    	window.close();
+		    };
+		</script>
+	</head>
+	<body class="sapUiBody" role="application">
+		<div id="content" class="LaunchpadBackground">
+<!-- 			<div class="btnset partition"  style="font-family: Arial !important;"> -->
+<!-- 			<a href="javascript:window.close();" class="type_btn">Close page</a> -->
+<!-- 			</div> -->
+		</div>
+	</body>
+</html>

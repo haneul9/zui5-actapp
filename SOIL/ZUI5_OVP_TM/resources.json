@@ -1,0 +1,48 @@
+{
+    "resources": [
+        {
+            "name": "manifest.json.bak"
+        },
+        {
+            "name": "i18n/i18n.properties",
+            "raw": "i18n/i18n.properties"
+        },
+        {
+            "name": "ext/readme.txt"
+        },
+        {
+            "name": "xs-app.json"
+        },
+        {
+            "name": "manifest.json"
+        },
+        {
+            "name": "Component.js"
+        },
+        {
+            "name": "img/readme.txt"
+        },
+        {
+            "name": "localService/mockserver.js"
+        },
+        {
+            "name": "localService/metadata.xml"
+        },
+        {
+            "name": "localService/ZHR_OVERIVEW_SRV/annotation1.xml"
+        },
+        {
+            "name": "localService/ZHR_OVERIVEW_SRV/annotation0.xml"
+        },
+        {
+            "name": "localService/ZHR_OVERIVEW_SRV/metadata.xml"
+        },
+        {
+            "name": "Component-preload.js",
+            "merged": true
+        },
+        {
+            "name": "neo-app.json"
+        }
+    ]
+}

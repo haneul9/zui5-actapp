@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>통합주소검색</title>
+		
+		<script src="resources/sap-ui-cachebuster/sap-ui-core.js"
+				id="sap-ui-bootstrap"
+				data-sap-ui-libs="sap.m,sap.ui.commons,sap.ui.core, sap.suite.ui.commons,sap.ui.ux3, 
+								  sap.ui.unified, sap.ui.layout, sap.ui.comp, sap.ca.ui, sap.ui.table"
+				data-sap-ui-xx-bindingSyntax="complex"
+				data-sap-ui-theme=	"sap_bluecrystal"
+				data-sap-ui-appCacheBuster="./">
+		</script>
+
+		<div id="wrap" style="display:none;border:1px solid;width:500px;height:300px;margin:5px 0;position:relative">
+		</div>
+		<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+		<script>
+			var sServiceURL1 = "/sap/opu/odata/sap/ZHR_COMMON_SRV/";
+	        var oModel = new sap.ui.model.odata.ODataModel(sServiceURL1, true);
+	        
+			var getUrlParameter = function getUrlParameter(sParam) {
+			    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+			        sURLVariables = sPageURL.split('&'),
+			        sParameterName,
+			        i;
+	
+			    for (i = 0; i < sURLVariables.length; i++) {
+			        sParameterName = sURLVariables[i].split('=');
+	
+			        if (sParameterName[0] === sParam) {
+			            return sParameterName[1] === undefined ? true : sParameterName[1];
+			        }
+			    }
+			};
+		   var sServiceURL1 = "/sap/opu/odata/sap/ZHR_COMMON_SRV/";
+           var oModel = new sap.ui.model.odata.ODataModel(sServiceURL1, true);
+	        // 우편번호 찾기 화면을 넣을 element
+		   var element_wrap = document.getElementById('wrap');
+		   element_wrap.style.display = 'block';
+	       var currentScroll = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
+	        
+		   new daum.Postcode({
+			   		autoClose : false ,
+			   		oncomplete: function(data) {
+		                // 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+		
+		                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+		                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+		                var fullAddr = data.address; // 최종 주소 변수
+		                var extraAddr = ''; // 조합형 주소 변수
+		
+		                // 기본 주소가 도로명 타입일때 조합한다.
+		                if(data.addressType === 'R'){
+		                    //법정동명이 있을 경우 추가한다.
+		                    if(data.bname !== ''){
+		                        extraAddr += data.bname;
+		                    }
+		                    // 건물명이 있을 경우 추가한다.
+		                    if(data.buildingName !== ''){
+		                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+		                    }
+		                    // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
+		                    fullAddr += (extraAddr !== '' ? ' ('+ extraAddr +')' : '');
+		                }else{
+		                	// 지번 일 경우에는 지번 주소
+		                	fullAddr = jibunAddress ;
+		                }
+			
+		                var addressData = {};
+		                addressData.Pstlz = data.zonecode;
+		                addressData.Bezei = data.sido ;
+		                addressData.ZZADDR1_KR = fullAddr ;
+
+		    			try {
+		    				oModel.create("/PostcodeSet", 
+		    						addressData, 
+		    						null, 
+		    						false, 
+		    						function (oData, response) {
+										console.log("Success : PostcodeSet!");
+								    },
+								    function (oError) {
+								    }
+		    				);
+		    			} catch(ex) {
+		    				common.Common.log(ex);
+		    			}
+		    			
+		    			
+		    			
+		            },
+		            onresize : function(size) {
+		                element_wrap.style.height = size.height+'px';
+		            },
+		            width : '100%',
+		            height : '100%'
+		        }).embed(element_wrap);
+		   
+		</script>
+	</head>
+	<body>
+	</body>
+</html>

@@ -1,0 +1,102 @@
+<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+	<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx"
+		Uri="https://kyjwebide-p1942068723trial.dispatcher.hanatrial.ondemand.com/destinations/kyj/sap/opu/odata/sap/ZHR_OVERIVEW_SRV/$metadata">
+		<edmx:Include xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Namespace="ZHR_OVERIVEW_SRV"/>
+	</edmx:Reference>
+	<edmx:Reference Uri="http://docs.oasis-open.org/odata/odata-data-aggregation-ext/v4.0/cs02/vocabularies/Org.OData.Aggregation.V1.xml">
+		<edmx:Include Alias="Aggregation" Namespace="Org.OData.Aggregation.V1"/>
+	</edmx:Reference>
+	<edmx:Reference Uri="http://docs.oasis-open.org/odata/odata/v4.0/errata03/os/complete/vocabularies/Org.OData.Capabilities.V1.xml">
+		<edmx:Include Alias="Capabilities" Namespace="Org.OData.Capabilities.V1"/>
+	</edmx:Reference>
+	<edmx:Reference Uri="https://wiki.scn.sap.com/wiki/download/attachments/448470974/Common.xml?api=v2">
+		<edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+	</edmx:Reference>
+	<edmx:Reference Uri="https://wiki.scn.sap.com/wiki/download/attachments/448470971/Communication.xml?api=v2">
+		<edmx:Include Alias="vCard" Namespace="com.sap.vocabularies.Communication.v1"/>
+	</edmx:Reference>
+	<edmx:Reference Uri="http://docs.oasis-open.org/odata/odata/v4.0/errata03/os/complete/vocabularies/Org.OData.Core.V1.xml">
+		<edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+	</edmx:Reference>
+	<edmx:Reference Uri="http://docs.oasis-open.org/odata/odata/v4.0/errata03/os/complete/vocabularies/Org.OData.Measures.V1.xml">
+		<edmx:Include Alias="CQP" Namespace="Org.OData.Measures.V1"/>
+	</edmx:Reference>
+	<edmx:Reference Uri="https://wiki.scn.sap.com/wiki/download/attachments/448470968/UI.xml?api=v2">
+		<edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+	</edmx:Reference>
+	<edmx:DataServices>
+		<Schema xmlns="http://docs.oasis-open.org/odata/ns/edm">
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="ZHR_OVERIVEW_SRV.TimeConf">
+				<Annotation Qualifier="Card00" Term="UI.LineItem">
+					<Collection>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="Title"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="Subttl"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="Count"/>
+						</Record>
+					</Collection>
+				</Annotation>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="ZHR_OVERIVEW_SRV.HeaderTimeConf">
+				<Annotation Term="UI.DataPoint" Qualifier="Count">
+					<Record>
+						<PropertyValue Property="Value" Path="Count"/>
+						<PropertyValue Property="Title" String="{@i18n&gt;_}"/>
+					</Record>
+				</Annotation>
+				<Annotation Term="UI.Chart" Qualifier="donut">
+					<Record Type="UI.ChartDefinitionType">
+						<PropertyValue Property="ChartType" EnumMember="UI.ChartType/Donut"/>
+						<PropertyValue Property="Dimensions">
+							<Collection>
+								<PropertyPath>Count</PropertyPath>
+							</Collection>
+						</PropertyValue>
+						<PropertyValue Property="DimensionAttributes">
+							<Collection>
+								<Record Type="UI.ChartDimensionAttributeType">
+									<PropertyValue Property="Dimension" PropertyPath="Cnttext"/>
+									<PropertyValue Property="Role" EnumMember="UI.ChartDimensionRoleType/Category"/>
+								</Record>
+							</Collection>
+						</PropertyValue>
+						<PropertyValue Property="Measures">
+							<Collection/>
+						</PropertyValue>
+						<PropertyValue Property="MeasureAttributes">
+							<Collection>
+								<Record Type="UI.ChartMeasureAttributeType">
+									<PropertyValue Property="Measure" PropertyPath="Count"/>
+									<PropertyValue Property="Role" EnumMember="UI.ChartMeasureRoleType/Axis1"/>
+									<PropertyValue Property="DataPoint" AnnotationPath="@UI.DataPoint#Count"/>
+								</Record>
+							</Collection>
+						</PropertyValue>
+						<PropertyValue Property="Actions"/>
+					</Record>
+				</Annotation>
+				<Annotation Term="UI.PresentationVariant" Qualifier="donut">
+					<Record>
+						<PropertyValue Property="SortOrder">
+							<Collection/>
+						</PropertyValue>
+						<PropertyValue Property="Visualizations">
+							<Collection>
+								<AnnotationPath>@UI.DataPoint#Count</AnnotationPath>
+								<AnnotationPath>@UI.Chart#donut</AnnotationPath>
+							</Collection>
+						</PropertyValue>
+						<PropertyValue Property="GroupBy"/>
+						<PropertyValue Property="TotalBy"/>
+						<PropertyValue Property="Total"/>
+						<PropertyValue Property="RequestAtLeast"/>
+					</Record>
+				</Annotation>
+			</Annotations>
+		</Schema>
+	</edmx:DataServices>
+</edmx:Edmx>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2012 SAP AG, All Rights Reserved -->
+<chip xmlns="http://schemas.sap.com/sapui2/services/Chip/1">
+  <implementation>
+    <sapui5>
+<!--       <basePath>../../</basePath> -->
+<!--        <basePath>../zsampletiles/</basePath> -->
+<!--       <viewName>sap.ushell.components.tiles.taskmonitoring.TaskMonitoringTile.view.js</viewName> -->
+ 		<viewName>zhr_mss_tile.DynamicTile.view.js</viewName>
+    </sapui5>
+  </implementation>
+  <appearance>
+    <title> mss용 Dynamic Tile</title>
+  </appearance>
+     <contracts>
+    <consume id="configuration">
+      <parameters>
+        <parameter name="service">/sap/opu/odata/IWPGW/TASKPROCESSING/</parameter>
+        <parameter name="chipType">TasksByPriority</parameter>
+        <parameter name="maxBubbleCount">8</parameter>
+        <parameter name="minBubbleCount">1</parameter>
+        <parameter name="tileConfiguration"></parameter>
+        <parameter name="sap.ui2.launchpage.support">true</parameter>
+        <parameter name="isSufficient"/>
+		<parameter name="timeStamp"/>
+		<parameter name="cacheTimeStamp"/>
+        <parameter name="row">1</parameter>
+		<parameter name="col">1</parameter>
+      </parameters>
+    </consume>
+    <consume id="writeConfiguration">
+	    <parameters>
+			<parameter name="tileConfiguation"/>
+			<parameter name="cacheTimeStamp"/>
+		</parameters>
+	</consume>
+    <consume id="bag" />
+    <consume id="navigation" />
+    <consume id="configurationUi" />
+    <consume id="preview" />
+<!--     <consume id="refresh" /> -->
+    <consume id="search" />
+    <consume id="actions"/>
+    <consume id="visible"> true</consume>
+    <consume id="url"/>
+    <consume id="types">
+		<parameters>
+			<parameter name="supportedTypes">tile,link</parameter>
+		</parameters>
+	</consume>
+    
+  </contracts>
+<!--   <parameters> -->
+<!--     <parameter name="/UI2/ChipType">applauncher</parameter> -->
+<!--   </parameters> -->
+</chip>

@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta http-equiv='Content-Type' content='text/html;charset=UTF-8'/>
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+        <meta http-equiv="Pragma" content="no-cache" />
+        <meta http-equiv="Expires" content="0" />
+		<link rel="icon" href="/sap/bc/ui5_ui5/sap/zui5_hr_common/images/logo.png">
+        <title>화상 조직도</title>
+
+ 		<script type="text/javascript" src="/sap/bc/ui5_ui5/sap/ZUI5_HR_ESSAPP/ZUI5_HR_Atworg/d3.v3.min.js"></script>
+		<script src="resources/sap-ui-cachebuster/sap-ui-core.js"
+				id="sap-ui-bootstrap"
+				data-sap-ui-libs="sap.m, sap.ui.commons, sap.ui.ux3, sap.ui.layout, sap.ui.table, sap.suite.ui.commons, sap.ui.unified"
+				data-sap-ui-theme="sap_belize"
+				data-sap-ui-xx-bindingSyntax="complex"
+				data-sap-ui-appCacheBuster="./"></script>
+
+		<script>
+				sap.ui.core.AppCacheBuster.register("/sap/bc/ui5_ui5/sap/ZUI5_HR_HCOMMON/");
+				sap.ui.core.AppCacheBuster.register("/sap/bc/ui5_ui5/sap/ZUI5_HR_COMMON/");
+				sap.ui.localResources("ZUI5_HR_Atworg");
+				jQuery.sap.registerModulePath("util", "/sap/bc/ui5_ui5/sap/ZUI5_HR_HCOMMON/util");
+				jQuery.sap.registerModulePath("control", "/sap/bc/ui5_ui5/sap/ZUI5_HR_HCOMMON/control");
+				jQuery.sap.registerModulePath("common", "/sap/bc/ui5_ui5/sap/ZUI5_HR_COMMON/common");
+				jQuery.sap.registerModulePath("fragment", "/sap/bc/ui5_ui5/sap/ZUI5_HR_HCOMMON/fragment");
+				
+				jQuery.sap.includeStyleSheet("/sap/bc/ui5_ui5/sap/ZUI5_HR_ESSAPP/ZUI5_HR_Atworg/Org.css");
+				jQuery.sap.includeStyleSheet("/sap/bc/ui5_ui5/sap/ZUI5_HR_COMMON/css/L2PSAP.css");
+				jQuery.sap.includeStyleSheet("/sap/bc/ui5_ui5/sap/ZUI5_HR_COMMON/css/L2PBasic.css");
+				jQuery.sap.includeStyleSheet("/sap/bc/ui5_ui5/sap/ZUI5_HR_HCOMMON/css/L2PCard.css");
+				jQuery.sap.includeStyleSheet("/sap/bc/ui5_ui5/sap/ZUI5_HR_HCOMMON/css/L2P2SAP1.css");
+				jQuery.sap.includeStyleSheet("/sap/bc/ui5_ui5/sap/ZUI5_HR_HCOMMON/css/L2PBasic2.css");	
+				
+				$( window ).resize(function() {
+					sap.ui.getCore().getEventBus().publish("app", "ResizeWindow", {
+						windowHeight : window.innerHeight
+					});	
+				});
+				
+				$( window ).ready(function() {
+					sap.ui.getCore().getEventBus().publish("app", "OpenWindow", {
+						windowHeight : window.innerHeight
+					});	
+				});
+				
+				var _gAuth = ""; // 권한 
+				_gAuth = jQuery.sap.getUriParameters().get("_gAuth");
+				if(!_gAuth ||_gAuth == "" ) _gAuth = "E";
+
+				var _gLangu = "";
+				_gLangu = jQuery.sap.getUriParameters().get("_gLangu") || "3";
+				
+				var surfix = "?" + new Date().getTime();
+ 				var oBundleText = jQuery.sap.resources({
+					url : "/sap/bc/ui5_ui5/sap/ZUI5_HR_COMMON/translation/i18n.properties"  + surfix, //번역파일 주소
+					locale : _gLangu == "E" ? "EN" : "KO"
+				});
+				
+			    var oview = sap.ui.jsview("app", "ZUI5_HR_Atworg.AppMain")
+			    oview.placeAt("content");
+		</script>
+
+	</head>
+	<body class="sapUiBody" role="application">
+		<div id="content"></div>
+		<iframe id="iWorker" name="iWorker"  height="100" width="100" style="display:none"></iframe>
+	</body>
+</html>

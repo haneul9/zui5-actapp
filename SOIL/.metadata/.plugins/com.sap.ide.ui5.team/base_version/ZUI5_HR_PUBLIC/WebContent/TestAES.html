@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<script type="text/javascript" src="/sap/bc/ui5_ui5/sap/zui5_hr_tile/zhr_status/plugin/aes.js"></script>
+<script>
+    function encryptByAES() {
+    	var oIdElement = document.getElementById("AesUserid");
+    	var vUserid = document.getElementById("Userid").value;
+    	var vKey = document.getElementById("Key").value;
+    	
+    	oIdElement.value = "";
+    	document.getElementById("DecUserid").value = "";
+    	oIdElement.value = CryptoJS.AES.encrypt(vUserid, vKey);
+    	
+    	var decrypted = CryptoJS.AES.decrypt(oIdElement.value, vKey);
+    	document.getElementById("DecUserid").value = decrypted.toString(CryptoJS.enc.Utf8);
+    	
+    	//var vUrl = "http://misdev.lsnikko.com:8000/eis/mb/index.htm?tp=hr&AesUserid=" + oIdElement.value;
+		//window.open(vUrl, '_blank');
+		
+		document.getElementById("j_empno").value = oIdElement.value;
+		document.form.submit();
+    }
+</script> 
+</head>
+<body>
+UserID : <input id="Userid" name="UserId" type="text" value="B0031"><br>
+Key : <input id="Key" name="Key" type="text" value="WeLS0732!@#" readonly>
+<hr>
+변환 User ID : <input id="AesUserid" name="AesUserid" type="text" value="" size="100" readonly><br>
+복호화 User ID : <input id="DecUserid" name="DecUserid" type="text" value="" size="100" readonly>
+<hr>
+<input type="button" onClick="javascript:encryptByAES()" value="테스트">
+<form name="form" id="form" action="http://misdev.lsnikko.com:8000/eis/mb/index.htm" target="_blank" method="get">
+<input  type="hidden" id="j_empno" name="j_empno" value="">
+<input type="hidden" id="tp" name="tp" value="hr">
+</form>
+</body>
+</html>

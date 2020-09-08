@@ -1,0 +1,383 @@
+@charset "utf-8";
+/*
+------------------------------------------------------------
+Project Name: L2P CO., LTD
+file name: L2PSAP.css
+Author: Yeonjun.kang
+date: 2016.06.23 
+SAP CSS overriding
+------------------------------------------------------------*/
+
+/*
+테이블 내 텍스트 아웃라인 제거
+*/
+td > div > span {outline : none;}
+
+/*
+Header 상단 Line
+*/
+.sapMShellBrandingBar{
+	background-color : #ffffff !important;
+	height : 0px !important;
+}
+
+/*
+IconTabbar 안에 속한 Contents padding
+*/
+.sapMITBContent{
+	padding : 0px !important;
+}
+/*
+Default Button
+*/
+
+.sapMBtnDefault{
+	font-size: 13px !important;
+	font-family: 'Noto Sans KR', sans-serif !important;
+	color: #ffffff !important;
+	background-color : #005f28 ;
+	border-color: #005f28;
+	height : 26px !important;
+	text-shadow : none !important;
+}
+
+.sapMBtn:hover>.sapMBtnHoverable {
+    background-image: none;
+    background-color: #005f28;
+    border-color: #005f28;
+}
+
+/*
+	Emphasized Button
+*/
+.sapMBtnInner.sapMBtnEmphasized{
+	background-color : #ffb400 !important;
+	border-color : #ffb400 !important;
+	color : #000000 !important;
+	font-weight : bold;
+	text-shadow : none !important;
+}
+
+/*
+	Ghost Button
+*/
+.sapUiSizeCompact .sapMBtnGhost{
+	font-size: 13px !important;
+	font-family: 'Noto Sans KR', sans-serif !important;
+	color: #ffffff !important;
+	background-color : #777777 ;
+	border-color: #777777;
+/* 	height : 26px !important; */
+	text-shadow : none !important;
+}
+
+.sapMBtn:hover>.sapMBtnGhost.sapMBtnHoverable{
+	background-color : #777777 ;
+	border-color: #777777;
+}
+/*
+	Button Icon
+*/
+:not(.sapMBtnDisabled)>span.sapMBtnInner.sapMBtnEmphasized>.sapMBtnIcon{
+	color : #000000 !important;
+	font-weight : bold;
+}
+/*
+	Text Area Padding
+*/
+.sapUiSizeCompact .sapMInputBase.sapMTextArea .sapMTextAreaInner{
+	padding : 10px 10px !important;
+}
+/*
+	Text Area Font
+*/
+.sapMInputBaseInner{
+	font-size: 14px !important;
+	font-family: 'Noto Sans KR', sans-serif !important;
+	color: #666666 !important;
+}
+/*
+	Panel Content Padding 삭제
+*/
+.sapMPanelContent{
+	padding-top : 0px !important;
+	padding-right : 0px !important;
+	padding-bottom : 5px !important;
+	padding-left : 0px !important;
+}
+
+.sapUiMltPadRight{
+	padding : 0px !important;
+}
+
+.sapMITBContent{
+	border-bottom : 0px solid #e5e5e5 !important;
+}
+
+.sapMPanelContent:not(.sapMPanelBGTransparent){
+	border-bottom: 0px solid #e5e5e5 !important;
+}
+
+/*
+	UI.TABLE 관련 
+*/
+.sapUiTableRowHighlights .sapUiTableColRowHdr {
+    border-right: 0px !important;
+}
+
+.sapContrast.sapTntSideNavigation, .sapContrast .sapTntSideNavigation {
+	border-right : 1px solid #e9e9e9 !important;
+}
+
+.sapUiCb>label{
+	background-position : left 4px !important;
+	padding-top :0px !important;
+	padding-bottom :0px !important;
+}
+
+.sapUiTableCtrlEmpty{
+	font-size: 14px !important;
+	font-family: 'Noto Sans KR', sans-serif !important;
+	color: #666666 !important;
+}
+
+.sapUiTableColCell{
+	padding-left : 0px !important;
+	padding-right : 0px !important;
+}
+
+/* 작성중 */
+.sapUiTableRowHighlight.sapUiTableRowHighlightNone{
+	background-color : #147dd9 !important;
+}
+/* 신청 */
+.sapUiTableRowHighlight.sapUiTableRowHighlightWarning{
+	background-color : #36c135 !important;
+}
+/* 진행중 */
+.sapUiTableRowHighlight.sapUiTableRowHighlightSuccess{
+	background-color : #28c2f1 !important;
+}
+/* 승인 */
+.sapUiTableRowHighlight.sapUiTableRowHighlightInformation{
+	background-color : #faa51f !important;
+}
+/* 반려 */
+.sapUiTableRowHighlight.sapUiTableRowHighlightError{
+	background-color : #e6362d !important;
+}
+/*
+	Header Padding
+*/
+.sapUiTableCol{
+	padding-top:0px !important;
+	padding-bottom :0px !important;
+}
+
+.sapMLabel{
+	font-size: 14px !important;
+	font-family: 'Noto Sans KR', sans-serif !important;
+	color: #333333 !important;
+	font-weight : bold !important;
+}
+
+/*
+	Table Top Border
+*/
+.sapUiTableCnt{
+	border-Top : 2px solid #333333 !important;
+}
+
+/*
+	Toolbar 
+*/
+.sapMTB-Transparent-CTX.sapMTB{
+	padding-left : 0px !important;
+}
+
+.sapMIBar.sapMTB .sapMBarChild{
+	margin-right : 0px !important;
+}
+
+.sapMIBar .sapMBarChild:first-child{
+	margin-left : 0px !important;
+} 
+
+/*
+ 필수 icon * padding
+*/
+.sapMLabelRequired:before{
+	padding-right : 5px;
+}
+
+/*
+ sap.m.Table
+*/
+.sapMLIB{
+	border-bottom : 0px solid #ffffff !important;
+}
+.sapMList {
+	border-Top: 2px solid #333333 !important;
+}
+
+.sapMListTblCell.cellBorderLeft{
+	border-left : 1px solid #e9e9e9;
+}
+
+.sapMListTblCell.cellBorderRight{
+	border-right : 1px solid #e9e9e9;
+}
+
+.sapMListShowSeparatorsAll .sapMLIBShowSeparator:last-child>td, .sapMListShowSeparatorsAll .sapMListTblSubRow:last-child>td{
+	border-bottom : 1px solid #e9e9e9 !important;
+}
+
+.sapMListTblHeader>.sapMTableTH{
+	border-top : 1px solid #e9e9e9;
+	border-bottom : 0px solid #e9e9e9 !important;
+	text-align : center !important;
+}
+
+.sapMTBStandard{
+	border-bottom : 0px solid #e9e9e9 !important;
+}
+
+/* .sapUiSizeCompact .sapMLIBSelectS, .sapUiSizeCompact .sapMLIBSelectM{ */
+/* 	border-left : 1px solid #e9e9e9 !important; */
+/* } */
+
+.sapMListTblHighlightCol + .sapMListTblHeaderCell, .sapMListTblHighlightCell + .sapMListTblCell{
+	padding-left : 10px !important;
+}
+
+.sapUiSizeCompact .sapMListTblNavCol, .sapUiSizeCompact .sapMListTblSelCol{
+	border-left : 1px solid #e9e9e9 !important;
+}
+
+.sapMListTblCell{
+	padding-top : 0px !important;
+	padding-bottom : 0px !important;
+}
+/*
+  Dialog Title
+*/
+.sapMTitle{
+	font-size: 16px !important;
+	font-family: 'Noto Sans KR', sans-serif !important;
+	color: #000000 !important;
+	font-weight : bold !important;
+}
+
+/*
+	sap.m.Link
+*/
+.sapContrast.sapMLnk:not(.sapMLnkDsbl), .sapContrast .sapMLnk:not(.sapMLnkDsbl){
+	text-shadow : none !important;
+}
+/*
+	sap.m.messagestrip
+*/
+
+.sapMMsgStrip{
+	padding-top : 2px !important;
+	padding-bottom : 2px !important;
+	padding-left : 10px !important;
+	padding-right : 10px !important;
+	font-size: 14px !important;
+	font-family: 'Noto Sans KR', sans-serif !important;
+	color: #000000 !important;
+ 	min-height : 20px !important; 
+/* 	height: 28px !important; */
+}
+
+.sapMMsgStripIcon {
+    top: -1px !important;
+}
+
+.sapMSelectListItem{
+	font-family: 'Noto Sans KR', sans-serif !important;
+}
+
+/* .sapMLabel{ */
+/* 	vertical-align : middle !important; */
+/* } */
+/*
+Dialog Button
+*/
+
+.sapMIBar.sapMFooter-CTX{
+	padding-right : 10px !important;
+	text-shadow : none !important;
+}
+
+.sapMIBar-CTX .sapMBtnInner, .sapMBar .sapMBtnInner, .sapMHeader-CTX .sapMBtnInner, .sapMFooter-CTX .sapMBtnInner{
+	background : #777777 !important;
+}
+
+.sapMBtnContent{
+	/* line-height : 24px !important; */
+	line-height : 1.5rem !important;
+}
+
+.sapMIBar-CTX .sapMTitle{
+	text-shadow : none !important;
+}
+
+.sapUiSizeCompact .sapMListTblCell.sapMListTblCellNoData{
+	border-right: 1px solid #e9e9e9;
+	border-left: 1px solid #e9e9e9;
+}
+
+.sapMText{
+	font-family: 'Noto Sans KR', sans-serif !important;
+}
+
+.sapMSlt>.sapMSltLabel{
+	font-size: 14px !important;
+	font-family: 'Noto Sans KR', sans-serif !important;
+	color: #666666 !important;
+}
+
+/*
+	Dialog 관련 CSS
+*/
+.html.sap-desktop .sapContrast .sapMIBar.sapMFooter-CTX, html.sap-desktop .sapContrast.sapMIBar.sapMFooter-CTX{
+	background-color : #ffffff !important;
+	border-top : 1px solid #e9e9e9 !important;
+}
+
+.sapUiSizeCompact .sapMBtnIcon{
+	color : #ffffff !important;
+}
+
+.sapUiSizeCompact .sapMBtnInner{
+	outline : none !important;
+}
+
+.sap-desktop .sapUiSizeCompact .sapTntToolPageAsideCollapsed .sapTntToolPageAside, .sap-tablet .sapUiSizeCompact .sapTntToolPageAsideCollapsed .sapTntToolPageAside{
+		width : 0px;
+}
+
+.sapMDialog:not(.sapMDialogWithSubHeader)>header>.sapMIBar, .sapMDialog>header:last-of-type .sapMIBar {
+	box-shadow : inset 0 -2px #333333;
+}
+
+.sapUiPopupWithPadding .sapMDialogScrollCont {
+	padding : 20px;
+}
+
+.sapMIBar.sapMTB .sapMBarChild{
+	outline : none !important;
+}
+
+.sapUiIconPointer{
+	outline : none !important;
+}
+
+.sapMCbRo .sapMCbBg {background-color : #dadada;}
+
+.sapUiUfdSpltContH .sapUiUfdSpltContPane{
+	border-right : 1px solid #cccccc !important;
+}
+
+.sapMFocus .sapMInputBaseContentWrapper::before {border : 0px;}

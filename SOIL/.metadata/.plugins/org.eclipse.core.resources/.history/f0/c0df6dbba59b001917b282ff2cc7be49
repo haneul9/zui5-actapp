@@ -1,0 +1,574 @@
+sap.ui.jsfragment("ZUI5_HR_EmTransport.fragment.EmTransportPage02", {
+	
+	createContent : function(oController) {
+		var oRow, oCell;
+		var oApplyInfoMatrix = new sap.ui.commons.layout.MatrixLayout({
+			columns : 4,
+			widths : ['20%','30%','20%','30%']
+		});
+		
+		var oVal1 = new sap.m.ComboBox({
+			value : "{Useyr}",
+			editable : {
+				parts : [{path : "ZappStatAl"}, {path : "Pernr"}],
+				formatter : function(fVal1, fVal2){
+					if((fVal1 == "" || fVal1 == "10") && fVal2) return true;
+					else return false;
+				}
+			},
+		}).addStyleClass("L2PFontFamily"),
+		
+		oVal2 = new sap.m.ComboBox({
+			value : "{Useyr}",
+			editable : {
+				parts : [{path : "ZappStatAl"}, {path : "Pernr"}],
+				formatter : function(fVal1, fVal2){
+					if((fVal1 == "" || fVal1 == "10") && fVal2) return true;
+					else return false;
+				}
+			},
+		}).addStyleClass("L2PFontFamily");
+		
+		
+		oRow = new sap.ui.commons.layout.MatrixLayoutRow({
+			height : "40px",
+			cells : [
+				new sap.ui.commons.layout.MatrixLayoutCell({
+					content : new sap.m.Label({
+						text : "근무형태", 
+						required : true
+					}).addStyleClass("L2PFontFamily")
+				}).addStyleClass("L2PMatrixLabel"),
+				new sap.ui.commons.layout.MatrixLayoutCell({
+					content : new sap.m.Toolbar({
+						content : [
+							oVal1
+					]}).addStyleClass("L2PToolbarNoBottomLine"),
+				}).addStyleClass("L2PMatrixData"),
+				new sap.ui.commons.layout.MatrixLayoutCell({
+					content : new sap.m.Label({
+						text : "근무시간", 
+						required : true
+					}).addStyleClass("L2PFontFamily")
+				}).addStyleClass("L2PMatrixLabel"),
+				new sap.ui.commons.layout.MatrixLayoutCell({
+					content : new sap.m.Toolbar({
+						content : [
+							oVal2
+					]}).addStyleClass("L2PToolbarNoBottomLine"),
+				}).addStyleClass("L2PMatrixData"),
+			]
+		});
+		oApplyInfoMatrix.addRow(oRow);
+		
+		var oVal3 = new sap.m.ComboBox({
+			value : "{Useyr}",
+			editable : {
+				parts : [{path : "ZappStatAl"}, {path : "Pernr"}],
+				formatter : function(fVal1, fVal2){
+					if((fVal1 == "" || fVal1 == "10") && fVal2) return true;
+					else return false;
+				}
+			},
+		}).addStyleClass("L2PFontFamily");
+		
+		oRow = new sap.ui.commons.layout.MatrixLayoutRow({
+			height : "40px",
+			cells : [
+				new sap.ui.commons.layout.MatrixLayoutCell({
+					content : new sap.m.Label({
+						text : "예산구분", 
+						required : true
+					}).addStyleClass("L2PFontFamily")
+				}).addStyleClass("L2PMatrixLabel"),
+				new sap.ui.commons.layout.MatrixLayoutCell({
+					content : new sap.m.Toolbar({
+						content : [
+							oVal3
+					]}).addStyleClass("L2PToolbarNoBottomLine"),
+				}).addStyleClass("L2PMatrixData"),
+				new sap.ui.commons.layout.MatrixLayoutCell({
+					content : new sap.m.Label({
+						text : "근무시간", 
+						required : true
+					}).addStyleClass("L2PFontFamily")
+				}).addStyleClass("L2PMatrixLabel"),
+				new sap.ui.commons.layout.MatrixLayoutCell({
+					content : new sap.m.Toolbar({
+						content : [
+							new sap.m.Input({
+							    value : "{Takper}",
+							    editable : {
+									parts : [{path : "ZappStatAl"}, {path : "Pernr"}],
+									formatter : function(fVal1, fVal2){
+										if((fVal1 == "" || fVal1 == "10") && fVal2) return true;
+										else return false;
+									}
+								},
+								maxLength : common.Common.getODataPropertyLength("ZHR_LEAVEAPPL_SRV", "YearLeaveList", "Takper"),
+								width : "95%"
+							}).addStyleClass("L2PFontFamily"),
+					]}).addStyleClass("L2PToolbarNoBottomLine"),
+				}).addStyleClass("L2PMatrixData"),
+			]
+		});
+		oApplyInfoMatrix.addRow(oRow);
+		
+		oRow = new sap.ui.commons.layout.MatrixLayoutRow({
+			height : "40px",
+			cells : [
+				new sap.ui.commons.layout.MatrixLayoutCell({
+					content : new sap.m.Label({
+						text : "집중휴가"
+					}).addStyleClass("L2PFontFamily")
+				}).addStyleClass("L2PMatrixLabel"),
+				
+				new sap.ui.commons.layout.MatrixLayoutCell({
+					content : new sap.m.Toolbar({
+						content : [ new sap.m.DatePicker({
+							valueFormat : "yyyy-MM-dd",
+				            displayFormat : "yyyy.MM.dd",
+				            value : "{Vcbeg}",
+				            width : "150px",
+							editable : {
+								parts : [{path : "ZappStatAl"}, {path : "Pernr"},{path :"IvCheck"}],
+								formatter : function(fVal1, fVal2, fVal3){
+									if((fVal1 == "" || fVal1 == "10") && fVal2 && fVal3 == false) return true;
+									else return false;
+								}
+							},
+					   }).addStyleClass("L2PFontFamily"),
+					   new sap.m.Text({text : "~"}).addStyleClass("L2PFontFamily L2PPaddingLeft10 L2PPaddingRight10 L2PMarginTop5"),
+					   new sap.m.DatePicker({
+							valueFormat : "yyyy-MM-dd",
+				            displayFormat : "yyyy.MM.dd",
+				            value : "{Vcend}",
+							width : "150px",
+							editable : {
+								parts : [{path : "ZappStatAl"}, {path : "Pernr"},{path :"IvCheck"}],
+								formatter : function(fVal1, fVal2, fVal3){
+									if((fVal1 == "" || fVal1 == "10") && fVal2 && fVal3 == false) return true;
+									else return false;
+								}
+							},
+					   }).addStyleClass("L2PFontFamily"),
+					   new sap.m.ToolbarSpacer({ width : "4px"}),
+					   new sap.m.Button({
+						   text : "기간 적용",
+						   icon : "sap-icon://date-time",
+						   press : oController.onSetIntensiveVacation,
+						   enabled : {
+							   parts :[{path :"Vcbeg"},{path :"Vcend"},{path :"IvCheck"},{path : "ZappStatAl"}, {path : "Pernr"}],
+							   formatter : function(fVal1, fVal2, fVal3, fVal4, fVal5){
+								   if(fVal4 != "" && fVal4 != "10") return false;
+								   else if(!fVal5 || fVal5 == "") return false;
+								   
+								   if(fVal1 && fVal1 != "" && fVal2 && fVal2 != "" && fVal3 == false) return true ;
+								   else return false;
+							   }
+						   }
+					   }),
+					   new sap.m.ToolbarSpacer({ width : "4px"}),
+					   new sap.m.Button({
+						   text : "기간 취소",
+						   icon : "sap-icon://undo",
+						   press : oController.onDelIntensiveVacation,
+						   enabled : {
+							   parts :[{path :"Vcbeg"},{path :"Vcend"},{path :"IvCheck"},{path : "ZappStatAl"}, {path : "Pernr"}],
+							   formatter : function(fVal1, fVal2, fVal3, fVal4, fVal5){
+								   if(fVal4 != "" && fVal4 != "10") return false;
+								   else if(!fVal5 || fVal5 == "") return false;
+								   
+								   if(fVal1 && fVal1 != "" && fVal2 && fVal2 != "" && fVal3 == true) return true ;
+								   else return false;
+							   }
+						   }
+					   }),
+					   new sap.m.ToolbarSpacer({ width : "4px"}),
+					   new sap.m.Button({
+						   text : "위임지정",
+						   enabled : {
+							   parts :[{path :"Vcbeg"},{path :"Vcend"},{path :"IvCheck"},{path : "ZappStatAl"}, {path : "Pernr"}],
+							   formatter : function(fVal1, fVal2, fVal3, fVal4, fVal5){
+								   if(fVal4 != "" && fVal4 != "10") return false;
+								   else if(!fVal5 || fVal5 == "") return false;
+								   
+								   if(fVal1 && fVal1 != "" && fVal2 && fVal2 != "" && fVal3 == true) return true ;
+								   else return false;
+							   }
+						   }
+					   }),
+					   
+					]}).addStyleClass("L2PToolbarNoBottomLine"),
+					colSpan : 3	
+				}).addStyleClass("L2PMatrixData"),
+				
+			]
+		});
+		oApplyInfoMatrix.addRow(oRow);
+		
+		oRow = new sap.ui.commons.layout.MatrixLayoutRow({
+			height : "40px",
+			cells : [
+				new sap.ui.commons.layout.MatrixLayoutCell({
+					content : new sap.m.Label({
+						text : "집중휴가중 직무인수인"
+					}).addStyleClass("L2PFontFamily")
+				}).addStyleClass("L2PMatrixLabel"),
+				
+				new sap.ui.commons.layout.MatrixLayoutCell({
+					content : new sap.m.Toolbar({
+						content : [new sap.m.Input({
+						    value : "{Takper}",
+						    editable : {
+								parts : [{path : "ZappStatAl"}, {path : "Pernr"}],
+								formatter : function(fVal1, fVal2){
+									if((fVal1 == "" || fVal1 == "10") && fVal2) return true;
+									else return false;
+								}
+							},
+							maxLength : common.Common.getODataPropertyLength("ZHR_LEAVEAPPL_SRV", "YearLeaveList", "Takper"),
+							width : "95%"
+						}).addStyleClass("L2PFontFamily"),
+					]}).addStyleClass("L2PToolbarNoBottomLine"),
+					colSpan : 3	
+				}).addStyleClass("L2PMatrixData"),
+				
+			]
+		});
+		oApplyInfoMatrix.addRow(oRow);
+		
+		var oApplyInfoPanel = new sap.m.Panel({
+			expandable : false,
+			expanded : false,
+			content : [
+				new sap.m.Toolbar({
+					design : sap.m.ToolbarDesign.Auto,
+					height : "40px",
+					content : [new sap.ui.core.Icon({
+						src: "sap-icon://open-command-field", 
+						size : "1.0rem"
+					}),
+					new sap.m.ToolbarSpacer({width: "5px"}),
+					new sap.m.Text({text : "예외근무 신청"}).addStyleClass("L2PFontFamilyBold"),
+				]}).addStyleClass("L2PToolbarNoBottomLine"),
+				oApplyInfoMatrix
+			]
+		});
+		
+		var oModel = sap.ui.getCore().getModel("ZHR_LEAVEAPPL_SRV");
+		// 휴가 combo
+		var oAptyp = new sap.m.ComboBox({ 
+			selectedKey : "{Awart}",
+			enabled : { 
+				parts : [{path : "Conchk"},{path : "ZappStatAl"},{path : "Pernr"}],
+				formatter : function(fVal1, fVal2, fVal3){
+					 if(!fVal3 || fVal3 == "") return false ;
+					 else if(fVal2 != "" && fVal2 != "10") return false; 
+					 else if(fVal1 && fVal1 == true) return false ;
+					 else return true;
+				 }
+			},
+			customData : [
+				new sap.ui.core.CustomData({key : "Idx", value : "{Idx}"}),
+			],
+			change : oController.onChangeAptyp
+		}).addStyleClass("L2PFontFamily");
+		
+		oController._Aptyp = [];
+		oModel.read("/AptypCodeListSet", {
+			async: false,
+			filters : [
+				new sap.ui.model.Filter('ZreqForm', sap.ui.model.FilterOperator.EQ, oController._vZworktyp),
+			],
+			success: function(data,res){
+				if(data && data.results.length) {
+					for(var i=0; i<data.results.length; i++) {
+						oAptyp.addItem(
+							new sap.ui.core.Item({ 
+								key: data.results[i].Awart, 
+								text: data.results[i].Atext,
+							})
+						);
+						
+						oController._Aptyp.push(data.results[i]);
+					}
+				}
+			},
+			error: function(res){console.log(res);}
+		});
+		
+		var oTable = new sap.ui.table.Table(oController.PAGEID + "_DetailTable",{
+			enableColumnReordering : false,
+			enableColumnFreeze : false,
+			showNoData : true,
+			selectionMode : sap.ui.table.SelectionMode.None,
+			visibleRowCount : 1
+		});
+		
+		oTable.addColumn(new sap.ui.table.Column({
+			hAlign : "Center",
+			flexible : false,
+        	autoResizable : true,
+        	filterProperty : "",
+        	sortProperty : "",
+        	resizable : true,
+			showFilterMenuEntry : true,
+			width : "50px",
+			multiLabels : new sap.m.CheckBox(oController.PAGEID + "_checkAll",{select : oController.CheckAll}),
+			template : [new sap.m.CheckBox({
+						selected  : "{Check}",
+						editable : { parts : [{path : "Conchk"},{path : "ZappStatAl"},{path : "Pernr"}],
+									 formatter : function(fVal1, fVal2, fVal3){
+										 if(!fVal3 || fVal3 == "") return false ;
+										 else if(fVal2 != "" && fVal2 != "10") return false; 
+										 else if(fVal1 && fVal1 == true) return false ;
+										 else return true;
+									 }
+								}
+							})]
+		}));
+		
+		var col_info1 = [{id: "Idx", label : "No.", plabel : "", span : 0, type : "string", sort : false, filter : false, width : "50px"}];
+			common.ZNK_TABLES.makeColumn(oController, oTable, col_info1);
+		
+		oTable.addColumn(new sap.ui.table.Column({
+			hAlign : "Center",
+			flexible : false,
+        	autoResizable : true,
+        	filterProperty : "",
+        	sortProperty : "",
+        	resizable : true,
+			showFilterMenuEntry : true,
+			width : "14%",
+			multiLabels : new sap.ui.commons.TextView({text : "휴가", textAlign : "Center"}).addStyleClass("L2PFontFamily"),
+			template : [oAptyp]
+		}));
+		
+		oTable.addColumn(new sap.ui.table.Column({
+			hAlign : "Center",
+			flexible : false,
+        	autoResizable : true,
+        	filterProperty : "",
+        	sortProperty : "",
+        	resizable : true,
+			showFilterMenuEntry : true,
+			width : "165px",
+			multiLabels : new sap.m.Label({text : "사용일", 
+										   textAlign : "Center"}).addStyleClass("L2PFontFamily"),
+			template : [new sap.m.Text({
+							text : "{Datum}"
+						}).addStyleClass("L2PFontFamily")]
+		}));
+		
+		oTable.addColumn(new sap.ui.table.Column({
+			hAlign : "Center",
+			flexible : false,
+        	autoResizable : true,
+        	filterProperty : "",
+        	sortProperty : "",
+        	resizable : true,
+			showFilterMenuEntry : true,
+			width : "11%",
+			multiLabels :new sap.m.Label({text : "반기휴가 시각",
+							   textAlign : "Center"}).addStyleClass("L2PFontFamily"),
+	        template : new sap.m.Text({
+							text : "{Holtim}"
+						}).addStyleClass("L2PFontFamily")
+		}));
+		
+		oTable.addColumn(new sap.ui.table.Column({
+			hAlign : "Center",
+			flexible : false,
+        	autoResizable : true,
+        	filterProperty : "",
+        	sortProperty : "",
+        	resizable : true,
+			showFilterMenuEntry : true,
+			width : "11%",
+			multiLabels :new sap.m.Label({text : "사용일수",
+							   textAlign : "Center"}).addStyleClass("L2PFontFamily"),
+	        template : new sap.m.Text({
+							text : "{Useday}"
+						}).addStyleClass("L2PFontFamily")
+		}));
+		
+		oTable.addColumn(new sap.ui.table.Column({
+			hAlign : "Center",
+			flexible : false,
+        	autoResizable : true,
+        	filterProperty : "",
+        	sortProperty : "",
+        	resizable : true,
+			showFilterMenuEntry : true,
+			width : "14%",
+			multiLabels : new sap.m.Label({text : "off-Duty Day",
+										   textAlign : "Center"}).addStyleClass("L2PFontFamily"),
+			template : new sap.m.CheckBox({
+							selected  : "{Offdut}",
+							editable : false
+							})
+		}));
+		
+		oTable.addColumn(new sap.ui.table.Column({
+			hAlign : "Center",
+			flexible : false,
+        	autoResizable : true,
+        	filterProperty : "",
+        	sortProperty : "",
+        	resizable : true,
+			showFilterMenuEntry : true,
+			width : "14%",
+			multiLabels : new sap.m.Label({text : "집중휴가",
+										   textAlign : "Center"}).addStyleClass("L2PFontFamily"),
+			template : new sap.m.CheckBox({
+							selected  : "{Conchk}",
+							editable : false
+							})
+		}));
+		
+		oTable.addColumn(new sap.ui.table.Column({
+			hAlign : "Center",
+			flexible : false,
+        	autoResizable : true,
+        	filterProperty : "",
+        	sortProperty : "",
+        	resizable : true,
+			showFilterMenuEntry : true,
+			width : "14%",
+			multiLabels : new sap.m.Label({text : "MRD",
+										   textAlign : "Center"}).addStyleClass("L2PFontFamily"),
+			template : new sap.m.CheckBox({
+							selected  : "{Mrdchk}",
+							editable : {
+								parts : [{path : "ZappStatAl"}, {path : "Pernr"}],
+								formatter : function(fVal1, fVal2){
+									if((fVal1 == "" || fVal1 == "10") && fVal2) return true;
+									else return false;
+								}
+							},
+						})
+		}));
+		
+		oTable.addColumn(new sap.ui.table.Column({
+			hAlign : "Center",
+			flexible : false,
+        	autoResizable : true,
+        	filterProperty : "",
+        	sortProperty : "",
+        	resizable : true,
+			showFilterMenuEntry : true,
+			width : "14%",
+			multiLabels : new sap.m.Label({text : "위임지정",
+										   textAlign : "Center"}).addStyleClass("L2PFontFamily"),
+			template : new sap.m.Button({
+							text : "위임지정",
+							visible : {
+								path : "Conchk",
+								formatter : function(fVal){
+									console.log(fVal);
+									if(!fVal || fVal == false) return true ;
+									else return false;
+								}
+							},
+						})
+		}));
+		oTable.setModel(oController._DetailTableJSonModel);
+		oTable.bindRows("/Data");
+		
+		oTable.addEventDelegate({
+	           onAfterRendering: function() {
+	                var oTds = $("td[colspan]");
+	                for(i=0; i<oTds.length; i++) {
+	                   if(oTds[i].colSpan > 1) $("#" + oTds[i].id).css("border-bottom", "1px solid #dddddd");
+	                }                
+	           }
+	      });
+		
+		
+		var oEmpPanel = new sap.m.Panel({
+			expandable : false,
+			expanded : false,
+			content :  [
+				new sap.m.Toolbar({
+					height : "40px",
+					content : [
+				    	new sap.m.ToolbarSpacer(),
+				    	new sap.m.Button({
+				    		text : "등록",
+				    		type : "Default",
+				    		press : oController.onPressAdd,
+				    		icon : "sap-icon://create",
+				    		enabled : {
+				    			parts : [{path : "ZappStatAl"}, {path : "Pernr"}],
+								formatter : function(fVal1, fVal2){
+									if((fVal1 == "" || fVal1 == "10") && fVal2) return true;
+									else return false;
+								}
+				    		},
+		    		   }).addStyleClass("L2PFontFamily"),
+		    		   new sap.m.Button({
+		    			   text : "삭제",
+		    			   type : "Default",
+		    			   icon : "sap-icon://delete",
+		    			   press : oController.onPressDelRecord,
+		    			   enabled : {
+		    				   parts : [{path : "ZappStatAl"}, {path : "Pernr"}],
+								formatter : function(fVal1, fVal2){
+									if((fVal1 == "" || fVal1 == "10") && fVal2) return true;
+									else return false;
+								}
+		    			   }
+		    		   }).addStyleClass("L2PFontFamily")
+				   ]
+				}).addStyleClass("L2PToolbarNoBottomLine"),
+				oTable
+			]
+		});
+		
+		/////////////////////////////////////////////////////////////		
+		var oContentMatrix = new sap.ui.commons.layout.MatrixLayout({
+			columns : 3,
+			widths : ["20px","","20px"],
+			width : "100%"
+		});
+		
+		var oContents = [
+			new sap.ui.core.HTML({content : "<div style='height : 15px;'/>"}), 
+			sap.ui.jsfragment("fragment.ApplyInformationLayout", oController),
+			sap.ui.jsfragment("fragment.TargetLayout", oController),
+			oOffDutyInfoPanel,
+			oApplyInfoPanel,
+			oEmpPanel,
+			sap.ui.jsfragment("fragment.COMMON_ATTACH_PTI", oController), 
+		    sap.ui.jsfragment("fragment.ApplyLayout", oController),
+			sap.ui.jsfragment("fragment.ApprovalInformationLayout", oController), // 결재내역
+			sap.ui.jsfragment("fragment.Comments", oController)	// 승인 / 반려 
+		];
+		
+		for(var i=0;i<oContents.length;i++){
+			oRow = new sap.ui.commons.layout.MatrixLayoutRow();
+			oCell = new sap.ui.commons.layout.MatrixLayoutCell();
+			oRow.addCell(oCell);
+			oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+				content : oContents[i]
+			});
+			oRow.addCell(oCell);
+			oCell = new sap.ui.commons.layout.MatrixLayoutCell();
+			oRow.addCell(oCell);
+			oContentMatrix.addRow(oRow);
+		}
+		
+		var oLayout = new sap.ui.commons.layout.VerticalLayout({
+			width : "100%",
+			content : [oContentMatrix]
+		}).setModel(oController._DetailJSonModel);
+		
+		oLayout.bindElement("/Data");
+		oLayout.addStyleClass("sapUiSizeCompact");
+
+		return oLayout;
+
+	
+	}
+});

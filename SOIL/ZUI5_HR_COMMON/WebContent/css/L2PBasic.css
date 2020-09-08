@@ -1,0 +1,743 @@
+@charset "utf-8";
+/*
+------------------------------------------------------------
+Project Name: L2P CO., LTD
+file name: L2PBasic.css
+Author: Yeonjun.kang
+date: 2016.06.23 
+L2P Custom CSS
+------------------------------------------------------------*/
+.L2PFontFamily {
+	font-family: 'Malgun Gothic' !important;
+	font-size: 0.875rem !important;
+	font-weight : normal !important;
+	color: #000000 !important;
+}
+
+.L2PFontFamilyNoColor {
+	font-family: 'Malgun Gothic' !important;
+	font-size: 0.875rem !important;
+	font-weight : normal !important;
+}
+
+.L2PFontFamily2 {
+	font-size: 0.875rem !important;
+	font-family: 'Noto Sans CJK KR Regular', sans-serif !important;
+	color: #000000 !important;
+}
+
+.L2PFontFamilyRed {
+ 	font-family: 'Malgun Gothic' !important; 
+    font-size: 0.875rem !important;
+	font-weight : normal !important;
+	color: red !important;
+}
+
+.L2P15FontRedBold {
+ 	font-family: 'Malgun Gothic' !important; 
+    font-size: 0.875rem !important;
+	font-weight : bold !important;
+	color: red !important;
+}
+
+.L2P14Font {
+ 	font-family: 'Malgun Gothic' !important; 
+    font-size: 14px !important;
+}
+
+.L2P15Font {
+ 	font-family: 'Malgun Gothic' !important; 
+    font-size: 15px !important;
+}
+
+.L2P11Font {
+ 	font-family: 'Malgun Gothic' !important; 
+    font-size: 11px !important;
+}
+
+.L2P18FontBold {
+	font-family: 'Malgun Gothic' !important; 
+    font-size: 18px !important;
+	font-weight : bold !important;
+	color: #2f3c48 !important;
+}
+
+.L2PFontWhite{
+	color: #ffffff !important;
+}
+
+
+.L2P13Font {
+ 	font-family: 'Malgun Gothic' !important; 
+    font-size: 13px !important;
+	font-weight : normal !important;
+	color: #000000;
+}
+
+.L2P15FontBold {
+ 	font-family: 'Malgun Gothic' !important; 
+    font-size: 15px !important;
+	font-weight : bold !important;
+}
+
+.L2PFontGray {
+	color: rgb(217, 217, 217) !important;
+}
+
+.L2PFontGreen {
+	color: rgb(146, 192, 150) !important;
+}
+
+.L2PFontRed {
+	color: red !important;
+}
+
+.L2PFontBlue {
+	color: blue !important;
+}
+
+.L2PFontBlack {
+	color: #333333 !important;
+}
+
+.L2PFontlightBlue {
+	color: #00ffff !important;
+}
+
+.L2P13FontGray {
+ 	font-family: 'Malgun Gothic' !important; 
+    font-size: 13px !important;
+	font-weight : normal !important;
+	color: rgb(217, 217, 217) !important;
+}
+
+.L2PFilterItem {
+	padding-right : 1rem;
+	padding-top : 0.5rem;
+	padding-bottom : 0.5rem;
+	vertical-align: bottom !important;
+}
+
+.L2PFilterLayout {
+	padding-left : 1.1rem;
+}
+
+.L2PFilterLayout2 {
+	padding-left : 0.8rem;
+}
+
+.L2PToolbarNoBottomLine {
+	border-bottom: 0px solid #cccccc !important;
+}
+
+.Border-Bottom {
+	border-bottom : 1px solid #cccccc;
+}
+
+.Border-Right {
+	border-Right : 1px solid #cccccc;
+}
+
+.Border-Top {
+	border-Top : 1px solid #000000;
+}
+
+.L2PFontFamilyBold {
+	font-family: 'Malgun Gothic' !important;
+	font-size: 0.875rem !important;  
+	color: #333333 !important;
+	font-weight: bold !important;
+}
+
+.L2PFontFamily2Bold {
+	font-size: 14px !important;
+	font-family: 'Noto Sans CJK KR Regular', sans-serif !important;
+	font-weight: bold !important;
+	color: #333333 !important;
+}
+
+.L2PMatrixData {	
+	background-color:rgb(255,255,255);
+	border : 1px solid #dddddd;
+	padding-left: 10px !important;
+}
+
+.ZMatrixData10 {	
+	background-color: #f4dda6;
+	border : 1px solid #dddddd;
+	padding-left: 10px !important;
+}
+
+.ZMatrixData11 {	
+	background-color: #f4dda6;
+	border : 1px solid #dddddd;
+	padding-left: 10px !important;
+	padding-right: 15px !important;
+}
+
+.ZMatrixData1 {	
+	background-color:rgb(255,255,255);
+	border : 1px solid #dddddd;
+	padding-left: 14px !important;
+}
+
+.L2PMatrixLabel {	
+	background-color: #f7f7f7;
+	border : 1px solid #dddddd;
+	padding-left: 10px !important;
+}
+
+.L2PMatrixLabel2 {	
+	background-color: #f7f7f7;
+	border-bottom : 1px solid #dddddd;
+	border-left : 1px solid #dddddd;
+	border-right : 1px solid #dddddd;
+	padding-left: 10px !important;
+}
+
+.L2PMatrixLabel3 {	
+	background-color: #f7f7f7;
+	border : 1px solid #dddddd;
+}
+
+.L2PMatrixLabel4 {	
+	background-color: #f7f7f7;
+	border-right : 1px solid #dddddd;
+}
+
+.L2PMatrixLabel5 {	
+	background-color: #d9d9d9;
+}
+
+.L2PMatrixLabel6{
+	background-color : rgba(217, 217, 217, 0.4);
+	border-right : 1px solid #e9e9e9;
+}
+
+.L2PMatrixLabel7{
+	background-color : rgba(217, 217, 217, 0.4);
+}
+
+.L2PMatrixLabel8 {	
+	background-color: #f7f7f7;
+	border-bottom : 1px solid #dddddd;
+	padding-left: 10px !important;
+}
+
+.L2PMatrixLabel9 {	
+	background-color: #f7f7f7;
+	border-top : 1px solid #dddddd;
+	border-right : 1px solid #dddddd;
+}
+
+.L2PMatrixLabel10 {	
+	background-color: #f7f7f7;
+	border-bottom : 1px solid #dddddd;
+}
+
+.L2PMatrixLabel11 {	
+	background-color: #f4dda6;
+	border : 1px solid #dddddd;
+	padding-left: 10px !important;
+}
+
+.L2PMatrixData2 {	
+	background-color:rgb(255,255,255);
+	border-bottom : 1px solid #dddddd;
+	border-top : 1px solid #dddddd;
+	border-right : 1px solid #dddddd;
+	padding-left: 10px !important;
+}
+
+.L2PMatrixData3 {	
+	background-color:rgb(255,255,255);
+	border-bottom : 1px solid #dddddd;
+	border-top : 1px solid #dddddd;
+	padding-left: 10px !important;
+}
+
+.L2PMatrixData4 {	
+	background-color:rgb(255,255,255);
+	border : 1px solid #dddddd;
+}
+
+.L2PMatrixData5 {	
+	background-color:rgb(255,255,255);
+	border : 1px solid #dddddd;
+	padding-right: 10px !important;
+}
+
+.L2PMatrixData6 {	
+	background-color:rgb(255,255,255);
+	border-right : 1px solid #dddddd;
+	padding-right : 5px;
+}
+
+.L2PMatrixData7 {	
+	background-color: rgb(255,255,255);
+	border-right : 1px solid #dddddd;
+}
+
+.L2PMatrixData8 {	
+	background-color: rgb(255,255,255);
+}
+
+.L2PMatrixData9 {	
+	background-color:rgb(255,255,255);
+	border-top : 1px solid #dddddd;
+	border-bottom : 1px solid #dddddd;
+	padding-left: 10px !important;
+}
+
+.L2PMatrixData10 {	
+	background-color:rgb(255,255,255);
+	border-top : 1px solid #dddddd;
+	padding-left: 10px !important;
+}
+
+.L2PMatrixData12 {	
+	background-color:rgb(255,255,255);
+	border : 1px solid #dddddd;
+	padding-left: 15px !important;
+}
+
+.L2PDisplayNone {
+	display: none;
+}
+
+.WhiteBackground {
+ 	background: white !important; 
+}
+
+.TitleFont {
+	font-size: 20px;
+	font-weight: bold;
+	font-family: 'Malgun Gothic' !important;
+/* 	color: white !important; */
+	vertical-align: middle !important;
+	text-shadow : none !important;
+}
+
+.TitleFont2 {
+	font-size: 20px;
+	font-weight: bold;
+	font-family: 'Malgun Gothic' !important;
+	color: #787f88 !important;
+	vertical-align: middle !important;
+	text-shadow : none !important;
+}
+
+
+.PSNCHeader {
+	background-color : #ffffff !important;
+	box-shadow : inset 0 -0.0625rem #005F28 !important;
+}
+
+.L2PHeader2 {
+	background-color : #F8FFE5 !important;
+}
+
+
+.L2PPaddingBottom13 {
+    padding-Bottom:13px !important;
+}
+
+.L2PPaddingBottom5 {
+    padding-Bottom:5px !important; 
+}
+
+.L2PPaddingBottom8 {
+    padding-Bottom:8px !important;
+}
+
+.L2PPaddingLeft3 {
+    padding-left:3px !important;
+}
+
+.L2PPaddingLeft5 {
+    padding-left:5px !important;
+}
+
+.L2PPaddingLeft10 {
+    padding-left:10px !important;
+}
+
+.L2PPaddingLeft15 {
+    padding-left:15px !important;
+}
+
+.L2PPaddingLeft20 {
+    padding-left:20px !important;
+}
+
+.L2PPaddingLeft25 {
+    padding-left:25px !important;
+}
+
+.L2PPaddingRight3 {
+    padding-right:3px !important;
+}
+
+.L2PPaddingRight5 {
+    padding-right:5px !important;
+}
+
+.L2PPaddingRight8 {
+    padding-right:8px !important;
+}
+
+.L2PPaddingRight10 {
+    padding-right:10px !important;
+}
+
+.L2PPaddingRight1Rem {
+    padding-right:1rem !important;
+}
+
+.L2PPaddingRight15 {
+    padding-right:15px !important;
+}
+
+.L2PPaddingRight20 {
+    padding-right:20px !important;
+}
+
+.L2PPaddingRightRem {
+    padding-right: 0.5rem !important;
+}
+
+.L2PPaddingTop20 {
+    padding-top:20px !important;
+}
+
+.L2PPaddingTop10 {
+    padding-top:10px !important;
+}
+
+.L2PPaddingTop5 {
+    padding-top:5px;
+}
+
+.L2PPaddingTop6 {
+    padding-top:6px;
+}
+
+.L2PPaddingTop3 {
+    padding-top:3px;
+}
+
+.L2PPaddingTop2 {
+    padding-top:2px;
+}
+
+.L2PPaddingTop1 {
+    padding-top:1px;
+}
+
+.L2PPaddingBottom1 {
+    padding-bottom:1px;
+}
+
+.L2PPaddingBottom10{
+	padding-bottom:10px;
+}
+
+.L2PMarginTop4 {
+	margin-top : 4px !important;
+}
+
+.L2PMarginTop5 {
+	margin-top : 5px !important;
+}
+
+.L2PMarginRight0 {
+	margin-right : 0px !important;
+}
+
+.L2PHeight40 {
+	height : 40px !important;
+}
+
+.L2PHeight48 {
+	height : 48px !important;
+}
+
+.L2PStandardBackground {
+	background-color :#3f5161 ;
+}
+
+.L2PAlignBottom{
+	vertical-align: bottom !important;
+}
+
+.L2PAlignmiddle{
+	vertical-align: middle !important;
+}
+
+.L2pMinWidth1rem{
+	min-width : 1rem !important;
+}
+
+.L2PListPadding{
+	padding-top : 0.5rem;
+	padding-left : 0.5rem;
+	padding-bottom : 0.5rem;
+}
+
+/* 일근태입력 인원수 text align 조절 */
+.L2PBaseline{
+	align-items : baseline !important;
+}
+
+.L2PRightPadding30px {
+	padding-right: 30px !important;
+}
+
+.L2PBottomPadding10px {
+	padding-bottom : 10px !important;
+}
+
+.L2P15FontWhite {
+	font-size: 15px !important;  
+	color : #FFFFFF !important;  
+    font-family: 'Malgun Gothic' !important;
+}
+
+.L2PFont0875 {
+ 	font-family: 'Malgun Gothic' !important; 
+    font-size: 0.875rem !important;
+	font-weight : normal !important;
+	color: #000000 !important;
+}
+
+/* .LaunchpadBackground { */
+/* 	background-image: linear-gradient(to bottom,#2a4f67,#9ec5de); */
+/* 	background-repeat:no-repeat; */
+/* 	background-position:center; */
+/* 	background-size:cover */
+/* } */
+
+.LaunchpadBackground{
+	background-image: linear-gradient(to bottom,#a9c6de,#e7ecf0);
+	background-repeat:no-repeat;
+	background-position:center;
+	background-size:cover;
+	opacity : 1;
+}
+.LaunchpadShellBG{
+	position : absolute;
+	right : 0;
+	left : 0;
+	top : 0;
+	bottom : 0;
+}
+.PSNCPositionFix{
+  position: fixed;
+  top: 50px;
+  right: 30px;
+  background : transparent;
+}
+
+.noPadding{
+	padding : 0px !important;
+}
+
+.L2PCursorPointer {
+	cursor : pointer;
+}
+
+.L2PWidth100 {
+	width : 100% !important;
+}
+
+.L2PGRID {
+/* 	height: 480px; */
+/*	margin-top: 0.875rem; */
+	width : 100% !important;
+	border-radius: 0px;
+	text-align: center;
+/* 	padding: 2px; */
+	border-left: 1px solid #dddddd;
+	border-right: 1px solid #dddddd;
+	border-collapse: collapse !important;
+	border-bottom : 1px solid #dddddd;
+/* 	box-shadow: 1px 1px 1px 1px #FFFFFF;*/
+	box-sizing: border-box;
+}
+
+/* .xhdr{ */
+/* 	border-right: 1px solid #dddddd; */
+/* } */
+
+/* .objbox{ */
+/* 	border-right: 1px solid #dddddd; */
+/* }  */
+
+.backgroundYellow{
+	background-color : #ffff00;
+}
+
+.backgroundYellow2{
+	background-color : rgba(255, 250, 193, 0.4);
+}
+
+.backgroundGreen{
+	background-color : #BAEE9A;
+}
+
+.backgroundGreen2{
+	background-color : rgba(186,238,154,0.4);
+}
+
+.backgroundBlue{
+	background-color:rgb(219, 238, 244);
+}
+
+.backgroundBlue2{
+	background-color:rgb(219, 238, 244, 0.4);
+}
+
+.backgroundOrange{
+	background-color:rgb(253, 234, 218);
+}
+
+.backgroundRed{
+	background-color:rgba(231,103,74,0.4);
+}
+
+.colorRed {
+	color : #E74C3C !important;
+}
+
+.colorBlue {
+	color : #2A80B9 !important;
+}
+
+.colorGreen {
+	color : #27AE60 !important;
+}
+
+.colorGreen2{
+	color : #2b7d2b !important; 
+}
+
+.colorBlack{
+	color : #000000 !important;
+}
+
+.colorOrange{
+	color : #e78c07 !important;
+}
+
+.bgYellow80 {	
+	background-color: rgba(255,255,0,0.2);
+}
+
+.bgYellow70 {	
+	background-color: rgba(255,255,0,0.3);
+}
+
+.noCalDay {
+	background-color: rgba(150,150,150,1) !important;
+}
+
+.noCalEdit {	
+	background-color: rgba(242,242,242,1) !important;
+}
+
+.calHoliDay {	
+	background-color: rgba(191,191,191,1) !important;
+}
+
+.bgGray1 {	
+	background-color: rgba(228,246,228,1);
+}
+
+.bgGray2 {	
+	background-color: rgba(242,242,242,1);
+}
+
+.SelectButton1{
+	background: white;
+    border: 2px solid #cccccc;
+    cursor: pointer;
+    font-weight: bold !important;
+    height: 30px;
+}
+
+.SelectButton1:hover{
+	background: #f7f7f7;
+    border: 2px solid #cccccc;
+    cursor: pointer;
+    font-weight: bold !important;
+    height: 30px;
+}
+
+.SelectButton2{
+	background: #e5e5e5;
+    border: 2px solid #cccccc;
+    cursor: pointer;
+    font-weight: bold !important;
+    height: 30px;
+}
+
+.NoShadow{
+	text-shadow : none !important;
+}
+
+.TextAlignLeft{
+	text-align : "Begin" !important;
+}
+
+.SubHeader{
+	background-color : white !important;
+	box-shadow : inset 0 -0.0625rem #ffffff !important;
+	border-top: 1px solid #d1e0ee !important;
+}
+
+.PSNCSkyBackground{
+	background-color : #66CCFF !important;;
+}
+
+.PSNCBlueBackground{
+	background-color : #2F75B5 !important;;
+}
+
+.PSNCMaxWidth700{
+	max-width : 700px;
+}
+
+.L2PTilePadding{
+	margin-top : 0.625rem ;
+	margin-left : 0.94rem ;
+	margin-right : 0.94rem ;
+	margin-bottom : 0.625rem ;
+}
+
+.PSNCPaddingLeft{
+	padding-left : 10px;
+	padding-top :10px;
+}
+
+.PSNCPaddingLeft10px{
+	padding-left : 10px;
+}
+
+.TileLayout{ 
+	 	border-radius : 0.125rem ;  
+	 	/* border : 1px solid #faa511;  */
+	 	border : 1px solid rgba(0,0,0,0.15);
+		cursor : pointer;
+} 
+
+.TileLayout:hover { 
+	border : 1px solid #faa511; 
+ 	background-color : rgb(251, 239, 221, 1) !important; 
+}
+
+.MarginBottom10px{
+	margin-bottom : 10px;
+}
+
+
+

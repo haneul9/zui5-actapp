@@ -1,0 +1,402 @@
+@charset "utf-8";
+
+.bluebutton {
+	color: #d9eef7;
+	border: solid 1px #0076a3;
+	background: #0095cd;
+	background: -webkit-gradient(linear, left top, left bottom, from(#00adee),
+		to(#0078a5));
+	background: -moz-linear-gradient(top, #00adee, #0078a5);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00adee',
+		endColorstr='#0078a5');
+}
+
+.bluebutton:hover {
+	background: #007ead;
+	background: -webkit-gradient(linear, left top, left bottom, from(#0095cc),
+		to(#00678e));
+	background: -moz-linear-gradient(top, #0095cc, #00678e);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0095cc',
+		endColorstr='#00678e');
+}
+
+.bluebutton:active {
+	color: #80bed6;
+	background: -webkit-gradient(linear, left top, left bottom, from(#0078a5),
+		to(#00adee));
+	background: -moz-linear-gradient(top, #0078a5, #00adee);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0078a5',
+		endColorstr='#00adee');
+}
+
+.whitebutton {
+	color: #606060 !important;
+	border: solid 1px #b7b7b7;
+	background: #fff;
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff),
+		to(#ededed));
+	background: -moz-linear-gradient(top, #fff, #ededed);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff',
+		endColorstr='#ededed');
+}
+
+.whitebutton:hover {
+	background: #ededed;
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff),
+		to(#dcdcdc));
+	background: -moz-linear-gradient(top, #fff, #dcdcdc);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff',
+		endColorstr='#dcdcdc');
+}
+
+.whitebutton:active {
+	color: #999;
+	background: -webkit-gradient(linear, left top, left bottom, from(#ededed),
+		to(#fff));
+	background: -moz-linear-gradient(top, #ededed, #fff);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed',
+		endColorstr='#ffffff');
+}
+
+.L2PTopButton {
+	height: 30px;
+	display: inline-block;
+	outline: none;
+	cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+	font: 14px/100% Arial, Helvetica, sans-serif;
+	padding: .1em 1em .2em;
+	text-shadow: 0 1px 1px rgba(0, 0, 0, .3);
+	-webkit-border-radius: .5em;
+	-moz-border-radius: .5em;
+	border-radius: .5em;
+	-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+	-moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+	box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+}
+
+.L2PTopButton:hover {
+	text-decoration: none;
+}
+
+.L2PTopButton:active {
+	position: relative;
+	top: 1px;
+}
+
+.InfoData {
+	padding-left: 10px;
+	font-size: 13px;
+	font-weight: bold;
+	font-family: 'Malgun Gothic';
+	color: gray;
+}
+
+.L2PComboBox {
+	border: 1px solid rgb(201, 201, 201) !important;
+}
+
+.L2Pfont12 {
+	ime-mode: active !important;
+	color: #000000 !important;
+	font-size: 12px !important;
+	font-family: 'Malgun Gothic' !important;
+}
+
+.L2Pfont14 {
+	ime-mode: active !important;
+	color: #000000 !important;
+	font-size: 14px !important;
+	font-family: 'Malgun Gothic' !important;
+}
+
+.l2pFormDataCell2 {
+	border: 1px solid rgb(201, 201, 201);
+	background-color: rgb(255, 255, 255);
+	padding-left: 5px;
+	vertical-align: middle !important;
+}
+
+.l2pFormDataCellYea {
+	border: 1px solid rgb(201, 201, 201);
+	background-color: rgb(255, 255, 255);
+	padding: 5px !important;
+	text-align: left !important;
+	vertical-align: middle !important;
+}
+
+.l2pFormDataCellYea2015{
+	border: 1px solid rgb(201, 201, 201);
+	background-color: rgb(255, 255, 255);
+	padding: 5px !important;
+	text-align: left !important;
+	vertical-align: top !important;
+}
+
+.l2pFormDataCellYeaCenter {
+	border: 1px solid rgb(201, 201, 201);
+	background-color: rgb(255, 255, 255);
+	padding: 5px !important;
+	vertical-align: middle !important;
+	text-align: center !important;
+}
+
+.l2pFormLabelCell2 {
+	background-color: rgb(246, 246, 246) !important;
+	text-align: center;
+	vertical-align: middle !important;
+	border-top: 1px solid rgb(246, 246, 246) !important;
+	border-bottom: 1px solid rgb(35, 175, 234) !important;
+	border-left: 1px rgb(246, 246, 246) !important;
+	border-right: 1px rgb(246, 246, 246) !important;
+	height: 47px !important;
+}
+
+.l2pFormLabelCellYea {
+	border: 1px solid rgb(201, 201, 201);
+	background-color: rgb(238, 239, 245);
+	padding: 5px !important;
+	text-align: center !important;
+	font-weight: bold !important;
+	vertical-align: middle !important;
+}
+
+.l2pFormLabelData {
+	font-size: 14px !important;
+	color: rgb(114, 114, 114) !important;
+	font-weight: bold !important;
+	font-family: 'Malgun Gothic' !important;
+}
+
+.L2PHelpfont12 {
+	/* color: #1020ee !important; */
+	color : #285af0 !important;
+	font-size: 12px !important;
+	font-family: 'Malgun Gothic' !important;
+}
+
+.L2PHelpfontColor {
+	color : #285af0 !important;
+}
+
+.L2PInfoBox2 {
+	border: 1px solid rgb(0, 176, 240);
+	background-color: #FFFFFF;
+	margin-bottom: 5px !important;
+	border-radius: 10px !important;
+}
+
+.L2PInfoToolbar {
+	background: transparent !important;
+	border-bottom: 0px solid rgb(95,95,95) !important;
+}
+
+.L2PInputAlignCenter {
+	text-align: center !important;
+}
+
+.L2PInputAlignLeft {
+	text-align: left !important;
+}
+
+.L2PInputAlignRight {
+	text-align: right !important;
+}
+
+.L2PPadding20px {
+	padding: 20px !important;
+}
+
+.L2PSelect {
+	opacity: 0.9 !important;
+	height: 22px !important;
+	padding: 0 20px 0 0 !important;
+}
+
+.TitleData {
+	padding-left: 10px;
+	font-size: 18px;
+	font-weight: bold;
+	font-family: 'Malgun Gothic';
+	color: black;
+}
+
+/* input box의 editable이 false 인 경우 */
+.sapMInputBaseInner.sapMInputBaseReadonlyInner {
+	border-color: #bfbfbf !important; 
+	background-color: #e9e9e9 !important;
+}
+
+.sapMSFI[type='search']{
+	line-height : 18px;
+}
+
+.sapMLabel {
+	font-family: 'Malgun Gothic', Arial !important;
+	color : #000000;
+}
+
+.sapMITBHorizontalWrapper {
+	font-family: 'Malgun Gothic', Arial !important;
+	font-size : 0.875rem !important;
+	font-weight : bold !important;
+}
+
+.sapMITBHorizontal.sapMITBFilter>.sapMITBHorizontalWrapper>.sapMITBText {
+  min-width: 4rem !important;
+}
+
+.sapMITBHead {
+	font-family: 'Malgun Gothic', Arial !important;
+}
+
+.sapUiTf{
+	font-family: 'Malgun Gothic', Arial !important;
+	font-size : 14px !important;
+}
+
+/* Table의 textField control css */
+.sapUiTableCell>.sapUiTf {
+	border: 1px solid #bfbfbf !important;
+	padding-right: 2px  !important;
+}
+
+.sapUiProgInd {
+	font-family: 'Malgun Gothic', Arial !important;
+}
+
+.sapMBtn {
+	font-family: 'Malgun Gothic', Arial !important;
+}
+
+button.sapMBtn.sapMBtnEmphasized {
+	background-color: rgb(65,65,147) !important;
+	border-color: rgb(65,65,147) !important;
+	color: #ffffff;
+	text-shadow: 0 1px 0 rgba(0,0,0,0.5);
+}
+
+.sapUiFTV {
+	font-family: 'Malgun Gothic', Arial !important;
+	font-size : 14px !important;
+}
+
+.sapMListTblHeader th {
+	border-bottom: 2px solid rgb(35,175,234) !important;
+	border-top: 1px solid rgb(229,229,229) !important;
+	background-color: rgb(246,246,246) !important;
+}
+
+.sapMBar.sapMPageHeader:before {
+	content: "";
+	position: absolute;
+	width: 100%;
+	top: 0;
+	border-top: 0.25rem solid rgb(159,190,221) !important;
+	z-index: 7;
+}
+
+.sap-desktop footer.sapMBar {
+	background-color : rgba(61,68,74, 0.96) !important;
+}
+
+/* .sapUiTableTr>td { */
+/* 	border-right: 0px solid #dddddd !important; */
+/* } */
+
+.sapMTBShrinkItem {
+	min-width: 0rem !important;
+}
+
+/*
+.sapUiTableCol {
+	border-right: 1px solid #cccccc !important;
+	background : rgb(95,95,95) !important;
+	padding-top: 7px !important;
+	padding-bottom: 5px !important;
+}
+*/
+
+.sapUiTableCol {
+    vertical-align: middle;
+    box-sizing: border-box;
+    min-height: 2rem;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    border-right: 1px solid #e9e9e9;
+    background-color: #d9d9d9;
+    color: #333333;
+}
+
+.sapUiTableColRowHdr {
+	border-right: 1px solid #cccccc !important;
+	background: #dddddd !important;
+}
+
+.sapUiTableColHdrCnt {
+	border-top: 0px solid rgb(65, 65, 137) !important;
+}
+
+.sapUiTv{
+	vertical-align : middle !important;
+	line-height : 18px !important;
+	display : 'inline-block' ;
+}
+
+/*
+	Feed Tile 관련 CSS 세팅  
+ */
+.sapSuiteUiCommonsFeedTileTitle {
+	font-family: 'Malgun Gothic', Arial !important;
+	font-size : 18px !important;
+}
+.sapSuiteUiCommonsFeedTileSource{
+	font-family: 'Malgun Gothic', Arial !important;
+}
+.sapSuiteUiCommonsFeedTileAge{
+	font-family: 'Malgun Gothic', Arial !important;
+}
+
+/* Dialog Content CSS */
+.sapUiDlgCont {
+	background-color:#F3F0F0 !important;
+	padding : 0px 5px 5px !important;
+}
+
+/* 버튼 배경 */
+div.sapMBtnInner.sapMBtnEmphasized {
+	background-color: rgb(159,190,221) !important;
+	border-color: rgb(159,190,221) !important;
+	color: rgb(89,93,96) !important;
+}
+
+.sapMListTblNavCol, .sapMListTblSelCol {
+	vertical-align: middle !important;
+}
+
+/* sap.m.Select 의 Enabled=false 상테를 변경 */
+li.sapMSltItemDisabled, .sapMSltDisabled {
+	opacity: 1.0 !important;
+	border-color: #bfbfbf !important; 
+	background-color: #e9e9e9 !important;
+	pointer-events: none;
+}
+
+.sapMShellGlobalOuterBackground {
+  background-image: -webkit-linear-gradient(top,#e0f2f4 0,#dcecf0 50%,#dde4ec 100%) !important;
+  background-image: -ms-linear-gradient(top,#e0f2f4 0,#dcecf0 50%,#dde4ec 100%) !important;
+  background-image: linear-gradient(to bottom,#e0f2f4 0,#dcecf0 50%,#dde4ec 100%) !important;
+}
+
+.sapMListTblCell {
+    vertical-align: middle !important;
+}
+
+div.YetComboBox>.sapMComboBoxTextFieldArrow {
+    line-height: 20px !important;
+}
+
+div.YetComboBox>.sapMComboBoxTextFieldInnerWidthExtraPadding:not(.sapMComboBoxTextFieldInnerReadonly) {
+    padding-right: 1rem !important;
+}

@@ -1,0 +1,1199 @@
+jQuery.sap.require("common.SearchUserList");
+jQuery.sap.require("common.Common");
+jQuery.sap.require("control.ZNK_SapBusy");
+jQuery.sap.require("ZUI5_HR_Portal.control.XNavigationListItem");
+jQuery.sap.require("ZUI5_HR_Portal.common.FavoriteController");
+jQuery.sap.require("ZUI5_HR_Portal.common.HoldoverController");
+
+sap.ui.controller("ZUI5_HR_Portal.ZUI5_HR_PortalList", {
+	/**
+	 * Is initially called once after the Controller has been
+	 * instantiated. It is the place where the UI is
+	 * constructed. Since the Controller is given to this
+	 * method, its event handlers can be attached right away.
+	 * 
+	 * @memberOf ZUI5_HR_Portal.ZUI5_HR_PortalList
+	 */
+
+	PAGEID : "ZUI5_HR_PortalList",
+	_HeaderJSonModel : new sap.ui.model.json.JSONModel(),
+	_ListCondJSonModel : new sap.ui.model.json.JSONModel(),
+	_ListCondJSonModel2 : new sap.ui.model.json.JSONModel(),
+	_JSonModel : new sap.ui.model.json.JSONModel(),
+	_JSonModel1 : new sap.ui.model.json.JSONModel(),
+	_JSonModel2 : new sap.ui.model.json.JSONModel(),
+	_SignE : new sap.ui.model.json.JSONModel(),
+	_SignH : new sap.ui.model.json.JSONModel(),
+	_JSonModel3 : new sap.ui.model.json.JSONModel(),
+	_JSonModel5 : new sap.ui.model.json.JSONModel(),
+	_FavoriteListE : [],
+	_FavoriteListM : [],
+	_FavoriteListH : [],
+	_FavoriteList : new sap.ui.model.json.JSONModel(),
+	_DetailJSonModel : new sap.ui.model.json.JSONModel(),
+	_Lev1MenuList : [],
+	_EssMenuList :  [],
+	_MssMenuList :  [],
+	_HassMenuList :  [],
+	_Lev2EssCategoryList : [],
+	_Lev2MssCategoryList : [],
+	_Lev2HassCategoryList : [],
+	_Lev3MenuList : [],
+	_MenuList : [],
+	_FavoriteTileJSonModel : new sap.ui.model.json.JSONModel(),
+	_vPersa : "" ,
+	_vClsdt : "",
+	_vPayym : "",
+	_vPernr : "" , // 로그인 사번 
+	_vEnamefg : "",
+	_oControl  : null,
+	BusyDialog : new sap.m.BusyDialog("main_busyDialog", {}),
+	_SearchControlPage : [], // Search Control 에 검색 Page Binding
+	
+	iPending : 0,
+	
+	onInit : function() {
+
+//		if (!jQuery.support.touch) {
+			this.getView().addStyleClass("sapUiSizeCompact");
+//		};
+
+		this.getView().addEventDelegate({
+			onBeforeShow : jQuery.proxy(function(evt) {
+				this.onBeforeShow(evt);
+			}, this)
+		});
+
+		this.getView().addEventDelegate({
+			onAfterShow : jQuery.proxy(function(evt) {
+				this.onAfterShow(evt);
+//				this.onBeforeShow(evt);
+			}, this),
+		});
+
+		var bus = sap.ui.getCore().getEventBus();
+		bus.subscribe("app", "OpenWindow", this.SmartSizing,
+				this);
+ 
+		var bus2 = sap.ui.getCore().getEventBus();
+		bus2.subscribe("app", "ResizeWindow", this.SmartSizing,
+				this);
+	},
+
+	onBeforeShow : function(event) {
+		var oController = this ;
+		
+		var vData = {Data : {}};
+		var mEmpLoginInfo = sap.ui.getCore().getModel("EmpLoginInfo");
+		var vEmpLoginInfo = mEmpLoginInfo.getProperty("/EmpLoginInfoSet");
+		var vEname = "";
+		var vPernr = "";
+		var vPhoto = ""; 
+		
+		if(vEmpLoginInfo.length > 0){
+			var OneData = {};
+			// 대상자
+			vEname = vEmpLoginInfo[0].Ename ;
+			vPernr = vEmpLoginInfo[0].Pernr ;
+			vPhoto = vEmpLoginInfo[0].Photo ;
+			oController._vPernr = vEmpLoginInfo[0].Pernr ;
+		}
+			
+		vData.Data.summary = ""; 
+		vData.Data.Pernr = vPernr;
+		vData.Data.Ename = vEname;
+		vData.Data.Photo = vPhoto;
+		
+		// Header 설정
+		oController._DetailJSonModel.setData(vData);
+		
+		oController.onSetMenu(oController);
+		
+		
+		var vListData = {Data : { Pernr : vPernr  }};
+		oController._ListCondJSonModel.setData(vListData);
+	
+		var oSNav = sap.ui.getCore().byId(oController.PAGEID + "_SideNavigation"),
+		oModel = oSNav.getModel();
+		oModel.setData({Data : []});
+		var toolPage = sap.ui.getCore().byId("toolPage");
+		toolPage.setSideExpanded(false);
+		
+		ZUI5_HR_Portal.common.HoldoverController.checkHoldOver(oController);
+		
+//		oController.searchApply(oController);
+//		oController.searchSignE(oController);
+//		oController.searchSignH(oController);
+//		oController.searchEmployee(oController);
+	},
+
+	onAfterShow : function(event) {
+		var oController = this ;
+		this.SmartSizing(event);	
+		oController.searchApply(oController);
+		oController.searchSignE(oController);
+		oController.searchSignH(oController);
+		oController.searchEmployee(oController);
+		var onSearch = function(){
+			if(_gZmcode != ""){
+				var vExist = "";
+				_gZmcode =  "E_" + _gZmcode;
+//				_gZmcode = _gZmcode.indexOf("ZP") > -1 ? _gZmcode : "E_" + _gZmcode;
+				for(var i =0; i < oController._EssMenuList.length; i++){
+					if(oController._EssMenuList[i].Mncod == _gZmcode){
+						vExist = "X";
+						oController.goToPage(oController, _gZmcode);
+						oController._EssMenuList[i].
+						if(oController._EssMenuList[i][i].Pwuse == true){
+							common.Password.openPasswordDialog(oController, item.getKey());
+							oController.onClearNavigation(oController);
+						}
+						
+						common.Password.openPasswordDialog(oController, PageKey);
+						break;
+					}
+				}
+				if(vExist == ""){
+					sap.m.MessageBox.alert("권한이 없어 해당 프로그램에 접근할 수 없습니다.");
+				}
+			}
+		}
+		setTimeout(onSearch, 100);
+	},
+	
+	onSetMenu : function(oController){
+		 var oModel = sap.ui.getCore().getModel("ZHR_MENU_SRV");	
+		 var oController = this.getView().getController() ;
+		 var vData = { Data : []}, vData1 = { Data : []}, vData2 = { Data : []}, vData3 = { Data : []};
+		
+		 // 리스트 , 비교할 변수
+		 var distinct = function(items, val, rAuth){
+			 var result = [];
+			 var lookup = {};
+			 for (var item, i = 0; item = items[i++];) {
+				 if(rAuth && rAuth != ""){
+					 if(item.Autho != rAuth) continue;
+				 } 
+				 var name = eval("item." + val);
+
+				 if (!(name in lookup)) {
+				    lookup[name] = 1;
+				    result.push(item);
+				 }
+			 }
+			 return result;
+		 }
+			
+		 
+//		 var onSearch = function(){
+			 var errData = {};
+			 oModel.read("/MenuListSet", {
+				async : false,
+				filters : [
+					
+				],
+				success : function(data, res) {
+					if(data && data.results.length){
+						for(var i =0; i<data.results.length; i++){
+							data.results[i].Zzurl = data.results[i].Zzurl + "&_gMncod=" + data.results[i].Mncod;
+							data.results[i].Mncod = data.results[i].Autho + "_" + data.results[i].Mncod; 
+							data.results[i].Zicon = data.results[i].Zicon.toLowerCase();
+							vData.Data.push(data.results[i]);
+						}
+					}
+				},
+				error : function(Res) {
+					errData = common.Common.parseError(Res);
+				}
+			});
+			
+			if(errData.Error && errData.Error == "E"){
+				sap.m.MessageBox.alert(errData.ErrorMessage, {
+					onClose : function() {
+						oController.BusyDialog.close();
+						oController.onBack();
+					}
+				});
+				return ;
+			}
+			// 전체 Menu List
+			oController._MenuList = vData.Data;
+			// Lev1 Menu List
+			oController._Lev1MenuList = distinct(vData.Data, "Autho");
+			var oLev1Menu = sap.ui.getCore().byId(oController.PAGEID + "_Lev1Menu"); 
+			oLev1Menu.destroyContent();
+			for(var i = 0; i< oController._Lev1MenuList.length; i++){
+				var vText = oController._Lev1MenuList[i].Autho == "E" ? "Employee Self Service" : 
+							oController._Lev1MenuList[i].Autho == "M" ? "Manager Self Service" :
+							oController._Lev1MenuList[i].Autho == "H" ? "HR Admin Self Service" :
+							"";
+				oLev1Menu.addContent(new sap.m.Link(oController.PAGEID +"_Lev1Link_" + oController._Lev1MenuList[i].Autho,{
+					text : vText,
+					width : "150px",
+					customData : [ new sap.ui.core.CustomData({key:"Auth", value : oController._Lev1MenuList[i].Autho})],
+					press : oController.onPressLev1
+				}).addStyleClass("FontLev1Normal CursorPointer PaddingRight30"));
+			}
+			// Lev2 Menu List ( Category )
+			oController._Lev2EssCategoryList = distinct(oController._MenuList, "Gubun", "E");
+			oController._Lev2MssCategoryList = distinct(oController._MenuList, "Gubun", "M");
+			oController._Lev2HassCategoryList = distinct(oController._MenuList, "Gubun", "H");
+			
+			var vEssData = { Data : []}, vMssData = { Data : []}, vHassData = { Data : []}; 
+			
+			// Navigaion Page 설정
+			var navContainer = sap.ui.getCore().byId("navContainer");
+			navContainer.destroyPages();
+			
+			
+			// Home 화면 추가
+			navContainer.addPage(
+				new sap.m.ScrollContainer("Home_E",{
+					vertical: true,
+					height : "100%",
+					horizontal: false,
+					content: [
+						sap.ui.jsfragment("ZUI5_HR_Portal.fragment.HomeE",oController),
+					]
+				})
+			);
+			
+			// Home 화면 추가
+			navContainer.addPage(
+				new sap.m.ScrollContainer("Home_M",{
+					vertical: true,
+					height : "100%",
+					horizontal: false,
+					content: [
+						sap.ui.jsfragment("ZUI5_HR_Portal.fragment.HomeM",oController),
+					]
+				})
+			);
+			
+			// Home 화면 추가
+			navContainer.addPage(
+				new sap.m.ScrollContainer("Home_H",{
+					vertical: true,
+					height : "100%",
+					horizontal: false,
+					content: [
+						sap.ui.jsfragment("ZUI5_HR_Portal.fragment.HomeH",oController),
+					]
+				})
+			);
+			
+			// 사원프로파일(ESS)
+			navContainer.addPage(
+				new sap.m.ScrollContainer("Emp_E",{
+					vertical: false,
+					height : "100%",
+					horizontal: false,
+					content: [
+						new sap.ui.core.HTML({
+							content : ["<iframe id='iWorkerPDF' name='iWorkerPDF' onload='iframeLoaded()' src='" + "/sap/bc/ui5_ui5/sap/zui5_hr_essapp/EmployeeProfile.html?_gAuth=E&_gMncod=YES03" +"' width='100%' height='100%' frameborder='0' border='0' scrolling='no'></>"],
+							preferDOM : false
+						})
+					]
+				})
+			);
+			// 사원프로파일(MSS)
+			navContainer.addPage(
+				new sap.m.ScrollContainer("Emp_M",{
+					vertical: false,
+					height : "100%",
+					horizontal: false,
+					content: [
+						new sap.ui.core.HTML({
+							content : ["<iframe id='iWorkerPDF' name='iWorkerPDF' onload='iframeLoaded()' src='" + "/sap/bc/ui5_ui5/sap/zui5_hr_essapp/EmployeeProfile.html?_gAuth=M&_gMncod=YES03" +"' width='100%' height='100%' frameborder='0' border='0' scrolling='no'></>"],
+							preferDOM : false
+						})
+					]
+				})
+			);
+			// 사원프로파일(HASS)
+			navContainer.addPage(
+				new sap.m.ScrollContainer("Emp_H",{
+					vertical: false,
+					height : "100%",
+					horizontal: false,
+					content: [
+						new sap.ui.core.HTML({
+							content : ["<iframe id='iWorkerPDF' name='iWorkerPDF' onload='iframeLoaded()' src='" + "/sap/bc/ui5_ui5/sap/zui5_hr_essapp/EmployeeProfile.html?_gAuth=H&_gMncod=YES03" +"' width='100%' height='100%' frameborder='0' border='0' scrolling='no'></>"],
+							preferDOM : false
+						})
+					]
+				})
+			);
+			
+			navContainer.addPage(
+				new sap.m.ScrollContainer("Apply",{
+					vertical: true,
+					height : "100%",
+					horizontal: false,
+					content: [
+						new sap.ui.core.HTML({
+							content : ["<iframe id='iWorkerPDF' name='iWorkerPDF' onload='iframeLoaded()' src='" + "/sap/bc/ui5_ui5/sap/zui5_hr_essapp/ApplyBox.html?_gAuth=E&_gMncod=YES01" +"' width='100%' height='100%' frameborder='0' border='0' scrolling='no'></>"],
+							preferDOM : false
+						})
+					]
+				})
+			);
+			
+			navContainer.addPage(
+				new sap.m.ScrollContainer("Approval_E",{
+					vertical: true,
+					height : "100%",
+					horizontal: false,
+					content: [
+						new sap.ui.core.HTML({
+							content : ["<iframe id='iWorkerPDF' name='iWorkerPDF' onload='iframeLoaded()' src='" + "/sap/bc/ui5_ui5/sap/zui5_hr_essapp/ApprovalBox.html?_gAuth=E&_gMncod=YES02" +"' width='100%' height='100%' frameborder='0' border='0' scrolling='no'></>"],
+							preferDOM : false
+						})
+					]
+				})
+			);
+			
+			navContainer.addPage(
+				new sap.m.ScrollContainer("Approval_H",{
+					vertical: true,
+					height : "100%",
+					horizontal: false,
+					content: [
+						new sap.ui.core.HTML({
+							content : ["<iframe id='iWorkerPDF' name='iWorkerPDF' onload='iframeLoaded()' src='" + "/sap/bc/ui5_ui5/sap/zui5_hr_essapp/ApprovalBox.html?_gAuth=H&_gMncod=YES02" +"' width='100%' height='100%' frameborder='0' border='0' scrolling='no'></>"],
+							preferDOM : false
+						})
+					]
+				})
+			);
+			
+			
+			for(var i = 0; i < oController._MenuList.length; i++){
+				if(oController._MenuList[i].Autho == "E"){
+					vEssData.Data.push(oController._MenuList[i]);
+				}else if(oController._MenuList[i].Autho == "M"){
+					vMssData.Data.push(oController._MenuList[i]);
+				}else if(oController._MenuList[i].Autho == "H"){
+					vHassData.Data.push(oController._MenuList[i]);
+				}
+				// Search Control 에 Binding 
+				var vTemp = {};
+				vTemp.text = oController._MenuList[i].Mncodt ;
+				vTemp.key = oController._MenuList[i].Mncod ;
+				vTemp.url = oController._MenuList[i].Zzurl;
+				vTemp.Autho = oController._MenuList[i].Autho;
+				vTemp.Pwuse = oController._MenuList[i].Pwuse;
+				oController._SearchControlPage.push(vTemp);
+				
+				// Navigation Page 등록
+				navContainer.addPage(
+					new sap.m.ScrollContainer(oController._MenuList[i].Mncod,{
+						vertical: true,
+						height: "100%",
+						horizontal: false, 
+						content: [
+							new sap.ui.core.HTML({
+								content : ["<iframe id='iWorkerPDF' name='iWorkerPDF' onload='iframeLoaded()' src='" + oController._MenuList[i].Zzurl +"' width='100%' height='100%' frameborder='0' border='0' scrolling='no'></>"],
+								preferDOM : false
+							})
+						]
+					}).addStyleClass("overflowy")
+				);
+			}
+			
+			oController._EssMenuList = vEssData.Data;
+			oController._MssMenuList = vMssData.Data;
+			oController._HassMenuList = vHassData.Data;
+			
+			if(oController._EssMenuList.length > 0){
+				var vTemp = {};
+				vTemp.text = "Total Reward Dashboard";
+				vTemp.key = "E_ZP01";
+				vTemp.Autho = "E";
+				vTemp.Pwuse = true;
+				oController._SearchControlPage.push(vTemp);
+			}
+			if(oController._MssMenuList.length > 0){
+				var vTemp = {};
+				vTemp.text = "Total Reward Dashboard(조직)";
+				vTemp.key = "M_ZP02";
+				vTemp.Autho = "M";
+				vTemp.Pwuse = true;
+				oController._SearchControlPage.push(vTemp);
+			}
+			
+			// 기본 ESS Click
+			oController.onPressLev1(event, "E");
+			
+			ZUI5_HR_Portal.common.FavoriteController.searchFavorite(oController);
+//		}
+		
+//		setTimeout(onSearch, 100);
+	},
+	
+	// Lev1 메뉴를 클릭 시 이벤트
+	onPressLev1 : function(oEvent, rAuth){
+		var oView = sap.ui.getCore().byId("ZUI5_HR_Portal.ZUI5_HR_PortalList");
+		var oController = oView.getController();
+		var Auth =  rAuth && rAuth != "" ? rAuth : oEvent.getSource().getCustomData()[0].getValue();
+		
+		// Lev2 메뉴와 비교하여 동일한 메뉴를 클릭 시 무시
+		var oLev2menu = sap.ui.getCore().byId(oController.PAGEID + "_Lev2menu_1");
+		var oContents = oLev2menu.getCustomData();
+		if(oContents && oContents.length){
+//			var vAuth = oContents[0].getId().split("_")[3];
+			var vAuth = oContents[0].getValue();
+			if(vAuth == Auth) return;
+		}
+		// Lev1 메뉴 클릭 시 Text 반전 
+		for(var i = 0; i< oController._Lev1MenuList.length; i++){
+			var oLink = sap.ui.getCore().byId(oController.PAGEID + "_Lev1Link_" + oController._Lev1MenuList[i].Autho);
+			oLink.removeStyleClass("FontLev1Select");
+			oLink.removeStyleClass("FontLev1Normal");
+			if(oController._Lev1MenuList[i].Autho == Auth){
+				oLink.addStyleClass("FontLev1Select");
+			}else{
+				oLink.addStyleClass("FontLev1Normal");
+			}
+		}
+		
+		oController.onSetLev2Menu(oController, Auth);
+		
+		oController.onClearNavigation(oController, "Home_" +Auth);
+		
+		// 메인화면의 즐겨찾기 설정
+		ZUI5_HR_Portal.common.FavoriteController.displayFavorite(oController);
+	},
+	
+	onSetLev2Menu : function(oController, vAuth){
+		for(var i = 0; i < 9; i ++) {
+			var oLev2menu = sap.ui.getCore().byId(oController.PAGEID +"_Lev2menu_" + (i+1));
+			
+			oLev2menu.setText("");
+			oLev2menu.destroyCustomData();
+			oLev2menu.setVisible(false);
+		}
+		
+		var vData = [];
+		if(vAuth == "E") vData = oController._Lev2EssCategoryList;
+		else if(vAuth == "M") vData = oController._Lev2MssCategoryList;
+		else if(vAuth == "H") vData = oController._Lev2HassCategoryList;
+		var index = 0;
+		for(var i = 0; i < vData.length; i++){
+			if(vData[i].Gubun == "YHR01") i++;
+			
+			var oLev2menu = sap.ui.getCore().byId(oController.PAGEID +"_Lev2menu_" + (index+1));
+			oLev2menu.setText(vData[i].Gubunt);
+			oLev2menu.addCustomData(new sap.ui.core.CustomData({key:"Auth", value : vAuth }));
+			oLev2menu.addCustomData(new sap.ui.core.CustomData({key:"Gubun", value : vData[i].Gubun }));
+			oLev2menu.addCustomData(new sap.ui.core.CustomData({key:"Gubunt", value : vData[i].Gubunt }));
+			oLev2menu.addCustomData(new sap.ui.core.CustomData({key:"Icon", value : vData[i].Zicon }));
+			oLev2menu.addCustomData(new sap.ui.core.CustomData({key:"Idx", value : index }));
+			oLev2menu.setVisible(true);
+			index ++;
+		}
+	},	
+	
+	onSetSideMenu : function(oEvent){
+		var oView = sap.ui.getCore().byId("ZUI5_HR_Portal.ZUI5_HR_PortalList");
+		var oController = oView.getController();
+		var vAuth = oEvent.getSource().getCustomData()[0].getValue(),
+			vGubun =  oEvent.getSource().getCustomData()[1].getValue(),
+		    vTxt = oEvent.getSource().getCustomData()[2].getValue(),
+		    vIcon = oEvent.getSource().getCustomData()[3].getValue(),
+		    vIdx = oEvent.getSource().getCustomData()[4].getValue();
+		var oSNav = sap.ui.getCore().byId(oController.PAGEID + "_SideNavigation"),
+		oModel = oSNav.getModel(),
+		vMenuData = {Data : []};
+
+		var vTemp = {};
+		vTemp.title =  vTxt;
+		vTemp.expanded =  true;
+		vTemp.icon = vIcon;
+		vTemp.items = [];
+		var vData = [] , vLev1Data = [];
+		
+		if(vAuth == "E"){
+			vData = oController._EssMenuList;
+			vLev1Data = oController._Lev2EssCategoryList;
+		}else if(vAuth == "M"){
+			vData = oController._MssMenuList;
+			vLev1Data = oController._Lev2MssCategoryList;
+		}else if(vAuth == "H"){
+			vData = oController._HassMenuList;
+			vLev1Data = oController._Lev2HassCategoryList;
+		}
+		var vNumber = 1;
+		for(var i = 0; i < vData.length; i++){
+			if(vGubun == vData[i].Gubun){
+				vTemp.items.push({title : vNumber + ". " + vData[i].Mncodt , key : vData[i].Mncod});
+				vNumber++;
+			}	
+		}
+		vMenuData.Data.push(vTemp);
+		oModel.setData(vMenuData);
+		
+		for(var i = 0; i< vLev1Data.length; i++){
+			var oLinkButton = sap.ui.getCore().byId(oController.PAGEID + "_Lev2menu_" + (i + 1));
+			oLinkButton.removeStyleClass("LinkFontFamilyBoldActive");
+			oLinkButton.removeStyleClass("LinkFontFamilyBold");
+			if(i == vIdx){
+				oLinkButton.addStyleClass("LinkFontFamilyBoldActive");
+			}else{
+				oLinkButton.addStyleClass("LinkFontFamilyBold");
+			}
+		}
+				
+		var toolPage = sap.ui.getCore().byId("toolPage");
+		toolPage.setSideExpanded(true);
+	},
+	
+	searchApply : function(oController){
+		
+		var oModel = sap.ui.getCore().getModel("ZHR_TILE_SRV");
+		var oView = this.getView();
+		var oController = this.getView().getController() ;
+		var vReqCntAll = 0, vReqCnt1 = 0, vReqCnt2 = 0, vReqCnt3 = 0, vReqCnt4 = 0, vReqCnt5 = 0;
+		
+		var vSummaryData = [];
+		var vData = {Data : {
+			Cnt01 : 0,
+			Cnt02 : 0,
+			Cnt03 : 0,
+			Cnt04 : 0,
+			Prdtx : "",
+		}};
+
+		oModel.read("/HrApplySet",
+				null, 
+				null, 
+				true, 
+				function(oData, oResponse) {
+					if(oData) {
+						var oneData = oData.results[0] ;
+						oneData.Cnt01 = oData.results[0].Cnt01 * 1;
+						oneData.Cnt02 = oData.results[0].Cnt02 * 1;
+						oneData.Cnt03 = oData.results[0].Cnt03 * 1;
+						oneData.CntAll = oneData.Cnt01 + oneData.Cnt02 + oneData.Cnt03 ;
+						vData.Data = oneData;
+						oController._JSonModel.setData(vData);
+					    
+					}else{
+					  oController._JSonModel.setData(vData);
+					}
+				},
+				function(oResponse) {
+					console.log(oResponse);
+				}
+		  );
+		
+	},
+	
+	searchSignE : function(oController){
+		var oModel = new sap.ui.model.odata.ODataModel("/sap/opu/odata/sap/ZHR_TILE_SRV/", true, undefined, undefined, { "Cache-Control": "max-age=0"}, undefined, undefined, true);
+		var oView = this.getView();
+		var oController = this.getView().getController() ;
+		  
+		var vReqCntAll = 0, vReqCnt1 = 0, vReqCnt2 = 0, vReqCnt3 = 0;
+		
+		var vSummaryData = [];
+		
+		var vData = {
+			Data : {			
+			  Cnt01 : 0,
+			  Cnt02 : 0,
+			  Cnt03 : 0,
+			  Prdtx : ""
+			}
+		};
+
+	  oModel.read("/HrApprovalSet",
+			null, 
+			null, 
+			true, 
+			function(oData, oResponse) {
+				if(oData.results && oData.results.length > 0) {
+					var oneData = oData.results[0] ;
+					oneData.Cnt01 = oData.results[0].Cnt01 * 1;
+					oneData.Cnt02 = oData.results[0].Cnt02 * 1;
+					oneData.Cnt03 = oData.results[0].Cnt03 * 1;
+					vData.Data = oneData;
+					oController._SignE.setData(vData);
+					oController.readAfterProcessE(oController);
+
+				}else{
+			        oController._SignE.setData(vData);
+					oController.readAfterProcessE(oController);
+				}
+			},
+			function(oResponse) {
+				console.log(oResponse);
+			}
+	  );	
+	},
+	
+	searchSignH : function(oController){
+		var oModel = new sap.ui.model.odata.ODataModel("/sap/opu/odata/sap/ZHR_TILE_SRV/", true, undefined, undefined, { "Cache-Control": "max-age=0"}, undefined, undefined, true);
+		var oView = this.getView();
+		var oController = this.getView().getController() ;
+		  
+		var vReqCntAll = 0, vReqCnt1 = 0, vReqCnt2 = 0, vReqCnt3 = 0;
+		
+		var vSummaryData = [];
+		
+		var vData = {
+			Data : {			
+			  Cnt01 : 0,
+			  Cnt02 : 0,
+			  Cnt03 : 0,
+			  Prdtx : ""
+			}
+		};
+
+	  oModel.read("/HrApprovalSet",
+			null, 
+			null, 
+			true, 
+			function(oData, oResponse) {
+				if(oData.results && oData.results.length > 0) {
+					var oneData = oData.results[0] ;
+					oneData.Cnt01 = oData.results[0].Cnt01 * 1;
+					oneData.Cnt02 = oData.results[0].Cnt02 * 1;
+					oneData.Cnt03 = oData.results[0].Cnt03 * 1;
+					vData.Data = oneData;
+					oController._SignH.setData(vData);
+					oController.readAfterProcessH(oController);
+
+				}else{
+			        oController._SignH.setData(vData);
+					oController.readAfterProcessH(oController);
+				}
+			},
+			function(oResponse) {
+				console.log(oResponse);
+			}
+	  );	
+	},
+
+
+	searchEmployee : function(oController){
+		  var oCommonModel = new sap.ui.model.odata.ODataModel("/sap/opu/odata/sap/ZL2P01GW9000_SRV/", true, undefined, undefined, { "Cache-Control": "max-age=0"}, undefined, undefined, true);
+		  var oDatas = {results: { pic : "" , Ename : "", 
+				                  Zzjikgbt : "", Zzjiktlt : "", 
+				                  Pbtxt : "", Stext : "" }};
+		  var mEmpLoginInfo = sap.ui.getCore().getModel("EmpLoginInfo");
+		  var vEmpLoginInfo = mEmpLoginInfo.getProperty("/EmpLoginInfoSet");
+		  var vPernr = vEmpLoginInfo[0].Pernr;
+	
+		  if(vPernr == ""){
+			  oController._JSonModel1.setData(oDatas);
+			  return ;
+		  }
+		  
+		  var dateFormat = sap.ui.core.format.DateFormat.getDateTimeInstance({pattern: "yyyy-MM-dd"});
+		  var curDate = new Date();
+		  var filterString = "?$filter=Actda%20eq%20datetime%27" + dateFormat.format(curDate) + "T00%3a00%3a00%27" 
+		                    + " and Ename eq '" + vPernr + "'"; 
+			   filterString += " and Actty eq 'E'";	// 권한 추가 
+		   oCommonModel.read("/EmpSearchResultSet" + filterString, 
+					null, 
+					null, 
+					false,
+					function(oData, oResponse) {					
+						if(oData && oData.results.length) {
+							var vOrgeh = "";
+							vOrgeh = oData.results[0].Fulln;
+							
+							oDatas = {results: {pic : oData.results[0].Photo, Ename : oData.results[0].Ename, 
+								                   totalOrgeh : vOrgeh ,
+								                   Stetx : oData.results[0].Stetx ,
+								                   Zzjikgbt : oData.results[0].Zzjikgbt, Zzjiklnt : oData.results[0].Zzjiklnt, 
+								                   Pbtxt : oData.results[0].Pbtxt, Stext : oData.results[0].Pbtxt }};
+						}
+					},
+					function(oResponse) {
+					}
+			);
+		   
+			oController._JSonModel1.setData(oDatas);
+		
+	},
+	
+	
+	onInitControl : function(oController, _vZappStatAl ){
+		
+	},
+	
+	onBack : function(event){
+	},
+
+	doSuggest : function(event){
+		var oView = sap.ui.getCore().byId("ZUI5_HR_Portal.ZUI5_HR_PortalList");
+		var oController = oView.getController();
+		
+		oController.onSuggest(event);
+		if (true || event.getSource() === barSearchField || event.getParameter("suggestValue")){
+			event.getSource().suggest();
+		}
+	},
+	
+	onSuggest : function(event){
+		var oView = sap.ui.getCore().byId("ZUI5_HR_Portal.ZUI5_HR_PortalList");
+		var oController = oView.getController();
+		var value = event.getParameter("suggestValue");
+		var newData;
+		// Lev1 추가
+		var oLev2menu = sap.ui.getCore().byId(oController.PAGEID + "_Lev2menu_1");
+		var oContents = oLev2menu.getCustomData();
+		var vAuth = "";
+		if(oContents && oContents.length){
+			vAuth = oContents[0].getValue();
+		}
+		
+		if (value) {
+			value = value.toUpperCase();
+			newData = oController._SearchControlPage.filter(function(item){
+				return item.Autho == vAuth && 
+					   ((item.text || "").toUpperCase().indexOf(value) > -1 || (item.description || "").toUpperCase().indexOf(value) > -1);
+			});
+		} else {
+			newData = [];
+		}
+		event.getSource().getModel().setData(newData);
+		
+	},
+	
+	onSearch : function(event){
+		var oView = sap.ui.getCore().byId("ZUI5_HR_Portal.ZUI5_HR_PortalList");
+		var oController = oView.getController();
+		var item = event.getParameter("suggestionItem");
+		if (item && item.getKey()) {
+			for(var i =0; i< oController._SearchControlPage.length; i++){
+				if(item.getKey() == oController._SearchControlPage[i].key){
+//					window.open(oController._SearchControlPage[i].url);
+					var toolPage = sap.ui.getCore().byId("toolPage");
+					toolPage.setSideExpanded(false);
+					
+					if(oController._SearchControlPage[i].Pwuse == true){
+						common.Password.openPasswordDialog(oController, item.getKey());
+						oController.onClearNavigation(oController);
+					}else{
+						oController.goToPage(oController, item.getKey());
+						oController.onClearNavigation(oController);
+					}
+					break;
+				}
+			}
+			//검색박스 초기화
+			event.oSource.setValue("");
+		}
+	},
+	
+	onClearNavigation : function(oController, toManuId){
+		for(var i = 0; i < 9; i++) {
+			var oLevMenuButton = sap.ui.getCore().byId(oController.PAGEID + "_Lev2menu_" + (i + 1));
+			
+			if(oLevMenuButton) {
+				oLevMenuButton.removeStyleClass("LinkFontFamilyBoldActive");
+				oLevMenuButton.addStyleClass("LinkFontFamilyBold");
+			}
+		}
+
+		var oSNav = sap.ui.getCore().byId(oController.PAGEID + "_SideNavigation"),
+		oModel = oSNav.getModel();
+		oModel.setData({Data : []});
+		
+		var toolPage = sap.ui.getCore().byId("toolPage");
+		toolPage.setSideExpanded(false);
+		
+		// Menu 설정 시 이동
+		if(!common.Common.checkNull(toManuId)){
+			var navContainer = sap.ui.getCore().byId("navContainer");
+			navContainer.to(toManuId);
+		}
+
+	},
+	
+	onClearLev2 : function(oController){
+		for(var i = 0; i< 9; i++){
+			var oLink = sap.ui.getCore().byId(oController.PAGEID + "_Lev2menu_" + (i + 1));
+			oLink.removeStyleClass("LinkFontFamilyBoldActive");
+			oLink.addStyleClass("LinkFontFamilyBold");
+		}
+	},
+	
+
+	readAfterProcessE : function(oController){
+		var vData = oController._SignE.getData();
+	    var vSummaryData = [];
+		  
+		if(vData.Data){
+			if(vData.Data.Cnt01 == 0 &&
+			    vData.Data.Cnt02 == 0 &&
+			    vData.Data.Cnt03 == 0  ){
+			    vSummaryData.push({label : "" , value : 1, color : "#f5f5f5", highlight: "#f5f5f5"});
+			   
+		    }else{
+				vSummaryData.push({label : "신청" , value : vData.Data.Cnt01, color : "#4bc0c0", highlight: "#4bc0c0"});
+				vSummaryData.push({label : "승인" , value : vData.Data.Cnt02, color : "#36a2eb", highlight: "#36a2eb"});
+				vSummaryData.push({label : "반려" , value : vData.Data.Cnt03, color : "#ff6384", highlight: "#ff6384"});
+		    }
+		
+		    if(document.getElementById("chart-areaE")){
+			    var ctx = document.getElementById("chart-areaE").getContext("2d");
+			    window.myPie = new Chart(ctx).Pie(vSummaryData);
+		    }
+				  
+
+		}
+	},
+	
+	readAfterProcessH : function(oController){
+		var vData = oController._SignH.getData();
+	    var vSummaryData = [];
+		  
+		if(vData.Data){
+			if(vData.Data.Cnt01 == 0 &&
+			    vData.Data.Cnt02 == 0 &&
+			    vData.Data.Cnt03 == 0  ){
+			    vSummaryData.push({label : "" , value : 1, color : "#f5f5f5", highlight: "#f5f5f5"});
+			   
+		    }else{
+				vSummaryData.push({label : "신청" , value : vData.Data.Cnt01, color : "#4bc0c0", highlight: "#4bc0c0"});
+				vSummaryData.push({label : "승인" , value : vData.Data.Cnt02, color : "#36a2eb", highlight: "#36a2eb"});
+				vSummaryData.push({label : "반려" , value : vData.Data.Cnt03, color : "#ff6384", highlight: "#ff6384"});
+		    }
+		
+		    if(document.getElementById("chart-areaH")){
+			    var ctx = document.getElementById("chart-areaH").getContext("2d");
+			    window.myPie = new Chart(ctx).Pie(vSummaryData);
+		    }
+				  
+
+		}
+	},
+	
+	SmartSizing : function(event){
+		var oView = sap.ui.getCore().byId("ZUI5_HR_Portal.ZUI5_HR_PortalList");
+		var oController = oView.getController();
+	},
+	
+	_AddPersonDialog : null,
+	
+	EmpSearchByTx :function(oEvent) {
+		var oView = sap.ui.getCore().byId("ZUI5_HR_Portal.ZUI5_HR_PortalList"),
+			oController = oView.getController(),
+			oControl = oEvent.getSource(),
+			vEname = oControl.getValue(),
+			mEmpSearchResult = sap.ui.getCore().getModel("EmpSearchResult"),
+			vEmpSearchResult = {EmpSearchResultSet : []};
+		
+		common.SearchUserList.oController = oController;
+		oController._vEnamefg = "";
+		
+		if(!vEname || vEname == "") {
+			if(oController._ListCondJSonModel.getProperty("/Data")) {
+				var vControlId = common.Common.getControlId(oController, oControl.getId());
+				if(vControlId.Id && vControlId.Id != "")
+					oController._ListCondJSonModel.setProperty("/Data/" + vControlId.Id,"");
+				if(vControlId.Key && vControlId.Key != "")
+					oController._ListCondJSonModel.setProperty("/Data/" + vControlId.Key,"");
+			}
+//			oController.onPressSearch();
+		}else{
+			oController._oControl = oControl;
+			
+			var oCommonModel = sap.ui.getCore().getModel("ZL2P01GW9000_SRV"),
+				curDate = new Date();
+			
+			try {
+				oCommonModel.read("/EmpSearchResultSet", {
+					async: false,
+					filters: [
+//						new sap.ui.model.Filter('Persa', sap.ui.model.FilterOperator.EQ, '1000'),
+						new sap.ui.model.Filter('Actda', sap.ui.model.FilterOperator.EQ, common.Common.adjustGMT(curDate)),
+						new sap.ui.model.Filter('Ename', sap.ui.model.FilterOperator.EQ, encodeURI(vEname)),
+						new sap.ui.model.Filter('Stat1', sap.ui.model.FilterOperator.EQ, '3'),
+						new sap.ui.model.Filter('Actty', sap.ui.model.FilterOperator.EQ, _gAuth)
+					],
+					success: function(oData, oResponse) {
+						if(oData && oData.results) {
+							for(var i=0; i<oData.results.length; i++) {	
+								oData.results[i].Chck = false ;
+								vEmpSearchResult.EmpSearchResultSet.push(oData.results[i]);
+								
+							}
+						}
+					},
+					error: function(Res) {
+						var errData = common.Common.parseError(Res);
+						oController.Error = errData.Error;
+						oController.ErrorMessage = errData.ErrorMessage;
+					}
+				});
+				
+				if(oController.Error == "E"){
+					oController.Error = "";
+					sap.m.MessageBox.alert(oController.ErrorMessage, {title : "오류"});
+					oEvent.getSource().setValue();
+					return;
+				}	
+			}catch(Ex){
+				
+			}
+			
+			if(vEmpSearchResult.EmpSearchResultSet.length == 1){
+				var vControlId = common.Common.getControlId(oController, oControl.getId());
+				if(vControlId.Id && vControlId.Id != "")
+					oController._ListCondJSonModel.setProperty("/Data/" + vControlId.Id,vEmpSearchResult.EmpSearchResultSet[0].Ename);
+				if(vControlId.Key && vControlId.Key != "")
+					oController._ListCondJSonModel.setProperty("/Data/" + vControlId.Key,vEmpSearchResult.EmpSearchResultSet[0].Pernr);
+//				oController.onPressSearch();
+			}else{
+				oController._vEnamefg = "X";
+				oController.displayEmpSearchDialog();
+			}
+		}
+		
+		
+	},
+	
+	displayEmpSearchDialog : function(oEvent) {
+		var oView = sap.ui.getCore().byId("ZUI5_HR_Portal.ZUI5_HR_PortalList"),
+			oController = oView.getController();
+		
+		if(oEvent){
+			oController._oControl = oEvent.getSource();
+			oController._vEnamefg = "";
+		}
+		
+		//각 발령대상자의 발령일을 검색조건으로 설정한다.
+		var oActda = sap.ui.getCore().byId(oController.PAGEID + "_Actda");
+		if(oActda) oController._vActda = oActda.getValue();
+		
+		common.SearchUserList.oController = oController;
+		common.SearchUserList.fPersaEnabled = false;
+		
+		if(!oController._AddPersonDialog) {
+			oController._AddPersonDialog = sap.ui.jsfragment("fragment.EmployeeSearchList", oController);
+			oView.addDependent(oController._AddPersonDialog);
+		}
+		
+		oController._AddPersonDialog.open();
+		
+	},
+	
+	displayMultiOrgSearchDialog : function(oEvent) {
+		jQuery.sap.require("common.SearchOrg");
+
+		var oView = sap.ui.getCore().byId("ZUI5_HR_Portal.ZUI5_HR_PortalList"),
+			oController = oView.getController();
+		
+		common.SearchOrg.oController = oController;
+		common.SearchOrg.vActionType = "Multi";
+		common.SearchOrg.vCallControlId = oEvent.getSource().getId();
+		common.SearchOrg.vCallControlType = "MultiInput";
+		
+		if(!oController._SerachOrgDialog) {
+			oController._SerachOrgDialog = sap.ui.jsfragment("fragment.COMMON_SEARCH_ORG", oController);
+			oView.addDependent(oController._SerachOrgDialog);
+		}
+		
+		oController._SerachOrgDialog.open();
+	},
+	
+	displayOrgSearchDialog : function(oEvent) {
+		jQuery.sap.require("common.SearchOrg");
+
+		var oView = sap.ui.getCore().byId("ZUI5_HR_Portal.ZUI5_HR_PortalList"),
+			oController = oView.getController();
+		
+		common.SearchOrg.oController = oController;
+		common.SearchOrg.vActionType = "Single";
+		common.SearchOrg.vCallControlId = oEvent.getSource().getId();
+		common.SearchOrg.vCallControlType = "Input";
+		common.SearchOrg.vNoPersa = true;
+		
+		if(!oController._SerachOrgDialog) {
+			oController._SerachOrgDialog = sap.ui.jsfragment("fragment.COMMON_SEARCH_ORG", oController);
+			oView.addDependent(oController._SerachOrgDialog);
+		}
+		
+		oController._SerachOrgDialog.open();
+	},
+	
+	onESSelectPerson : function(oEvent) {
+		var oView = sap.ui.getCore().byId("ZUI5_HR_Portal.ZUI5_HR_PortalList"),
+			oController = oView.getController(),
+			mEmpSearchResult = sap.ui.getCore().getModel("EmpSearchResult"),
+			vEmpSearchResult = mEmpSearchResult.getProperty("/EmpSearchResultSet"),
+			mActionSubjectList_Temp = sap.ui.getCore().getModel("ActionSubjectList_Temp"),
+			vActionSubjectList_Temp = {ActionSubjectListSet : []},
+			mEmpSearchResult = sap.ui.getCore().getModel("EmpSearchResult"),
+			oTable = sap.ui.getCore().byId(oController.PAGEID + "_EmpSearchResult_Table"), 
+			vIDXs = oTable.getSelectedIndices();
+		
+		if(vEmpSearchResult && vEmpSearchResult.length > 0 ) {
+			if(vIDXs.length > 1){
+				sap.m.MessageBox.alert("대상자는 한명만 선택이 가능합니다.");
+				return;
+			}else if(vIDXs.length < 1){
+				sap.m.MessageBox.alert("대상자는 선택하여 주세요.");
+				return;
+			}
+			
+			var vControlId = common.Common.getControlId(oController, oController._oControl.getId()),
+				_selPath = oTable.getContextByIndex(vIDXs[0]).sPath;
+			
+			if(vControlId.Id && vControlId.Id != "")
+				oController._ListCondJSonModel.setProperty("/Data/" + vControlId.Id, mEmpSearchResult.getProperty(_selPath + "/Ename"));
+			if(vControlId.Key && vControlId.Key != "")
+				oController._ListCondJSonModel.setProperty("/Data/" + vControlId.Key,mEmpSearchResult.getProperty(_selPath + "/Pernr"));
+		
+		}else {
+			sap.m.MessageBox.alert("대상자를 선택하여 주십시오.", {title : "오류"});
+			return;
+		}
+		
+		oController._AddPersonDialog.close();
+	},
+	
+	onESSClose : function(oEvent) {
+		var oView = sap.ui.getCore().byId("ZUI5_HR_Portal.ZUI5_HR_PortalList"),
+			oController = oView.getController(),
+			vControlId = common.Common.getControlId(oController, oController._oControl.getId());
+		
+		if(vControlId.Id && vControlId.Id != "")
+			oController._ListCondJSonModel.setProperty("/Data/" + vControlId.Id,"");
+		if(vControlId.Key && vControlId.Key != "")
+			oController._ListCondJSonModel.setProperty("/Data/" + vControlId.Key,"");
+		
+		oController._AddPersonDialog.close();
+	},
+	
+	setOnlyDigit : function(oEvent){
+		var oView = sap.ui.getCore().byId("ZUI5_HR_Portal.ZUI5_HR_PortalList");
+		var oController = oView.getController();
+		var inputValue = oEvent.getParameter('value').trim(),
+		convertValue = inputValue.replace(/[^\d]/g, '');
+		
+		
+		oController._ListCondJSonModel.setProperty("/Data/Datum", convertValue);
+	},
+	
+	displayOrgSearchDialog : function(oEvent) {
+		var oView = sap.ui.getCore().byId("ZUI5_HR_Portal.ZUI5_HR_PortalList");
+		var oController = oView.getController();
+		
+		jQuery.sap.require("common.SearchOrg");
+		
+		common.SearchOrg.oController = oController;
+		common.SearchOrg.vActionType = "Single";
+		common.SearchOrg.vCallControlId = oEvent.getSource().getId();
+		common.SearchOrg.vCallControlType = "Input";
+		common.SearchOrg.vNoPersa = true;
+		
+		if(!oController._SerachOrgDialog) {
+			oController._SerachOrgDialog = sap.ui.jsfragment("fragment.COMMON_SEARCH_ORG", oController);
+			oView.addDependent(oController._SerachOrgDialog);
+		}
+		oController._SerachOrgDialog.open();
+	},
+	
+	moveTiletoPage : function(oController, movePage){
+		var navContainer = sap.ui.getCore().byId("navContainer"); 
+		// Lev2 메뉴와 비교하여 동일한 메뉴를 클릭 시 무시
+		var oLev2menu = sap.ui.getCore().byId(oController.PAGEID + "_Lev2menu_1");
+		var oContents = oLev2menu.getCustomData();
+		var vAuth = "E";
+		if(oContents && oContents.length){
+			vAuth = oContents[0].getValue();
+		}
+		
+		switch(movePage) {
+		case "Emp":
+			movePage = movePage + "_" + vAuth;
+			break;
+		case "Approval":
+			vAuth = vAuth == "H" ? "H" : "E";
+			movePage = movePage + "_" + vAuth;
+			break;
+		}
+		$('#navContainer > div[id^="E_"]').each(function() {$(this).remove();});
+		$('#navContainer > div[id^="M_"]').each(function() {$(this).remove();});
+		$('#navContainer > div[id^="H_"]').each(function() {$(this).remove();});
+		navContainer.to(movePage);		
+	},
+	
+	
+	openMyFavoriteLsit : function(oEvent){
+		
+	},
+	
+	getCurrentAuth : function(oController){
+		var oLev2menu = sap.ui.getCore().byId(oController.PAGEID + "_Lev2menu_1");
+		var oContents = oLev2menu.getCustomData();
+		var vAuth = "E";
+		if(oContents && oContents.length){
+			vAuth = oContents[0].getValue();
+		}
+		return vAuth;
+	},
+	
+	goToPage : function(oController, PageKey ){
+		var oView = sap.ui.getCore().byId("ZUI5_HR_Portal.ZUI5_HR_PortalList");
+		var oController = oView.getController();
+		var navContainer = sap.ui.getCore().byId("navContainer");
+		oController.BusyDialog.open();
+		
+		if(navContainer.getCurrentPage().sId == PageKey) {
+			
+			var vSrc = $('#iWorkerPDF').attr('src');
+			
+			$('#iWorkerPDF').attr('src', vSrc);
+			
+		} else {
+			$('#navContainer > div[id^="E_"]').each(function() {$(this).remove();});
+			$('#navContainer > div[id^="M_"]').each(function() {$(this).remove();});
+			$('#navContainer > div[id^="H_"]').each(function() {$(this).remove();});
+			$('#navContainer > div[id^="Emp_"]').each(function() {$(this).remove();});
+			
+			if(PageKey != "" && PageKey.indexOf("ZP") < 0)
+				navContainer.to(PageKey);
+			else{
+				// Total Reward Dashbord Popup
+				if(PageKey.indexOf("ZP01") > -1){
+					ZUI5_HR_Portal.common.TotalRewardController.onOpenDashboard(oController);
+				}else if(PageKey.indexOf("ZP02") > -1){
+					ZUI5_HR_Portal.common.TotalRewardController.onOpenDashboard2(oController);
+				}
+				oController.BusyDialog.close();
+			}
+		}
+	},
+	
+	openOrgChart : function(oController, vTypgb ){
+		var oModel = sap.ui.getCore().getModel("ZHR_COMMON_SRV");
+		var errData = {};
+		
+		oModel.read("/OrgChartUrlSet", {
+			async : false,
+			filters : [
+				new sap.ui.model.Filter('Typgb', sap.ui.model.FilterOperator.EQ, vTypgb),
+			],
+			success : function(data, res) {
+				if(data && data.results.length && data.results[0].Url){
+					window.open(data.results[0].Url);
+				}
+			},
+			error : function(Res) {
+				errData = common.Common.parseError(Res);
+			}
+		});
+		
+		if(errData.Error && errData.Error == "E"){
+			sap.m.MessageBox.alert(errData.ErrorMessage);
+		}
+	},
+	
+});

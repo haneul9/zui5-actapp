@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta http-equiv='Content-Type' content='text/html;charset=UTF-8'/>
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+        <meta http-equiv="Pragma" content="no-cache" />
+        <meta http-equiv="Expires" content="0" />
+        
+        <title>사원명부</title>
+
+		
+		<script src="resources/sap-ui-cachebuster/sap-ui-core.js"
+				id="sap-ui-bootstrap"
+				data-sap-ui-libs="sap.m, sap.ui.commons, sap.ui.layout, sap.ui.table"
+				data-sap-ui-theme="sap_belize"
+				data-sap-ui-xx-bindingSyntax="complex"
+				data-sap-ui-preload="sync"
+				data-sap-ui-appCacheBuster="./"></script>
+		
+		<script>
+				sap.ui.core.AppCacheBuster.register("/sap/bc/ui5_ui5/sap/ZUI5_HR_HCOMMON");
+				jQuery.sap.registerModulePath("common", "/sap/bc/ui5_ui5/sap/ZUI5_HR_HCOMMON/common");
+				jQuery.sap.registerModulePath("control", "/sap/bc/ui5_ui5/sap/ZUI5_HR_HCOMMON/control"); 
+				jQuery.sap.registerModulePath("fragment", "/sap/bc/ui5_ui5/sap/ZUI5_HR_HCOMMON/fragment");
+				jQuery.sap.registerModulePath("util", "/sap/bc/ui5_ui5/sap/ZUI5_HR_HCOMMON/util");
+				
+				// 사원검색을 위한 필드 
+				var gDtfmt = "yyyy.MM.dd";
+				var gPersa = "";
+				var _gAuth = ""; // 권한 
+				_gAuth = jQuery.sap.getUriParameters().get("_gAuth");
+				var _pObjKey = ""; // Object Key 
+				_pObjKey = jQuery.sap.getUriParameters().get("_pObjKey");
+				
+				jQuery.sap.includeStyleSheet("/sap/bc/ui5_ui5/sap/ZUI5_HR_HCOMMON/css/L2PSAP.css");
+				jQuery.sap.includeStyleSheet("/sap/bc/ui5_ui5/sap/ZUI5_HR_HCOMMON/css/L2PBasic.css");
+
+				sap.ui.localResources("ZUI5_HR_EmployeeList");
+				
+				var oView = sap.ui.view({id: "ZUI5_HR_EmployeeList.AppMain", viewName:"ZUI5_HR_EmployeeList.AppMain", type:"JS"});
+				oView.placeAt("content");
+		</script> 
+		<style type="text/css">
+		
+		.WhiteBackground {
+		 	background: white !important; 
+		}
+		
+		.TitleFont {
+			font-size: 20px;
+			font-weight: bold;
+			font-family: 'Malgun Gothic' !important;
+			color: white !important;
+			vertical-align: middle !important;
+		}
+		
+		.PSNCHeader {
+			background-color : #2f3c48 !important;
+		}
+		
+		.L2PFontFamily {
+		 	font-family: 'Malgun Gothic' !important; 
+		    font-size: 15px !important;
+			font-weight : normal !important;
+			color: #000000 !important;
+		}
+		
+		.L2PMatrixData {	
+			background-color:rgb(255,255,255);
+			border : 1px solid #aaaaaa;
+			padding-left: 10px !important;
+		}
+		
+		.L2PMatrixLabel {	
+			background-color: #fafafa;
+			border : 1px solid #aaaaaa;
+			padding-left: 10px !important;
+		}
+		</style>
+		
+	</head>
+	<body class="sapUiBody" role="application">
+		<div id="content" oncontextmenu='return false'></div>
+		<iframe id="iWorker" name="iWorker"  height="100" width="100" style="display:none"></iframe>
+		<div id="DownloadExcel"></div>
+	</body>
+</html>

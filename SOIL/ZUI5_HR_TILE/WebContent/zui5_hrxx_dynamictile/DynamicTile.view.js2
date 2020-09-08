@@ -1,0 +1,217 @@
+// Copyright (c) 2009-2014 SAP SE, All Rights Reserved
+
+
+
+(function(){
+	"use strict";
+	sap.ui.jsview("zui5_hrxx_dynamictile.DynamicTile",{
+//(function(){"use strict";sap.ui.jsview("sap.ushell.components.tiles.zui5_hrxx_dynamictile.DynamicTile",{
+	getControllerName:function(){
+		return"zui5_hrxx_dynamictile.DynamicTile";
+//		return "sap.ushell.components.tiles.zui5_hrxx_dynamictile.DynamicTile"
+	},
+	createContent:function(c){
+		this.setHeight('100%');
+		this.setWidth('100%');
+	},
+	
+	getTileControl:function(){
+		jQuery.sap.require('sap.m.GenericTile');
+		jQuery.sap.require('sap.m.Text');
+		jQuery.sap.require("sap.ui.commons.TextView", "sap.ui.core.Icon" , "sap.ui.layout.VerticalLayout");
+		jQuery.sap.require("sap.ui.commons.layout.MatrixLayout", "sap.ui.commons.layout.VerticalLayout", "sap.ui.core.HTML");
+		jQuery.sap.includeStyleSheet("/sap/bc/ui5_ui5/sap/ZUI5_HR_TILE/css/actapp.css");
+		
+		var oController =this.getController();
+		
+		var oMatrixLayout = new sap.ui.commons.layout.MatrixLayout({
+			layoutFixed : true,
+			width : '100%',
+			columns : 1,
+		});	
+		
+		var oCell = null , oRow = null;
+		
+		var oMainContent =  new sap.ui.commons.layout.MatrixLayout({
+			layoutFixed : true,
+			widths : ['20%','80%'],
+			columns : 2,
+			visible : {
+				path : "/data/Number1yn",
+				formatter : function(fVal){
+					if(fVal && fVal == "Y") return true;
+					else return false;
+				}
+			}  
+		});			
+		oRow = new sap.ui.commons.layout.MatrixLayoutRow({height : "60px"});
+		oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+			content : new sap.ui.commons.TextView({
+		        	   text : '{/data/Number1}',
+		        	   width : "100%",
+		        	   textAlign : "End"
+				   }).addStyleClass("L2PFontMSSMainText L2PLineHeight"),
+    	    colSpan : 2
+		}).addStyleClass("L2PPaddingTopBottom");
+		oRow.addCell(oCell);		
+		oMainContent.addRow(oRow);
+		
+		/////////////////
+		var oMainContent2 =  new sap.ui.commons.layout.MatrixLayout({
+			layoutFixed : true,
+			widths : ['20%','80%'],
+			columns : 2,
+			visible : {
+				path : "/data/Number2yn",
+				formatter : function(fVal){
+					if(fVal && fVal == "Y") return true;
+					else return false;
+				}
+			}  
+		});	
+		oRow = new sap.ui.commons.layout.MatrixLayoutRow({height : "60px"});
+		oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+			content : new sap.ui.commons.layout.HorizontalLayout({
+							content : [
+								new sap.ui.commons.TextView({
+						        	   text : '{/data/Number1}',
+						        	   width : "100%",
+						        	   textAlign : "End"
+								   }).addStyleClass("L2PFontMSSMainText L2PLineHeight"),
+							    new sap.ui.commons.TextView({
+						        	   text : '/',
+						        	   width : "100%",
+						        	   textAlign : "End",
+						        	   visible : {
+						        		   path : "/data/Number1",
+						        		   formatter : function(fVal){
+						        			   return fVal == "" ? false : true;
+						        		   }
+						        	   }
+							    }).addStyleClass("L2PFontMSSMainText4 L2PLineHeight"),
+//							    new sap.ui.commons.TextView({
+//						        	   text : '{/data/Number2}',
+//						        	   width : "100%",
+//						        	   textAlign : "End"
+//							    }).addStyleClass("L2PFontMSSMainText3 L2PLineHeight"),
+							    new sap.ui.commons.TextView({
+							    	   text : {
+							    		   parts : [{path : "/data/Number2"}, {path : "/data/ObjectNo"}],
+							    		   formatter : function(fVal1, fVal2){
+							    			   this.removeStyleClass("L2PFontMSSMainText L2PFontMSSMainText3");
+							    			   
+							    			   if(fVal2 == "ZHR03") this.addStyleClass("L2PFontMSSMainText3");	// 휴가계획입력(빨간글자)
+							    			   else this.addStyleClass("L2PFontMSSMainText");
+							    			   
+							    			   return fVal1;
+							    		   }
+							    	   },
+						        	   width : "100%",
+						        	   textAlign : "End"
+							    }).addStyleClass("L2PLineHeight"),
+							]
+						}),
+    	    colSpan : 2,
+    	    hAlign : "Right"
+		}).addStyleClass("L2PPaddingTopBottom");
+		oRow.addCell(oCell);		
+		oMainContent2.addRow(oRow);
+		
+		/////////////////
+		var oMainContent3 =  new sap.ui.commons.layout.MatrixLayout({
+			layoutFixed : true,
+			widths : ['20%','80%'],
+			columns : 2,
+			visible : {
+				path : "/data/Number3yn",
+				formatter : function(fVal){
+					if(fVal && fVal == "Y") return true;
+					else return false;
+				}
+			}  
+		});			
+		oRow = new sap.ui.commons.layout.MatrixLayoutRow({height : "60px"});
+		oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+			content : new sap.ui.commons.layout.HorizontalLayout({
+							content : [
+								new sap.ui.commons.TextView({
+						        	   text : '{/data/Number1}',
+						        	   width : "100%",
+						        	   textAlign : "End"
+								   }).addStyleClass("L2PFontMSSMainText L2PLineHeight"),
+							    new sap.ui.commons.TextView({
+						        	   text : '/',
+						        	   width : "100%",
+						        	   textAlign : "End"
+							    }).addStyleClass("L2PFontMSSMainText4 L2PLineHeight"),
+							    new sap.ui.commons.TextView({
+						        	   text : '{/data/Number2}',
+						        	   width : "100%",
+						        	   textAlign : "End"
+								   }).addStyleClass("L2PFontMSSMainText L2PLineHeight"),
+							    new sap.ui.commons.TextView({
+						        	   text : '/',
+						        	   width : "100%",
+						        	   textAlign : "End"
+							    }).addStyleClass("L2PFontMSSMainText4 L2PLineHeight"),
+							    new sap.ui.commons.TextView({
+						        	   text : '{/data/Number3}',
+						        	   width : "100%",
+						        	   textAlign : "End"
+							    }).addStyleClass("L2PFontMSSMainText3 L2PLineHeight"),
+//							    new sap.ui.commons.TextView({
+//						        	   text : '/',
+//						        	   width : "100%",
+//						        	   textAlign : "End"
+//							    }).addStyleClass("L2PFontMSSMainText4 L2PLineHeight"),
+//							    new sap.ui.commons.TextView({
+//						        	   text : '{/data/Number4}',
+//						        	   width : "100%",
+//						        	   textAlign : "End"
+//							    }).addStyleClass("L2PFontMSSMainText3 L2PLineHeight"),
+							]
+						}),
+    	    colSpan : 2,
+    	    hAlign : "Right"
+		}).addStyleClass("L2PPaddingTopBottom");
+		oRow.addCell(oCell);		
+		oMainContent3.addRow(oRow);
+
+		var oContents = [oMainContent, oMainContent2, oMainContent3];
+		
+		for(var i=0;i<oContents.length;i++){
+			oRow = new sap.ui.commons.layout.MatrixLayoutRow();
+			oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+				content : oContents[i]
+			}).addStyleClass("L2PPaddingTopBottom");
+			oRow.addCell(oCell);
+			oMatrixLayout.addRow(oRow);
+		}
+		
+		var oLayout = new sap.ui.commons.layout.VerticalLayout({
+			width : "145px",
+			content : [oMatrixLayout]
+		});
+		oLayout.addStyleClass("L2PTilePadding");
+		
+		var oCustomTile = new sap.m.GenericTile({
+			 	header : "{/data/display_title_text}",
+			 	mode : "ContentMode",
+			 	subheader : "{/data/display_subtitle_text}",
+			 	tileContent : [new sap.m.TileContent({content : oLayout, footer : "{/data/display_info_text}"})],
+			 	press:[oController.onPress, oController]
+		}).addStyleClass("sapUiSizeCompact Tile TileLayout");	//L2PTilePadding
+		return oCustomTile;
+		
+	},
+	
+	getLinkControl:function(){
+		jQuery.sap.require('sap.m.Link');
+		return new sap.m.Link({text:"{/config/display_title_text}",href:"{/nav/navigation_target_url}"});
+	}
+	
+  });
+}());
+
+
+

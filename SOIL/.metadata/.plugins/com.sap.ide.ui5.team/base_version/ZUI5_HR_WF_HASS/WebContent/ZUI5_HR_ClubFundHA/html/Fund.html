@@ -1,0 +1,207 @@
+<html>
+<head>
+	<style type="text/css">
+    TABLE.dscss {
+        font-size : 13px;
+        table-layout : fixed;
+        word-break : break-all;
+        border-collapse: collapse; 
+        border: 1px solid #bcbcbc;
+      }
+      TR.normal {
+        height : 32px;
+      }
+      TD.normal {
+      	padding-left : 5px;
+      	text-align : left;
+      	border-collapse: collapse; 
+        border: 1px solid #bcbcbc;
+      }
+      TD.normal1 {
+      	padding-left : 5px;
+      	text-align : left;
+      	border-collapse: collapse; 
+        border-left: 1px solid #bcbcbc;
+        border-bottom: 1px solid #bcbcbc;
+      }
+      TD.normal2 {
+      	padding-left : 5px;
+      	text-align : left;
+      	border-collapse: collapse; 
+        border-right: 1px solid #bcbcbc;
+        border-bottom: 1px solid #bcbcbc;
+      }
+      TD.number {
+      	padding-left : 5px;
+      	padding-right : 5px;
+      	text-align : right;
+      	border-collapse: collapse; 
+        border: 1px solid #bcbcbc;
+      }
+      TD.color {
+      	padding-left : 5px;
+      	text-align : center;
+      	background-color:#f1f1f1;
+      	border-collapse: collapse; 
+        border: 1px solid #bcbcbc;
+      }
+      TD.tblcolor {
+      	padding-left : 5px;
+      	text-align : center;
+      	background-color:#f1f1f1;
+      	border-collapse: collapse; 
+        border: 1px solid #bcbcbc;
+      }
+      TD.tblnormal {
+      	padding-left : 5px;
+      	text-align : center;
+      	border-collapse: collapse; 
+        border: 1px solid #bcbcbc;
+      }
+      DIV.normal{
+        font-size : 13px;
+        font-weight:bold;
+        height : 20px;
+        text-align : left;
+      }
+      PRE.normal{
+      	font-size : 13px;
+      	font-family : "Malgun Gothic","맑은 고딕",Segoe UI, dotum,"돋움" !important; 
+      }
+    </style>
+	</head>
+	<body>
+	<div class='normal' >신청내역 </div>
+		<table class='dscss'>
+	  	<colgroup>
+	      <col width="172px" />
+	      <col width="172px" />
+	      <col width="172px" />   
+	      <col width="172px" />  
+	      <col width="172px" />
+	    </colgroup>
+		  <tbody>
+		    <tr class='normal'>
+	          <td class='color'>인포멀그룹명</td>
+	          <td class='normal' colSpan=4>[DATA]</td>
+	  		</tr>
+	  		<tr class='normal'>
+	          <td class='color'>구분</td>
+	          <td class='color'>일반지원금</td>
+	  		  <td class='color'>행사지원금</td>
+	          <td class='color'>기타지원금</td>
+	          <td class='color'>계</td>
+	  		</tr>
+	  		<tr class='normal'>
+	          <td class='color'>지원금예산</td>
+	          <td class='number'>[ITEM_DATA1]</td>
+	  		  <td class='number'>[ITEM_DATA2]</td>
+	          <td class='number'>[ITEM_DATA3]</td>
+	          <td class='number'>[ITEM_DATA4]</td>
+	  		</tr>
+	  		<tr class='normal'>
+	          <td class='color'>현재 잔액</td>
+	          <td class='number'>[ITEM_DATA5]</td>
+	  		  <td class='number'>[ITEM_DATA6]</td>
+	          <td class='number'>[ITEM_DATA7]</td>
+	          <td class='number'>[ITEM_DATA8]</td>
+	  		</tr>
+	  		<tr class='normal'>
+	          <td class='color'>당행사 지원</td>
+	          <td class='number'>[ITEM_DATA9]</td>
+	  		  <td class='number'>[ITEM_DATA10]</td>
+	          <td class='number'>[ITEM_DATA11]</td>
+	          <td class='number'>[ITEM_DATA12]</td>
+	  		</tr>
+	  		<tr class='normal'>
+	          <td class='color'>지원 후 잔액</td>
+	          <td class='number'>[ITEM_DATA13]</td>
+	  		  <td class='number'>[ITEM_DATA14]</td>
+	          <td class='number'>[ITEM_DATA15]</td>
+	          <td class='number'>[ITEM_DATA16]</td>
+	  		</tr>
+	  	</tbody>
+		</table>  
+	<br/>
+		<div class='normal'>지원금신청 계산근거</div>
+			<table class='dscss'>
+		  	<colgroup>
+		      <col width="32px" />
+		      <col width="150px" />
+		      <col width="175px" />
+		      <col width="70px" />
+		      <col width="70px" />
+		      <col width="70px" />
+		      <col width="70px" />
+		      <col width="70px" />
+		      <col width="150px" />
+		    </colgroup>
+			  <tbody>
+		  		<tr class='normal'>
+		  			<td class='tblcolor'>No.</td>
+		  			<td class='tblcolor'>내용</td>
+		  			<td class='tblcolor'>계산근거</td>
+		  			<td class='tblcolor'>회비</td>
+		            <td class='tblcolor'>지원금<br>총액</td>
+		            <td class='tblcolor'>일반<br>지원금</td>
+		            <td class='tblcolor'>행사<br>지원금</td>
+		            <td class='tblcolor'>기타<br>지원금</td>
+		            <td class='tblcolor'>비고</td>
+		  		</tr>
+		        [TABLE_START]
+		        <tr class='normal'>
+		  			<td class='tblnormal'>[TABLE_ITEM1]</td>
+		  			<td class='tblnormal'>[TABLE_ITEM2]</td>
+		  			<td class='tblnormal'>[TABLE_ITEM3]</td>
+		  			<td class='number'>[TABLE_ITEM4]</td>
+		            <td class='number'>[TABLE_ITEM5]</td>
+		            <td class='number'>[TABLE_ITEM6]</td>
+		            <td class='number'>[TABLE_ITEM7]</td>
+		            <td class='number'>[TABLE_ITEM8]</td>
+		            <td class='tblnormal'>[TABLE_ITEM9]</td>
+		  		</tr>
+		        [TABLE_END]
+		          <tr class='normal'>
+		  			<td class='tblnormal' colSpan="3">합계</td>
+		            <td class='number'>[TOTAL_DATA1]</td>
+		            <td class='number'>[TOTAL_DATA2]</td>
+		            <td class='number'>[TOTAL_DATA3]</td>
+		            <td class='number'>[TOTAL_DATA4]</td>
+		            <td class='number'>[TOTAL_DATA5]</td>
+		            <td class='tblnormal'></td>
+		  		</tr>
+		  	</tbody>
+			</table> 
+	<br/>
+		<div class='normal' >행사계획</div>
+		<table class='dscss'>
+	  	<colgroup>
+	      <col width="150px" />
+	      <col width="280px" />
+	      <col width="150px" />
+	      <col width="280px" />
+	    </colgroup>
+		  <tbody>
+	  		<tr class='normal'>
+	          <td class='color'>행사명</td>
+	          <td class='normal'>[ITEM_DATA17]</td>
+	  		  <td class='color'>일자</td>
+	          <td class='normal'>[ITEM_DATA18]</td>
+	  		</tr>
+	  		<tr class='normal'>
+	          <td class='color'>장소</td>
+	          <td class='normal' colspan=3>[ITEM_DATA19]</td>
+	  		</tr>
+	  		<tr class='normal'>
+	          <td class='color'>행사 내용</td>
+	          <td class='normal' colspan=3>[ITEM_DATA20]</td>
+	  		</tr>
+	  		<tr class='normal'>
+	          <td class='color'>참가인원</td>
+	          <td class='normal1'>[ITEM_DATA21]</td>
+	  		  <td class='normal2' colspan=2> </td>
+	  		</tr>
+	  	</tbody>
+		</table>
+	</body>
+</html>

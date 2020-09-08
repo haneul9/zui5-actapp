@@ -1,0 +1,125 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta http-equiv='Content-Type' content='text/html;charset=UTF-8'/>
+		<title>연말정산</title>
+		   
+		<script type="text/javascript" src="/sap/bc/ui5_ui5/sap/ZUI5_HR_COMMON/plugin/spin/spin.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="/sap/bc/ui5_ui5/sap/ZUI5_HR_COMMON/plugin/dhtmlx/css/dhtmlxtree.css" />		
+		<script type="text/javascript" src="/sap/bc/ui5_ui5/sap/ZUI5_HR_COMMON/plugin/dhtmlx/dhtmlxtree.js"></script>
+			  	
+		<script src="resources/sap-ui-cachebuster/sap-ui-core.js"
+				id="sap-ui-bootstrap"
+				data-sap-ui-libs="sap.m, sap.ui.commons, sap.ui.table, sap.ui.comp"
+				data-sap-ui-xx-bindingSyntax="complex"
+				data-sap-ui-theme="sap_belize"
+				data-sap-ui-appCacheBuster="./">
+		</script>
+			
+		<script>
+				sap.ui.core.AppCacheBuster.register("/sap/bc/ui5_ui5/sap/ZUI5_HR_COMMON/");
+				sap.ui.core.AppCacheBuster.register("/sap/bc/ui5_ui5/sap/ZUI5_HR_YET/");
+				
+				sap.ui.localResources("ZUI5_HR_YEARTAX");
+				
+				jQuery.sap.registerModulePath("util", "/sap/bc/ui5_ui5/sap/ZUI5_HR_COMMON/util");
+				jQuery.sap.registerModulePath("control", "/sap/bc/ui5_ui5/sap/ZUI5_HR_COMMON/control");
+				jQuery.sap.registerModulePath("common", "/sap/bc/ui5_ui5/sap/ZUI5_HR_COMMON/common");
+				jQuery.sap.registerModulePath("fragment", "/sap/bc/ui5_ui5/sap/ZUI5_HR_COMMON/fragment");
+				
+				$( window ).resize(function() {
+					sap.ui.getCore().getEventBus().publish("app", "ResizeWindow", {
+						windowHeight : window.innerHeight
+					});	
+				});
+				
+				//LoginEmpInfoSet 의 EntitySet을 읽은후 할당되는 파라메터를 정의한다.
+				//이 변수들은 Global Variable로서 어떤 페이지에서도 그냥 사용하면 된다.
+				var gPersa = "";
+				var gMolga = "";
+				var gDtfmt = "yyyy-MM-dd";
+				var gDcpfm = "";
+				var gLangu = "";
+				
+				// 권한
+				var _gAuth = "";
+				var gReqAuth = '3';
+				_gAuth = jQuery.sap.getUriParameters().get("_gAuth");
+				
+				if(!_gAuth || _gAuth == "")
+					_gAuth = "E";
+				else
+					_gAuth = _gAuth.toUpperCase();
+				
+				var gAuth = _gAuth;				
+				
+				//Style Sheet 파일 설정
+				//No Cache를 위해 NoCache 파라메터를 추가한다.
+// 				jQuery.sap.includeStyleSheet("/sap/bc/ui5_ui5/sap/ZUI5_HR_COMMON/css/NewSAP.css");
+// 				jQuery.sap.includeStyleSheet("/sap/bc/ui5_ui5/sap/ZUI5_HR_COMMON/css/NewBasic.css");
+				
+				jQuery.sap.includeStyleSheet("/sap/bc/ui5_ui5/sap/ZUI5_HR_YET/css/yearendtax.css");
+				jQuery.sap.includeStyleSheet("/sap/bc/ui5_ui5/sap/ZUI5_HR_YET/css/PSNCSAP.css");
+				jQuery.sap.includeStyleSheet("/sap/bc/ui5_ui5/sap/ZUI5_HR_YET/css/PSNCBasic.css");
+				
+				var surfix = "?" + new Date().getTime();
+ 				var oBundleText = jQuery.sap.resources({
+					url : "/sap/bc/ui5_ui5/sap/ZUI5_HR_COMMON/translation/i18n.properties"  + surfix, //번역파일 주소
+					locale : "KO"
+				});
+						
+				sap.ui.getCore().attachInit(function() {
+					var oview = sap.ui.jsview("app", "ZUI5_HR_YEARTAX.AppMain")
+					$("body").fadeOut("slow",function(){
+						$("#content").empty();
+						$("#content").removeAttr('style');
+						oview.placeAt("content");
+						$(this).fadeIn("slow");
+					});
+				});
+
+		</script>
+		
+		<style type="text/css">
+			.sapMITBHead{
+				margin: 0 !important;
+			}
+			
+			:not(.sapMBtnDisabled) .sapMBtnTransparent>.sapMBtnIcon{
+				color: white !important;
+			}
+			
+			.sapMITBHorizontalWrapper {
+			    font-family: 'Malgun Gothic', Arial !important;
+			    font-weight: bold !important;
+			}
+			
+			.MessageStrip_Information{
+				border: 1px solid !important;
+			    border-radius: 0.1875rem;
+			    box-sizing: border-box;
+			    font-size: 0.875rem;
+			    font-weight: normal;
+			    padding: 0.4375rem 1rem;
+			    position: relative;
+			    background-color: #f5faff !important;
+			    border-color: #0a6ed1 !important;
+			    color: #32363a;
+			    font-family: 'Malgun Gothic' !important;
+	       		transition: opacity 0.2s;
+			}
+		</style>
+
+	</head>
+	<body class="sapUiBody" role="application">
+		<div id="content" class="LaunchpadBackground"></div>
+		
+		<div id="HelpOverlayBackLayout" class="L2POverlayBackLayout"></div>
+		<div id="HelpOvrelay" class="L2POverlay">
+			<div id="HelpOvrelay-close" class="close"></div>
+			<div id="HelpOvrelay-inner" class="inner"></div>
+		</div>
+		
+	</body>
+</html>

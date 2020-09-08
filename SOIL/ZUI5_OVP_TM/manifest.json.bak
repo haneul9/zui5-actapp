@@ -1,0 +1,385 @@
+{
+	"_version": "1.6.0",
+	"start_url": "start.html",
+	"sap.app": {
+		"id": "ZHR_OVERIVEW_SRV",
+		"type": "application",
+		"i18n": "i18n/i18n.properties",
+		"applicationVersion": {
+			"version": "${project.version}"
+		},
+		"title": "{{app_title}}",
+		"description": "{{app_description}}",
+		"ach": "sap",
+		"resources": "resources.json",
+		"dataSources": {
+			"ZHR_OVERIVEW_SRV": {
+				"uri": "/sap/opu/odata/sap/ZHR_OVERIVEW_SRV/",
+				"type": "OData",
+				"settings": {
+					"localUri": "localService/ZHR_OVERIVEW_SRV/metadata.xml",
+					"annotations": [
+						"annotation1"
+					]
+				}
+			},
+			"annotation1": {
+				"type": "ODataAnnotation",
+				"uri": "localService/ZHR_OVERIVEW_SRV/annotation1.xml",
+				"settings": {
+					"localUri": "localService/ZHR_OVERIVEW_SRV/annotation1.xml"
+				}
+			}
+		},
+		"sourceTemplate": {
+			"id": "OVP.cardtemplate",
+			"version": "0.0.0"
+		}
+	},
+	"sap.ui": {
+		"technology": "UI5",
+		"icons": {
+			"icon": ""
+		},
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": false,
+			"phone": false
+		},
+		"supportedThemes": [
+			"sap_belize"
+		]
+	},
+	"sap.ui5": {
+		"dependencies": {
+			"minUI5Version": "${sap.ui5.dist.version}",
+			"libs": {
+				"sap.ui.core": {},
+				"sap.m": {},
+				"sap.ui.layout": {},
+				"sap.ushell": {},
+				"sap.collaboration": {},
+				"sap.ui.comp": {},
+				"sap.uxap": {},
+				"sap.ovp": {}
+			}
+		},
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"uri": "i18n/i18n.properties"
+			},
+			"@i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"uri": "i18n/i18n.properties"
+			},
+			"ZHR_OVERIVEW_SRV": {
+				"dataSource": "ZHR_OVERIVEW_SRV",
+				"settings": {}
+			}
+		},
+		"extends": {
+			"extensions": {}
+		},
+		"contentDensities": {
+			"compact": true,
+			"cozy": true
+		}
+	},
+	"sap.ovp": {
+		"globalFilterModel": "ZHR_OVERIVEW_SRV",
+		"globalFilterEntityType": "",
+		"enableLiveFilter": true,
+		"considerAnalyticalParameters": false,
+		"cards": {
+			"ZHR_OVERIVEW_SRV_card00": {
+				"model": "ZHR_OVERIVEW_SRV",
+				"template": "sap.ovp.cards.list",
+				"settings": {
+					"title": "{{ZHR_OVERIVEW_SRV_card00_title}}",
+					"subTitle": "현재일 기준 1개월 이내",
+					"listType": "condensed",
+					"annotationPath": "com.sap.vocabularies.UI.v1.LineItem#Card00",
+					"entitySet": "TimeConfSet"
+				}
+			},
+			"ZHR_OVERIVEW_SRV_card01": {
+				"template": "sap.ovp.cards.linklist",
+				"settings": {
+					"title": "{{ZHR_OVERIVEW_SRV_card01_title}}",
+					"listFlavor": "standard",
+					"headerAnnotationPath": "com.sap.vocabularies.UI.v1.HeaderInfo",
+					"staticContent": [{
+						"title": "근태통합신청",
+						"subTitle": "",
+						"imageUri": "sap-icon://feeder-arrow",
+						"targetUri": "../../../../../../sap/bc/ui5_ui5/sap/zui5_hr_essapp/Vacation.html?_gAuth=H",
+						"openInNewWindow": true
+					}, {
+						"title": "연장근무명령신청",
+						"subTitle": "",
+						"imageUri": "sap-icon://feeder-arrow",
+						"targetUri": "../../../../../../sap/bc/ui5_ui5/sap/zui5_hr_essapp/overtime.html?_gAuth=H",
+						"openInNewWindow": true
+					}, {
+						"title": "연장근무확정신청",
+						"subTitle": "",
+						"imageUri": "sap-icon://feeder-arrow",
+						"targetUri": "../../../../../../sap/bc/ui5_ui5/sap/zui5_hr_essapp/OvertimeConf.html?_gAuth=H",
+						"openInNewWindow": true
+					}, {
+						"title": "근태수정신청",
+						"subTitle": "",
+						"imageUri": "sap-icon://feeder-arrow",
+						"targetUri": "../../../../../../sap/bc/ui5_ui5/sap/zui5_hr_essapp/WorkTimeMod.html?_gAuth=H",
+						"openInNewWindow": true
+					}]
+				}
+			},
+			"ZHR_OVERIVEW_SRV_card02": {
+				"template": "sap.ovp.cards.linklist",
+				"settings": {
+					"title": "{{ZHR_OVERIVEW_SRV_card02_title}}",
+					"listFlavor": "standard",
+					"headerAnnotationPath": "com.sap.vocabularies.UI.v1.HeaderInfo",
+					"staticContent": [{
+						"title": "근태미결내역",
+						"subTitle": "",
+						"imageUri": "sap-icon://feeder-arrow",
+						"targetUri": "../../../../../../sap/bc/ui5_ui5/ui2/ushell/shells/abap/FioriLaunchPad.html#ZHRR2060-approve",
+						"openInNewWindow": true
+					}, {
+						"title": "무급근태내역",
+						"subTitle": "",
+						"imageUri": "sap-icon://feeder-arrow",
+						"targetUri": "../../../../../../sap/bc/ui5_ui5/ui2/ushell/shells/abap/FioriLaunchPad.html#ZHRR2080-approve",
+						"openInNewWindow": true
+					}, {
+						"title": "주휴미발생내역",
+						"subTitle": "",
+						"imageUri": "sap-icon://feeder-arrow",
+						"targetUri": "../../../../../../sap/bc/ui5_ui5/ui2/ushell/shells/abap/FioriLaunchPad.html#ZHRR2070-approve",
+						"openInNewWindow": true
+					}]
+				}
+			},
+			"ZHR_OVERIVEW_SRV_card03": {
+				"template": "sap.ovp.cards.linklist",
+				"settings": {
+					"title": "{{ZHR_OVERIVEW_SRV_card03_title}}",
+					"listFlavor": "standard",
+					"headerAnnotationPath": "com.sap.vocabularies.UI.v1.HeaderInfo",
+					"staticContent": [{
+						"title": "근태평가",
+						"subTitle": "",
+						"imageUri": "sap-icon://feeder-arrow",
+						"targetUri": "../../../../../../sap/bc/ui5_ui5/ui2/ushell/shells/abap/FioriLaunchPad.html#PT60-approve",
+						"openInNewWindow": true
+					}, {
+						"title": "근태평가결과조회",
+						"subTitle": "",
+						"imageUri": "sap-icon://feeder-arrow",
+						"targetUri": "../../../../../../sap/bc/ui5_ui5/ui2/ushell/shells/abap/FioriLaunchPad.html#ZHRR2050-approve",
+						"openInNewWindow": true
+					}, {
+						"title": "근태평가결과조회(B2)",
+						"subTitle": "",
+						"imageUri": "sap-icon://feeder-arrow",
+						"targetUri": "../../../../../../sap/bc/ui5_ui5/ui2/ushell/shells/abap/FioriLaunchPad.html#PT_CLSTB2-approve",
+						"openInNewWindow": true
+					}, {
+						"title": "휴가쿼터보상",
+						"subTitle": "",
+						"imageUri": "sap-icon://feeder-arrow",
+						"targetUri": "../../../../../../sap/bc/ui5_ui5/ui2/ushell/shells/abap/FioriLaunchPad.html#PC00_M41_LQC0-approve",
+						"openInNewWindow": true
+					}]
+				}
+			},
+			"ZHR_OVERIVEW_SRV_card04": {
+				"template": "sap.ovp.cards.linklist",
+				"settings": {
+					"title": "{{ZHR_OVERIVEW_SRV_card04_title}}",
+					"listFlavor": "standard",
+					"headerAnnotationPath": "com.sap.vocabularies.UI.v1.HeaderInfo",
+					"staticContent": [{
+						"title": "일근태관리",
+						"subTitle": "",
+						"imageUri": "sap-icon://feeder-arrow",
+						"targetUri": "../../../../../../sap/bc/ui5_ui5/sap/ZUI5_HR_ESSAPP/WorkTime.html?_gAuth=H",
+						"openInNewWindow": true
+					}, {
+						"title": "시간데이터 유지보수 (PA61)",
+						"subTitle": "",
+						"imageUri": "sap-icon://feeder-arrow",
+						"targetUri": "../../../../../../sap/bc/ui5_ui5/ui2/ushell/shells/abap/FioriLaunchPad.html#PA61-approve",
+						"openInNewWindow": true
+					}, {
+						"title": "시간데이터 조회 (PA51)",
+						"subTitle": "",
+						"imageUri": "sap-icon://feeder-arrow",
+						"targetUri": "../../../../../../sap/bc/ui5_ui5/ui2/ushell/shells/abap/FioriLaunchPad.html#PA51-approve",
+						"openInNewWindow": true
+					}, {
+						"title": "시간데이터 빠른입력 (PA71)",
+						"subTitle": "",
+						"imageUri": "sap-icon://feeder-arrow",
+						"targetUri": "../../../../../../sap/bc/ui5_ui5/ui2/ushell/shells/abap/FioriLaunchPad.html#PA71-approve",
+						"openInNewWindow": true
+					}]
+				}
+			},
+			"ZHR_OVERIVEW_SRV_card05": {
+				"template": "sap.ovp.cards.linklist",
+				"settings": {
+					"title": "{{ZHR_OVERIVEW_SRV_card05_title}}",
+					"listFlavor": "standard",
+					"headerAnnotationPath": "com.sap.vocabularies.UI.v1.HeaderInfo",
+					"staticContent": [{
+						"title": "근태입력기준관리",
+						"subTitle": "",
+						"imageUri": "sap-icon://feeder-arrow",
+						"targetUri": "../../../../../../sap/bc/ui5_ui5/ui2/ushell/shells/abap/FioriLaunchPad.html#ZHRVC2000-approve",
+						"openInNewWindow": true
+					}, {
+						"title": "근태달력",
+						"subTitle": "",
+						"imageUri": "sap-icon://feeder-arrow",
+						"targetUri": "../../../../../../sap/bc/ui5_ui5/ui2/ushell/shells/abap/FioriLaunchPad.html#SCAL-approve",
+						"openInNewWindow": true
+					}, {
+						"title": "근무일정",
+						"subTitle": "",
+						"imageUri": "sap-icon://feeder-arrow",
+						"targetUri": "../../../../../../sap/bc/ui5_ui5/ui2/ushell/shells/abap/FioriLaunchPad.html#PT03-approve",
+						"openInNewWindow": true
+					}, {
+						"title": "개인별근무일정",
+						"subTitle": "",
+						"imageUri": "sap-icon://feeder-arrow",
+						"targetUri": "../../../../../../sap/bc/ui5_ui5/ui2/ushell/shells/abap/FioriLaunchPad.html#PT63-approve",
+						"openInNewWindow": true
+					}]
+				}
+			},
+			"ZHR_OVERIVEW_SRV_card06": {
+				"template": "sap.ovp.cards.linklist",
+				"settings": {
+					"title": "{{ZHR_OVERIVEW_SRV_card06_title}}",
+					"listFlavor": "standard",
+					"headerAnnotationPath": "com.sap.vocabularies.UI.v1.HeaderInfo",
+					"staticContent": [{
+						"title": "일근태현황",
+						"subTitle": "",
+						"imageUri": "sap-icon://feeder-arrow",
+						"targetUri": "../../../../../../sap/bc/ui5_ui5/ui2/ushell/shells/abap/FioriLaunchPad.html#ZHRR2000-approve",
+						"openInNewWindow": true
+					}, {
+						"title": "근태통합신청현황",
+						"subTitle": "",
+						"imageUri": "sap-icon://feeder-arrow",
+						"targetUri": "../../../../../../sap/bc/ui5_ui5/ui2/ushell/shells/abap/FioriLaunchPad.html#ZHRR2010-approve",
+						"openInNewWindow": true
+					}, {
+						"title": "연장근무명령신청현황",
+						"subTitle": "",
+						"imageUri": "sap-icon://feeder-arrow",
+						"targetUri": "../../../../../../sap/bc/ui5_ui5/ui2/ushell/shells/abap/FioriLaunchPad.html#ZHRR2020-approve",
+						"openInNewWindow": true
+					}, {
+						"title": "연장근무확정신청현황",
+						"subTitle": "",
+						"imageUri": "sap-icon://feeder-arrow",
+						"targetUri": "../../../../../../sap/bc/ui5_ui5/ui2/ushell/shells/abap/FioriLaunchPad.html#ZHRR2030-approve",
+						"openInNewWindow": true
+					}, {
+						"title": "근태수정신청현황",
+						"subTitle": "",
+						"imageUri": "sap-icon://feeder-arrow",
+						"targetUri": "../../../../../../sap/bc/ui5_ui5/ui2/ushell/shells/abap/FioriLaunchPad.html#ZHRR2040-approve",
+						"openInNewWindow": true
+					}, {
+						"title": "연차계획서작성현황",
+						"subTitle": "",
+						"imageUri": "sap-icon://feeder-arrow",
+						"targetUri": "http://www.naver.com",
+						"openInNewWindow": true
+					}, {
+						"title": "연차계획대비실적관리",
+						"subTitle": "",
+						"imageUri": "sap-icon://feeder-arrow",
+						"targetUri": "http://www.naver.com",
+						"openInNewWindow": true
+					}, {
+						"title": "휴Weeks상품권관리",
+						"subTitle": "",
+						"imageUri": "sap-icon://feeder-arrow",
+						"targetUri": "http://www.naver.com",
+						"openInNewWindow": true
+					}, {
+						"title": "모성보호관리",
+						"subTitle": "",
+						"imageUri": "sap-icon://feeder-arrow",
+						"targetUri": "../../../../../../sap/bc/ui5_ui5/sap/znk_hassapp/ActionLoa.html?_gAuth=H",
+						"openInNewWindow": true
+					}]
+				}
+			},
+			"ZHR_OVERIVEW_SRV_card07": {
+				"template": "sap.ovp.cards.linklist",
+				"settings": {
+					"title": "{{ZHR_OVERIVEW_SRV_card07_title}}",
+					"listFlavor": "standard",
+					"headerAnnotationPath": "com.sap.vocabularies.UI.v1.HeaderInfo",
+					"staticContent": [{
+						"title": "개인별근태현황",
+						"subTitle": "",
+						"imageUri": "sap-icon://feeder-arrow",
+						"targetUri": "../../../../../../sap/bc/ui5_ui5/sap/zui5_hr_essapp/WorkTimeSched.html?_gAuth=H",
+						"openInNewWindow": true
+					}, {
+						"title": "일근태현황 (MSS)",
+						"subTitle": "",
+						"imageUri": "sap-icon://feeder-arrow",
+						"targetUri": "http://www.naver.com",
+						"openInNewWindow": true
+					}, {
+						"title": "일근태마감관리 (MSS)",
+						"subTitle": "",
+						"imageUri": "sap-icon://feeder-arrow",
+						"targetUri": "http://www.naver.com",
+						"openInNewWindow": true
+					}, {
+						"title": "OT현황 (MSS)",
+						"subTitle": "",
+						"imageUri": "sap-icon://feeder-arrow",
+						"targetUri": "http://www.naver.com",
+						"openInNewWindow": true
+					}, {
+						"title": "휴가사용현황 (MSS)",
+						"subTitle": "",
+						"imageUri": "sap-icon://feeder-arrow",
+						"targetUri": "http://www.naver.com",
+						"openInNewWindow": true
+					}]
+				}
+			},
+			"ZHR_OVERIVEW_SRV_card08": {
+				"model": "ZHR_OVERIVEW_SRV",
+				"template": "sap.ovp.cards.charts.analytical",
+				"settings": {
+					"entitySet": "HeaderTimeConfSet",
+					"title": "{{ZHR_OVERIVEW_SRV_card08_title}}",
+					"subTitle": "",
+					"presentationAnnotationPath": "com.sap.vocabularies.UI.v1.PresentationVariant#donut",
+					"chartAnnotationPath": "com.sap.vocabularies.UI.v1.Chart#donut",
+					"dataPointAnnotationPath": "com.sap.vocabularies.UI.v1.DataPoint#Count"
+				}
+			}
+		}
+	},
+	"sap.platform.abap": {
+		"uri": "/sap/bc/ui5_ui5/sap/zui5_ovp_tm/webapp",
+		"_version": "1.1.0"
+	}
+}

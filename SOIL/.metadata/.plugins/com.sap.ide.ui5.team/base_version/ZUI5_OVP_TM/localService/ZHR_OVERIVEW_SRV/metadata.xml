@@ -1,0 +1,92 @@
+<edmx:Edmx
+    xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx"
+    xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata"
+    xmlns:sap="http://www.sap.com/Protocols/SAPData" Version="1.0">
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema
+            xmlns="http://schemas.microsoft.com/ado/2008/09/edm" Namespace="ZHR_OVERIVEW_SRV" xml:lang="en" sap:schema-version="1">
+            <EntityType Name="MedicalOvp" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Pernr"/>
+                </Key>
+                <Property Name="Pernr" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:label="사번" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Ename" Type="Edm.String" MaxLength="20" sap:unicode="false" sap:label="����" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Zurl" Type="Edm.String" MaxLength="255" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false"/>
+                <Property Name="TotalCnt" Type="Edm.Decimal" Precision="5" Scale="2" sap:unicode="false" sap:label="ó����" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="SalesOrder" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.String" Nullable="false" MaxLength="30" sap:unicode="false" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Supplier" Type="Edm.String" MaxLength="9" sap:unicode="false" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false" sap:filterable="false"/>
+                <Property Name="SupplierName" Type="Edm.String" MaxLength="30" sap:unicode="false" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false" sap:filterable="false"/>
+                <Property Name="GrossAmountInCompanyCurrency" Type="Edm.Decimal" Precision="15" Scale="3" sap:unicode="false" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="NetUnitPriceInCompanyCurrency" Type="Edm.Decimal" Precision="15" Scale="3" sap:unicode="false" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Quantity" Type="Edm.Decimal" Precision="15" Scale="3" sap:unicode="false" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false" sap:filterable="false"/>
+                <Property Name="CompanyCurrency" Type="Edm.String" MaxLength="5" sap:unicode="false" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false" sap:filterable="false"/>
+                <Property Name="QuantityUnit" Type="Edm.String" MaxLength="3" sap:unicode="false" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false" sap:filterable="false"/>
+                <Property Name="CompanyCurrencyShortName" Type="Edm.String" MaxLength="15" sap:unicode="false" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false" sap:filterable="false"/>
+                <Property Name="QuantityUnitName" Type="Edm.String" MaxLength="10" sap:unicode="false" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="TimeConf" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Title"/>
+                </Key>
+                <Property Name="Title" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="����" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Period" Type="Edm.String" MaxLength="40" sap:unicode="false" sap:label="�Ⱓ" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Subttl" Type="Edm.String" MaxLength="40" sap:unicode="false" sap:label="������" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Count" Type="Edm.String" MaxLength="40" sap:unicode="false" sap:label="�����ͰǼ�" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Prate" Type="Edm.Decimal" Precision="5" Scale="1" sap:unicode="false" sap:label="������" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="HeaderTimeConf" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Cnt01"/>
+                </Key>
+                <Property Name="Cnt01" Type="Edm.Decimal" Nullable="false" Precision="5" Scale="0" sap:unicode="false" sap:label="��û�Ǽ�"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Cnt02" Type="Edm.Decimal" Precision="5" Scale="0" sap:unicode="false" sap:label="���ΰǼ�" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Cnt03" Type="Edm.Decimal" Precision="5" Scale="0" sap:unicode="false" sap:label="�ݷ��Ǽ�" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Cnt04" Type="Edm.Decimal" Precision="5" Scale="0" sap:unicode="false" sap:label="��ҰǼ�" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Cnttot" Type="Edm.Decimal" Precision="5" Scale="0" sap:unicode="false" sap:label="�ѰǼ�" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityContainer Name="ZHR_OVERIVEW_SRV_Entities" m:IsDefaultEntityContainer="true">
+                <EntitySet Name="MedicalOvpSet" EntityType="ZHR_OVERIVEW_SRV.MedicalOvp" sap:creatable="false" sap:updatable="false" sap:deletable="false"
+					sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="SalesOrderSet" EntityType="ZHR_OVERIVEW_SRV.SalesOrder" sap:creatable="false" sap:updatable="false" sap:deletable="false"
+					sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="TimeConfSet" EntityType="ZHR_OVERIVEW_SRV.TimeConf" sap:creatable="false" sap:updatable="false" sap:deletable="false"
+					sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="HeaderTimeConfSet" EntityType="ZHR_OVERIVEW_SRV.HeaderTimeConf" sap:creatable="false" sap:updatable="false"
+					sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+            </EntityContainer>
+            <atom:link
+                xmlns:atom="http://www.w3.org/2005/Atom" rel="self" href="./sap/ZHR_OVERIVEW_SRV/$metadata"/>
+                <atom:link
+                    xmlns:atom="http://www.w3.org/2005/Atom" rel="latest-version" href="./sap/ZHR_OVERIVEW_SRV/$metadata"/>
+                </Schema>
+            </edmx:DataServices>
+        </edmx:Edmx>

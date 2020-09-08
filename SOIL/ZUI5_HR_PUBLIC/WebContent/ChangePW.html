@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>비밀번호 변경</title>
+		
+		<script src="resources/sap-ui-cachebuster/sap-ui-core.js"
+				id="sap-ui-bootstrap"
+				data-sap-ui-libs="sap.m, sap.ui.commons, sap.ui.ux3, sap.ui.layout, sap.ui.table, sap.suite.ui.commons, sap.ui.unified, sap.tnt, sap.uxap"
+				data-sap-ui-theme = "sap_belize_plus"
+				data-sap-ui-xx-bindingSyntax="complex"
+				data-sap-ui-preload="sync"
+				data-sap-ui-compatVersion="1.16"
+				data-sap-ui-appCacheBuster="./"></script>
+					
+		<script src="/sap/public/bc/ui2/logon/core.js"></script>
+		<script src="/sap/public/bc/ui2/logon/cipher-core.js"></script>
+		<script src="/sap/public/bc/ui2/logon/enc-base64.js"></script>
+		<script src="/sap/public/bc/ui2/logon/enc-utf16.js"></script>
+		<script src="/sap/public/bc/ui2/logon/format-hex.js"></script>
+		<script src="/sap/public/bc/ui2/logon/tripledes.js"></script>			
+		
+	    <style>
+	    .LaunchpadBackground {
+				background-image: linear-gradient(to bottom,#2a4f67,#9ec5de);
+				background-repeat:no-repeat;
+				background-position:center;
+				background-size:cover
+			}
+		.L2PFontFamily {
+		 	font-family: 'Malgun Gothic' !important;
+		    font-size: 0.875rem !important;
+			font-weight : normal !important;
+			color: white !important;
+		}
+		.L2PToolbarNoBottomLine {
+			border-bottom: 0px solid #cccccc !important;
+		}
+				
+	    </style>			
+		<script>
+			jQuery.sap.require("sap.m.MessageBox");
+			
+			var sServiceURL = "/sap/opu/odata/sap/zhr_password_srv/";
+			
+			var oHeader = ({ "X-Requested-With" : "X" });
+			var oModel = new sap.ui.model.odata.ODataModel(sServiceURL, true, undefined, undefined, oHeader, undefined, undefined, false);
+			
+			 oModel.refreshSecurityToken();
+
+		        var oHeaders = oModel.oHeaders;
+		
+		        var sToken = oHeaders['x-csrf-token'];
+		
+		        console.log(sToken);
+		
+			var getUrlParameter = function getUrlParameter(sParam) {
+			    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+			    sURLVariables = sPageURL.split('&'),
+			    sParameterName,
+			    i;
+			
+			    for (i = 0; i < sURLVariables.length; i++) {
+			        sParameterName = sURLVariables[i].split('=');
+			
+			        if (sParameterName[0] === sParam) {
+			            return sParameterName[1] === undefined ? true : sParameterName[1];
+				        }
+			    	}
+			};
+
+			function encryptByDES(message, key) {
+			    var keyHex = CryptoJS.enc.Utf8.parse(key);
+			    var ivHex = CryptoJS.enc.Utf8.parse(key);
+
+			    var encrypted = CryptoJS.TripleDES.encrypt(message, keyHex, {
+			    	iv: ivHex,
+			        mode: CryptoJS.mode.CBC,
+			        padding: CryptoJS.pad.Pkcs7
+			    });
+
+			    return encrypted.ciphertext.toString();
+			}
+
+			function decryptByDES(ciphertext, key) {
+			 	var keyHex = CryptoJS.enc.Utf8.parse(key);
+			 	var ivHex = CryptoJS.enc.Utf8.parse(key);
+
+			 	var decrypted = CryptoJS.TripleDES.decrypt({
+			        ciphertext: CryptoJS.enc.Hex.parse(ciphertext)
+			    }, keyHex, {
+			    	iv: ivHex,
+			        mode: CryptoJS.mode.CBC,
+			        padding: CryptoJS.pad.Pkcs7
+			    });
+			
+			    return decrypted.toString(CryptoJS.enc.Utf8);
+			}
+		
+			var key = "!ssoNetsConfigKey       ";
+			var vEnUserid = getUrlParameter('Userid');
+			var vUserid = decryptByDES(vEnUserid ,key);
+			
+			var oMatrixLayout = new sap.ui.commons.layout.MatrixLayout({
+				columns : 3,
+				width : "100%",
+				widths : [,'400px',],
+			});
+		
+			oRow = new sap.ui.commons.layout.MatrixLayoutRow({height : "100px"});
+			oCell = new sap.ui.commons.layout.MatrixLayoutCell({}); 
+			oRow.addCell(oCell);
+			oMatrixLayout.addRow(oRow);
+			
+			oRow = new sap.ui.commons.layout.MatrixLayoutRow({height : "50px"});
+			oCell = new sap.ui.commons.layout.MatrixLayoutCell({}); 
+			oRow.addCell(oCell);
+			
+			oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+				content : new sap.m.Image({
+					src : "/sap/bc/ui5_ui5/sap/ZUI5_HR_PUBLIC/LoginLogo.gif" ,
+				})
+			}); 
+			oRow.addCell(oCell);
+			oMatrixLayout.addRow(oRow);
+			
+			oRow = new sap.ui.commons.layout.MatrixLayoutRow({height : "18px"});
+			
+			oCell = new sap.ui.commons.layout.MatrixLayoutCell({}); 
+			oRow.addCell(oCell);
+			
+			oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+				colSpan : 2,
+				content : new sap.ui.commons.TextView({text : "* 패스워드는 영문, 숫자, 특수문자를 하나씩 포함한 8자리 이상 16자리 이하이어야 합니다." }).addStyleClass("L2PFontFamily"),
+			}).addStyleClass(); 
+			oRow.addCell(oCell);
+			
+			oMatrixLayout.addRow(oRow);
+			
+			oRow = new sap.ui.commons.layout.MatrixLayoutRow({height : "18px"});
+			oCell = new sap.ui.commons.layout.MatrixLayoutCell({}); 
+			oRow.addCell(oCell);
+			
+			oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+				colSpan : 2,
+				content : new sap.ui.core.HTML({content : "<div class='L2PFontFamily'>&nbsp&nbsp(단 & + [ ] \\ # 제외)</div>",	preferDOM : false}) 
+			}).addStyleClass(); 
+			oRow.addCell(oCell);
+			
+			oMatrixLayout.addRow(oRow);
+			
+			oRow = new sap.ui.commons.layout.MatrixLayoutRow({height : "25px"});
+			
+			oCell = new sap.ui.commons.layout.MatrixLayoutCell({}); 
+			oRow.addCell(oCell);
+			
+			oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+				colSpan : 2,
+				content : new sap.ui.commons.TextView({text : "* 패스워드 첫 자리가 ‘!’ 또는 ‘?’로 시작할 수 없음" }).addStyleClass("L2PFontFamily"),
+			}).addStyleClass(); 
+			oRow.addCell(oCell);
+			
+			oMatrixLayout.addRow(oRow);
+			
+			oRow = new sap.ui.commons.layout.MatrixLayoutRow({height : "25px"});
+			
+			oCell = new sap.ui.commons.layout.MatrixLayoutCell({}); 
+			oRow.addCell(oCell);
+			
+			oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+				colSpan : 2,
+				content : new sap.ui.commons.TextView({text : "* 패스워드 첫 세자리가 동일할 수 없음 (예. AAA123!! 불가능 / BAAA123! 가능)" }).addStyleClass("L2PFontFamily"),
+			}).addStyleClass(); 
+			oRow.addCell(oCell);
+			
+			oMatrixLayout.addRow(oRow);
+			
+			oRow = new sap.ui.commons.layout.MatrixLayoutRow({height : "40px"});
+			oCell = new sap.ui.commons.layout.MatrixLayoutCell({}); 
+			oRow.addCell(oCell);
+			
+			var oPasswdA = new sap.m.Input({ type : "Password" , placeholder : "이전 패스워드" ,  width : "95%"}).addStyleClass("L2PFontFamily"),
+			
+			oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+				content : oPasswdA,
+			});
+			oRow.addCell(oCell);
+			oMatrixLayout.addRow(oRow);
+			
+			oRow = new sap.ui.commons.layout.MatrixLayoutRow({height : "40px"});
+			oCell = new sap.ui.commons.layout.MatrixLayoutCell({});
+			oRow.addCell(oCell);
+			
+			var oPasswdB = new sap.m.Input({ type : "Password" ,  placeholder : "변경 패스워드" ,  width : "95%"}).addStyleClass("L2PFontFamily"),
+			
+			oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+				content : oPasswdB,
+			});
+			oRow.addCell(oCell);
+			oMatrixLayout.addRow(oRow);
+			
+			oRow = new sap.ui.commons.layout.MatrixLayoutRow({height : "40px"});
+			oCell = new sap.ui.commons.layout.MatrixLayoutCell({});
+			oRow.addCell(oCell);
+			
+			var oPasswdC = new sap.m.Input({ type : "Password" , placeholder : "패스워드 확인" ,  width : "95%"}).addStyleClass("L2PFontFamily"),
+			
+			oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+				content : oPasswdC,
+			});
+			oRow.addCell(oCell);
+			oMatrixLayout.addRow(oRow);
+
+			oRow = new sap.ui.commons.layout.MatrixLayoutRow({height : "50px"});
+			oCell = new sap.ui.commons.layout.MatrixLayoutCell({});
+			oRow.addCell(oCell);
+			
+			oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+				//width : "95%",
+				content : new sap.m.Toolbar({
+					content : [
+					new sap.m.ToolbarSpacer(),	
+				    new sap.m.Button({
+						text : "저장",
+						press : function(){
+							onSave();
+						}
+					}),
+					new sap.m.Button({
+						text : "닫기" ,
+						press : function(){
+							closeWindow();
+						}
+					}),
+					new sap.m.ToolbarSpacer({width : "5px"}),	
+				    ]
+				}).addStyleClass("L2PToolbarNoBottomLine")
+			});
+			oRow.addCell(oCell);
+			oMatrixLayout.addRow(oRow);
+			
+			oRow = new sap.ui.commons.layout.MatrixLayoutRow({});
+			oCell = new sap.ui.commons.layout.MatrixLayoutCell({});
+			oRow.addCell(oCell);
+			oMatrixLayout.addRow(oRow);
+			
+			oMatrixLayout.placeAt("content");
+			oMatrixLayout.addStyleClass("sapUiSizeCompact");
+			
+			$( window ).ready(function() {
+				onResize();
+			});
+			
+			$( window ).resize(function() {
+				onResize();
+			});
+			
+			function onResize(){
+				
+				oMatrixLayout.setHeight(window.innerHeight + "px");
+			}
+			
+			function onSave(){
+				var vPassA = oPasswdA.getValue();
+				var vPassB = oPasswdB.getValue();
+				var vPassC = oPasswdC.getValue();
+				if(vPassA.length < 1){
+					sap.m.MessageBox.alert("이전 패스워드가 입력되지 않았습니다.",{});
+					return ;
+				}
+				if(vPassB.length < 1){
+					sap.m.MessageBox.alert("비밀번호는 영문/숫자/특수문자 조합으로 8~16 글자로 입력하여 주십시오",{});
+					return ;
+				}
+				if(vPassA == vPassB){
+					sap.m.MessageBox.alert("이전 패스워드와 동일한 패스워드로 변경은 불가능 합니다.",{});
+					return ;
+				}
+				if(vPassC.length < 1){
+					sap.m.MessageBox.alert("패스워드 확인이 입력되지 않았습니다.",{});
+					return ;
+				}
+				
+				if(vPassB != vPassC){
+					sap.m.MessageBox.alert("새로운 비밀번호가 서로 일치하지 않습니다.",{});
+					return ;
+				}
+				
+				if(vPassB.indexOf("&") != -1 || vPassB.indexOf("+") != -1 ||
+				  vPassB.indexOf("+") != -1 || vPassB.indexOf("[") != -1 ||
+				  vPassB.indexOf("]") != -1 || vPassB.indexOf("\\") != -1 || vPassB.indexOf("#") != -1){
+					sap.m.MessageBox.alert("입력할 수 없는 특수기호를 입력하였습니다.",{});
+					return ;
+				}
+				
+				if(vPassB.length > 16 ){
+					sap.m.MessageBox.alert("패스워드 길이가 16자리 이하로 입력하여야 합니다.",{});
+					return ;
+				}
+				
+				if(vPassB.length < 8 ){
+					sap.m.MessageBox.alert("패스워드 길이는 8자리 이상으로 입력하여야 합니다.",{});
+					return ;
+				}
+				
+			    var chk_num = vPassB.search(/[0-9]/g);
+			    var chk_engS = vPassB.search(/[a-z]/ig);
+			    var chk_engL = vPassB.search(/[A-Z]/ig);
+			
+			    if(chk_num < 0 || ( chk_engS < 0 && chk_engL < 0 ) )
+			    {
+					sap.m.MessageBox.alert("비밀번호는 영문과 숫자조합으로 이루어져야 합니다.",{});
+					return ;
+			    }
+
+			    // var chr_str = '&+[]\';
+			    var chr_str = ["&" , "+", "[", "]", "\\","#" ];
+ 			    for(var j=0 ; j<vPassB.length ; j++){
+ 			 	  for(var i=0 ; i<chr_str.length ; i++){
+ 			   		 if(chr_str[i] == vPassB.charAt(j)){
+ 			   			sap.m.MessageBox.alert("특수문자 중 & + [ ] \\ 은 제외하고 입력하여 주시기 바랍니다.");
+ 			   			return;
+ 			    	 }
+ 			   	  }
+ 			    }
+			
+			    	
+			    var regExp = /[~!@\$%^*\()\-=_']/gi ;
+			    if(!regExp.test(vPassB)){
+			    	sap.m.MessageBox.alert("비밀번호에 특수문자를 포함해 주세요.");
+			        return;
+			     }
+			
+			    var vReqData = { Perno : vUserid ,
+	    				 Password : vPassB
+				};
+			
+			    var vCheckData = { Perno : vUserid ,
+	    				 Password : vPassA,
+	    				 Newpass : vPassB
+				};
+			
+			     var vCheck = checkPrePw(oModel , vCheckData);
+			
+			    if(vCheck == false || vCheck == "" ) return ;
+			
+			    var vSSoReqUrl = "" ;
+			    if(window.location.hostname == "myhr.lsnikko.com"){
+			    	vSSoReqUrl = "http://sso.lsnikko.com/SSO/LsNikkoSync/LsNikkoSyncNew.aspx";
+			    }else{
+			      	vSSoReqUrl = "http://ssodev.lsnikko.com/SSO/LsNikkoSync/LsNikkoSync.aspx";
+				}	
+			
+ 				var vAjax = jQuery.ajax({
+	 				type: 'GET',
+	 				async: false,
+//	 	            crossDomain: true,
+ 	 				dataType: 'jsonp',
+ 	 				jsonpCallback : 'resultSet',
+					url: vSSoReqUrl + "?userid="+ vCheck +"&empno="+ vUserid + "&pwd=" +vPassB ,	
+					success :function(data){
+						console.log(data);
+						if(data){
+							if(data.value == "T"){
+								updateData(oModel , vReqData, vCheck);
+							}else{
+								sap.m.MessageBox.alert(data.message,{});
+							}
+						}else{
+							sap.m.MessageBox.alert("SSO 에서 비밀번호 변경이 실패하였습니다.",{});
+							return ;
+						}
+					},
+					error: function(request, error){
+						console.log(error);
+						console.log(request);
+						sap.m.MessageBox.alert("SSO 에서 비밀번호 변경이 실패하였습니다.",{});
+						return ;
+					},
+				});
+ 			};
+			
+			
+			function checkPrePw(oModel , vCheckData){
+				var vRetLoginId = "";
+				try {
+			    	oModel.create("/PasswordCheckSet",
+			    			vCheckData,
+							null,
+							function(oData, oResponse) {
+			    				vRetLoginId = oData.Loginid ;
+			    			},
+							function(oResponse) {
+			    				var vErrorMessage = "";
+								if(oResponse.response.body){
+			    					var ErrorMessage = oResponse.response.body;
+									var ErrorJSON = JSON.parse(ErrorMessage);
+									if(ErrorJSON.error.innererror.errordetails&&ErrorJSON.error.innererror.errordetails.length){
+										vErrorMessage = ErrorJSON.error.innererror.errordetails[0].message;
+									}else vErrorMessage = "이전 비밀번호 체크 중 에러가 발생하였습니다.";
+								}else{
+									vErrorMessage = "이전 비밀번호 체크 중 에러가 발생하였습니다.";
+								}
+			    				sap.m.MessageBox.alert(vErrorMessage,{	});
+								return false ;
+							}
+					);
+				} catch(ex) {
+					sap.m.MessageBox.alert("이전 비밀번호 체크 중 에러가 발생하였습니다.",{
+	 				});
+					return false ;
+				}
+				return vRetLoginId;
+	    		
+			};
+
+			function updateData(oModel , vReqData){
+				try {
+			    	oModel.create("/ChangePasswordSet",
+			    			vReqData,
+							null,
+							function(oData, oResponse) {					
+			    			sap.m.MessageBox.alert("비밀번호가 변경되었습니다.",{
+			 					onClose : function() {
+			 						document.write('Y');
+			 						// closeWindow();
+			 					}
+		 				});
+							},
+							function(oResponse) {
+								sap.m.MessageBox.alert("비밀번호가 변경에 실패하였습니다.",{
+				 				});
+							}
+					);
+				} catch(ex) {
+					sap.m.MessageBox.alert("비밀번호가 변경에 실패하였습니다.",{
+	 				});
+				}
+			};
+			
+		    function closeWindow(){
+		    	document.write('CLOSE');
+// 		    	window.open('/sap/bc/ui5_ui5/sap/zui5_hr_public/none.html', '_self', '');
+// 		    	window.close();
+		    };
+		</script>
+	</head>
+	<body class="sapUiBody" role="application">
+			<div id="content"  class="LaunchpadBackground">
+			</div>
+	</body>
+</html>

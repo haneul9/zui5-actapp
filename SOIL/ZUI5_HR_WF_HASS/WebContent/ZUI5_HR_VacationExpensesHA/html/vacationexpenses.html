@@ -1,0 +1,112 @@
+<html>
+<head>
+	<style type="text/css">
+    TABLE.dscss {
+        font-size : 13px;
+        table-layout : fixed;
+        word-break : break-all;
+        border-collapse: collapse; 
+        border: 1px solid #bcbcbc;
+      }
+      TR.normal {
+        height : 32px;
+      }
+      TD.normal {
+      	padding-left : 5px;
+      	text-align : left;
+      	border-collapse: collapse; 
+        border: 1px solid #bcbcbc;
+      }
+      TD.color {
+      	padding-left : 5px;
+      	text-align : left;
+      	background-color:#f1f1f1;
+      	border-collapse: collapse; 
+        border: 1px solid #bcbcbc;
+      }
+      TD.tblcolor {
+      	padding-left : 5px;
+      	text-align : center;
+      	background-color:#f1f1f1;
+      	border-collapse: collapse; 
+        border: 1px solid #bcbcbc;
+      }
+      TD.tblnormal {
+      	padding-left : 5px;
+      	text-align : center;
+      	border-collapse: collapse; 
+        border: 1px solid #bcbcbc;
+      }
+      DIV.normal{
+        font-size : 13px;
+        font-weight:bold;
+        height : 20px;
+        text-align : left;
+      }
+      PRE.normal{
+      	font-size : 13px;
+      	font-family : "Malgun Gothic","맑은 고딕",Segoe UI, dotum,"돋움" !important; 
+      }
+    </style>
+	</head>
+	<body>
+		<div class='normal' >대상자 </div>
+		<table class='dscss'>
+	  	<colgroup>
+	      <col width="180px" />
+	      <col width="250px" />
+	      <col width="180px" />   
+	      <col width="250px" />
+	    </colgroup>
+		  <tbody>
+	  		<tr class='normal'>
+	          <td class='color'>성명</td>
+	          <td class='normal'>[DATA1] </td>
+	  		  <td class='color'>사업장 / 소속부서</td>
+	          <td class='normal'>[DATA2]</td>
+	  		</tr>
+	        <tr class='normal'>
+	          <td class='color'>직급 / 직급호칭</td>
+	          <td class='normal'>[DATA3] </td>
+	  		  <td class='color'>직책</td>
+	          <td class='normal'>[DATA4]</td>
+	  		</tr>
+	  	</tbody>
+		</table>  
+	<br/>
+	<div class='normal' >신청내역 </div>
+		<table class='dscss'>
+	  	<colgroup>
+	      <col width="180px" />
+	      <col width="250px" />
+	      <col width="180px" />   
+	      <col width="250px" />
+	    </colgroup>
+		  <tbody>
+	  		<tr class='normal'>
+	          <td class='color'>휴가구분</td>
+	          <td class='normal'>[ITEM_DATA1] </td>
+	  		  <td class='color'>휴가비</td>
+	          <td class='normal'>[ITEM_DATA2]</td>
+	  		</tr>
+	        <tr class='normal'>
+	          <td class='color'>휴가일수</td>
+	          <td class='normal'>[ITEM_DATA3] </td>
+	  		  <td class='color'>분할사용가능횟수</td>
+	          <td class='normal'>[ITEM_DATA4]</td>
+	  		</tr>
+	        <tr class='normal'>
+	          <td class='color'>휴가일자</td>
+	          <td class='normal'>[ITEM_DATA5] </td>
+   	          <td class='color'>분할사용여부</td>
+	          <td class='normal'>[ITEM_DATA6] </td>   
+	  		</tr>
+	        <tr class='normal'>
+	          <td class='color'>휴가장소</td>
+	          <td class='normal' colSpan=3 >[ITEM_DATA7]</td>
+	  		</tr>
+	  	</tbody>
+		</table>
+	</div>  
+	</body>
+</html>

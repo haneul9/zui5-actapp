@@ -1,0 +1,252 @@
+@charset "utf-8";
+/*
+------------------------------------------------------------
+Project Name: L2P CO., LTD
+file name: l2p.css
+Author: jihee,kim
+date: 2015.01.22 
+------------------------------------------------------------*/
+
+/*
+	Emphasized Button
+ */
+.sapMBtnInner.sapMBtnEmphasized{
+	font-size: 13px !important;
+	font-family: 'Noto Sans KR', sans-serif !important;
+	color: #ffffff !important;
+	background-color : #005f28 !important;
+	border-color:  #005f28 !important;
+	height : 26px !important;
+	text-shadow : none !important;
+}
+
+.sapMBtn:hover>.sapMBtnEmphasized.sapMBtnHoverable{
+    background-image: none;
+    background-color: #005f28;
+    border-color: #005f28;
+}
+
+
+/*
+	Ghost Button
+*/
+.sapUiSizeCompact .sapMBtnGhost{
+	font-size: 13px !important;
+	font-family: 'Noto Sans KR', sans-serif !important;
+	color: #ffffff !important;
+	background-color : #777777 ;
+	border-color: #777777;
+/* 	height : 26px !important; */
+	text-shadow : none !important;
+}
+
+.sapMBtn:hover>.sapMBtnGhost.sapMBtnHoverable{
+	background-color : #777777 ;
+	border-color: #777777;
+}
+
+
+.sapMPanelContent:not(.sapMPanelBGTransparent){
+	border-bottom : 0px solid #ffffff !important;
+}
+
+.sapContrastPlus.sapUxAPObjectPageHeaderContentDesign-Light, .sapContrastPlus .sapUxAPObjectPageHeaderContentDesign-Light{
+	background-color : #2f2b21 !important;
+},
+.sapUxAPObjectPageLayout .sapUxAPObjectPageNavigation{
+	background-color : #2f2b21 !important;
+}
+.sapContrastPlus.sapUxAPAnchorBar.sapMTB, .sapContrastPlus .sapUxAPAnchorBar.sapMTB{
+	background : #2f2b21 !important;
+	border-top : 1px solid #454239 !important;
+	padding-left : 0px !important;
+}
+
+.sapContrastPlus.sapUxAPAnchorBar.sapMTB, .sapContrastPlus .sapUxAPAnchorBar.sapMTB{
+	box-shadow : inset 0 -0.125rem #2f2b21 !important;
+	padding-bottom : 1px;
+}
+
+.sapUxAPObjectPageHeaderTitle{
+	padding-bottom : "20px" !important;
+}
+.sapUxAPBlockContainerDesktop{
+	padding : 5px 0rem 10px 0rem !important;
+}
+
+.sapContrastPlus.sapUxAPAnchorBarButton.sapUxAPAnchorBarButtonSelected .sapMBtnContent, .sapContrastPlus .sapUxAPAnchorBarButton.sapUxAPAnchorBarButtonSelected .sapMBtnContent{
+	border-bottom : 5px solid #ffb400 !important;	
+}
+
+.sapUxAPAnchorBar .sapUxAPAnchorBarButton .sapMBtnInner{
+	padding-left : 1.5rem !important;
+	padding-right : 1.5rem !important;
+}
+
+.sapUiRespGrid.sapUiRespGridHSpace1{
+	padding : 0px !important;
+}
+
+.sapUiRespGrid.sapUiRespGridHSpace1>div{
+	margin : 0px !important;
+}
+
+.sapUiMedia-Std-Desktop .sapUxAPObjectPageHeaderContent{
+	padding-left : 1.5rem !important;
+}
+
+.sapUxAPObjectPageSectionHeader{
+	padding : 0px !important;
+	border-bottom : 0px solid #f2f2f2 !important;
+}
+
+.sapUxAPObjectPageSubSectionHeader{
+	padding : 0px 0px 0px 0px !important;
+}
+
+.sapUxAPObjectPageSubSection{
+	border-bottom : 0px solid #f2f2f2 !important;
+}
+
+.sapUxAPObjectPageSectionTitle{
+	font-size: 16px !important;
+	font-family: 'Noto Sans KR', sans-serif !important;
+	color: #666666 !important;
+	font-weight : bold !important;
+	border-bottom : 0px solid #999999 !important;
+}
+
+.sapUxAPObjectPageSubSectionHeaderTitle{
+	font-size: 15px !important;
+	font-family: 'Noto Sans KR', sans-serif !important;
+	color: #666666 !important;
+	font-weight : bold !important;
+}
+
+.sapUxAPObjectPageSubSectionHeaderActions{
+	height : 20px !important;
+}
+
+/*
+Header 상단 Line
+*/
+.sapMShellBrandingBar{
+	background-color : #ffffff !important;
+	height : 0px !important;
+}
+
+.sapUiMltPadRight{
+	padding : 0px;
+}
+
+.sapUiRespGridMedia-Std-LargeDesktop.sapUiRespGridHSpace1>.sapUiRespGridSpanXL12{
+	width : 100% !important;
+}
+
+.sapUxAPObjectPageContainer, .sapUxAPObjectPageContainer + div, .sapUxAPObjectPageHeaderDetailsHidden{
+	background-color : #ffffff !important;
+}
+
+.sapMListTblHeader>.sapMTableTH{
+	text-align : center !important;
+	border-bottom : 0px solid #dddddd !important;
+}
+
+.sapMListTblCell.cellBorderRight {
+	border-right: 1px solid #dddddd;
+}
+ 
+.sapMListTblCell.cellBorderLeft {
+	border-left: 1px solid #dddddd;
+}
+
+.sapUiSizeCompact .sapMListTblSelCol, .sapUiSizeCompact .sapMListTblHasNav .sapMListTblNavCol{
+	border-left: 1px solid #dddddd;
+}
+
+.sapMListTblCell.sapMListTblCellNoData{
+	border-left : 1px solid #dddddd !important;
+	border-right : 1px solid #dddddd !important;
+}
+
+.sapUiUfdSpltContH .sapUiUfdSpltContPane{
+	border : 1px solid #ebebeb;
+}
+
+/*
+	Table Top Border
+*/
+.sapUiTableCnt{
+	border-Top : 2px solid #333333 !important;
+}
+
+.sapMList {
+	border-Top: 2px solid #333333 !important;
+}
+
+.sapMPanelContent{
+	padding : 0px 1rem 0px 1rem !imporant;
+}
+
+.sapMListTblCell{
+	padding : 0.0rem .5rem !important;
+}
+
+.sapUiSizeCompact .sapMListTblCell{
+	padding-top : 0px !important;
+	padding-bottom : 0px !important;
+}
+
+.sapMPanelContent{
+	padding : 0px 0px 10px 0px !imporant;
+}
+
+.sapUxAPAnchorBar .sapUxAPAnchorBarButton .sapMBtnContent{
+ 	font-family: 'Noto Sans KR', sans-serif !important; 
+	font-size: 14px !important;
+	font-weight : normal !important;
+	color: #ffffff !important;
+}
+
+.sapUiRespGridMedia-Std-Desktop.sapUiRespGridHSpace1>.sapUiRespGridSpanL12{
+	width : 100% !important;
+}
+
+/*
+	Dialog 관련 CSS
+*/
+.html.sap-desktop .sapContrast .sapMIBar.sapMFooter-CTX, html.sap-desktop .sapContrast.sapMIBar.sapMFooter-CTX{
+	background-color : #ffffff !important;
+	border-top : 1px solid #e9e9e9 !important;
+}
+
+.sapMIBar-CTX .sapMBtnInner, .sapMBar .sapMBtnInner, .sapMHeader-CTX .sapMBtnInner, .sapMFooter-CTX .sapMBtnInner{
+	background : #777777 !important;
+}
+
+.sapMBtnDefault{
+	font-size: 13px !important;
+	font-family: 'Noto Sans KR', sans-serif !important;
+	color: #ffffff !important;
+	background-color : #005f28 ;
+	border-color: #005f28;
+	height : 26px !important;
+	text-shadow : none !important;
+}
+
+.sapUiSizeCompact .sapMBtnIcon{
+	color : #ffffff !important;
+}
+
+.sapMText{
+	font-family: 'Noto Sans KR', sans-serif !important;
+}
+
+.sapMBtnContent{
+	/* line-height : 24px !important; */
+	line-height : 1.5rem !important;
+}
+
+.sapUiSizeCompact .sapUxAPAnchorBarButton .sapMBtnInner{
+	height : 26px !important;
+}

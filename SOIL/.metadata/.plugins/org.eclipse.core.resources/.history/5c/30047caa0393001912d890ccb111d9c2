@@ -1,0 +1,312 @@
+jQuery.sap.declare("common.ZipSearch");
+jQuery.sap.require("common.Common");
+/** 
+* 사원검색의 Dialog를 위한 JS 이다.
+* @Create By 강연준
+*/
+
+common.ZipSearch = {
+	/** 
+	* @memberOf ZipSearch
+	*/	
+	
+	oController : null,
+	_vTotalResult : 0, 
+	
+	getAddr : function(vIndex) {	
+		var oController = common.ZipSearch.oController;
+		var vCurPage = 1 ;
+		var oTable = sap.ui.getCore().byId(oController.PAGEID + "_ZipTable");
+		var oResult = sap.ui.getCore().byId(oController.PAGEID + "_Result");
+		var oZipLayout = sap.ui.getCore().byId(oController.PAGEID + "_ZipLayout");
+		var oFilter = sap.ui.getCore().byId(oController.PAGEID + "_Filter")  
+		if(typeof vIndex == "Object") return ;
+		
+		oResult.setVisible(true);
+		if(vIndex && vIndex != "" ){
+			vCurPage = vIndex;
+		}else{
+			common.ZipSearch._vTotalResult = 0 ;
+		}
+		
+		var vKey = oFilter.getValue();
+		var vJsonStr = { juso : [], common : {}};
+		if (!common.ZipSearch.checkSearchedWord(vKey)) {
+			return ;
+		}
+
+		var onProcess = function(){
+			oTable.setVisible(true);
+			$.ajax({
+				 url :"http://www.juso.go.kr/addrlink/addrLinkApiJsonp.do"  //인터넷망
+				,type:"post"
+				,data: {"confmKey" :"U01TX0FVVEgyMDE5MDYxODExNDMyMzEwODgxODE=" , 
+					"keyword" : vKey , 
+					"resultType" : "json",
+					"currentPage" : vCurPage ,
+					"countPerPage": 10	
+				}
+				,dataType:"jsonp"
+				,async : false
+				,crossDomain:true
+				,success:function(jsonStr){
+					var errCode = jsonStr.results.common.errorCode;
+					var errDesc = jsonStr.results.common.errorMessage;
+					if(errCode != "0"){
+						sap.m.MessageBox.error(errCode+"="+errDesc);
+					}else{
+						if(jsonStr != null){
+							common.ZipSearch.makeListJson(jsonStr,vCurPage);
+							if(vIndex && vIndex != "" ){
+								
+							}else{
+								common.ZipSearch._vTotalResult = jsonStr.results.common.totalCount;
+								 // 도로명주소 검색 결과 (1180건)
+						        oResult.setText("ㆍ 도로명주소 검색 결과 (" + common.ZipSearch._vTotalResult + "건)" );
+						        common.ZipSearch.onSetButtons();
+							}
+						}
+					}
+				}
+			    ,error: function(xhr,status, error){
+			    	BusyDialog.close();
+			    	sap.m.MessageBox.error("주소 검색 중 에러발생");
+			    }
+			});
+			 oController.BusyDialog.close();
+		}
+		oController.BusyDialog.open();
+		setTimeout(onProcess, 100);	
+	},
+	
+	makeListJson : function(jsonStr,curPage){
+		var oController = common.ZipSearch.oController;
+		var oTable = sap.ui.getCore().byId(oController.PAGEID + "_ZipTable");
+		var vData = { Data : []};
+		curPage = ( curPage - 1 ) * 10 ;
+		for(var i = 0; i < 10 ;i++){
+			var OneData = {};
+			OneData.Idx = curPage + i + 1;
+			OneData.zipNo = jsonStr.results.juso[i].zipNo ;
+			OneData.roadAddr = jsonStr.results.juso[i].roadAddr ;
+			OneData.siNm = jsonStr.results.juso[i].siNm ;
+			OneData.engAddr = jsonStr.results.juso[i].engAddr ;
+			OneData.jibunAddr  = jsonStr.results.juso[i].jibunAddr ;
+			vData.Data.push(OneData);
+		}
+		
+		oTable.getModel().setData(vData);
+	},
+	
+	
+	//특수문자, 특정문자열(sql예약어의 앞뒤공백포함) 제거
+	checkSearchedWord: function(obj){
+		if(obj.length >0){
+			//특수문자 제거
+			var expText = /[%=><]/ ;
+			if(expText.test(obj) == true){
+				alert("특수문자를 입력 할수 없습니다.") ;
+				obj = obj.split(expText).join(""); 
+				return false;
+			}
+			
+			//특정문자열(sql예약어의 앞뒤공백포함) 제거
+			var sqlArray = new Array(
+				//sql 예약어
+				"OR", "SELECT", "INSERT", "DELETE", "UPDATE", "CREATE", "DROP", "EXEC",
+	             		 "UNION",  "FETCH", "DECLARE", "TRUNCATE" 
+			);
+			
+			var regex;
+			for(var i=0; i<sqlArray.length; i++){
+				regex = new RegExp( sqlArray[i] ,"gi") ;
+				
+				if (regex.test(obj) ) {
+				    sap.m.MessageBox.error("\"" + sqlArray[i]+"\"와(과) 같은 특정문자로 검색할 수 없습니다.");
+				    obj =obj.replace(regex, "");
+					return false;
+				}
+			}
+		}else return false;
+		
+		return true ;
+	},
+	
+	onSetButtons : function(vRange, vDownyn) {
+		var oController = common.ZipSearch.oController;
+		var oZipLayout = sap.ui.getCore().byId(oController.PAGEID + "_ZipLayout");
+		var oButton0 = sap.ui.getCore().byId(oController.PAGEID + "_Button0");
+		var oButton11 = sap.ui.getCore().byId(oController.PAGEID + "_Button11");
+		var oZipButtonLayout = sap.ui.getCore().byId(oController.PAGEID + "_ZipButtonLayout");
+		
+		
+		if(!vRange || vRange == ""){
+			vRange = 0;
+		}
+		
+		if(!vDownyn || vDownyn == "undefined" ){
+			vDownyn = ""; 
+		}
+		
+		var vLength = Math.ceil(common.ZipSearch._vTotalResult/10); 
+		oZipButtonLayout.setVisible(true);
+		if(vLength > 10){
+			oButton0.setVisible(true);
+			
+			oButton11.setVisible(true);
+		}else{
+			oButton0.setVisible(false);
+			oButton11.setVisible(false);
+		} 
+		
+		for(var i = 1; i <= 10; i++){
+			var oButton = sap.ui.getCore().byId(oController.PAGEID + "_Button" + i);
+			if(i <= vLength - vRange ){
+				var vTempName =  i + vRange ;
+				oButton.setVisible(true);
+				oButton.setText(vTempName);
+				oButton.addCustomData(new sap.ui.core.CustomData({key: 'Index', value : i}));
+				
+				if(vDownyn == "X"){
+					if(i == 10){
+						oButton.setType( sap.m.ButtonType.Emphasized );
+					}else{
+						oButton.setType( sap.m.ButtonType.Default );
+					} 
+				}else{
+					if(i == 1){
+						oButton.setType( sap.m.ButtonType.Emphasized );
+					}else{
+						oButton.setType( sap.m.ButtonType.Default );
+					} 
+				}
+			}else{
+				oButton.setVisible(false);
+			}
+		}
+	},
+	
+	clickBtnIdx : function(oEvent) {
+		var vIdx = oEvent.getSource().getCustomData()[0].getValue();
+		var oController = common.ZipSearch.oController;
+		var vCurPage = "";
+		for(var i =1; i <= 10 ; i++){
+			var oButton = sap.ui.getCore().byId(oController.PAGEID + "_Button" + i);
+			if(i == vIdx){
+				oButton.setType( sap.m.ButtonType.Emphasized );
+				vCurPage = oButton.getText();
+			}
+			else oButton.setType( sap.m.ButtonType.Default );
+		}
+		common.ZipSearch.getAddr(vCurPage);
+	},
+	
+	// 다음 버튼 클릭 시
+	clickNextBtn : function(oEvent) {
+		var oController = common.ZipSearch.oController;
+		var oZipLayout = sap.ui.getCore().byId(oController.PAGEID + "_ZipLayout");
+		
+		for(var i = 1; i <= 10; i++){
+			var oButton = sap.ui.getCore().byId(oController.PAGEID + "_Button" + i);
+			if(oButton.getType() == sap.m.ButtonType.Emphasized ){
+				oButton.setType(sap.m.ButtonType.Default);
+				var vText = oButton.getText() * 1;
+				var vTResult = parseInt(common.ZipSearch._vTotalResult / 10) ; // 현재 전체 수 / 10
+				var vQuota = parseInt(vText  / 10); // 몫
+				var vRemains  = vText % 10; // 나머지
+				if(vRemains == 0 || vText == vTResult){ // 10 번대 버튼 전체 Page No를 바꾸는 경우
+					if(vText == vTResult){ // 마지막위치에서 Next 버튼을 클릭한 경우
+					}else{ 
+						// Button Setting
+						common.ZipSearch.onSetButtons((vQuota) * 10);
+						common.ZipSearch.getAddr(vText+1);
+					}
+				}else{  // 1~9번대 버튼
+					var vIdx = i+1 ;
+					var oNextButton = sap.ui.getCore().byId(oController.PAGEID + "_Button" + vIdx);
+					oNextButton.setType(sap.m.ButtonType.Emphasized);
+					common.ZipSearch.getAddr(vText+1);
+				}
+				break;
+			}
+			
+		}
+	},
+	
+	// 이전 버튼 클릭 시
+	clickPreBtn : function(oEvent) {
+		var oController = common.ZipSearch.oController;
+		for(var i = 1; i <= 10; i++){
+			var oButton = sap.ui.getCore().byId(oController.PAGEID + "_Button" + i);
+			
+			if(oButton.getType() == sap.m.ButtonType.Emphasized ){
+				oButton.setType(sap.m.ButtonType.Default);
+				var vText = oButton.getText() * 1 ;
+				var vQuota = parseInt(vText / 10); // 몫
+				var vRemains  = vText % 10; // 나머지
+				if(vRemains == 0 || vRemains > 1){ // 2 ~ 10 번대 버튼 전체 Page No를 바꾸지 않는 경우
+					var vIdx = i-1 ;
+					var oPreButton = sap.ui.getCore().byId(oController.PAGEID + "_Button" + vIdx);
+					common.ZipSearch.getAddr(vText-1);
+					oPreButton.setType(sap.m.ButtonType.Emphasized);
+				}else{  // 1번대 버튼
+					if(vQuota > 0){ // 전체 Pag No를 바꾸는 경우
+						common.ZipSearch.onSetButtons((vQuota - 1) * 10 , "X");
+						common.ZipSearch.getAddr(vText-1);
+					}
+				} 
+				break;
+			}
+		}
+	},
+	
+	onSelectAddress : function(oEvent){
+		var oController = common.ZipSearch.oController;
+		var oTable = sap.ui.getCore().byId(oController.PAGEID + "_ZipTable");
+		var oZipSearchDialog = sap.ui.getCore().byId(oController.PAGEID + "_ZipSearchDialog");
+		
+		var vContexts = oTable.getSelectedContexts(true);
+		if(!vContexts || vContexts.length == 0){
+			sap.m.MessageBox.alert("주소를 선택하여 주세요.");
+			return;
+		}
+		var oModel = oTable.getModel();
+		var selectedData = oModel.getProperty(vContexts[0].sPath);
+		
+		if(!oController._ZipMode || oController._ZipMode === undefined || oController._ZipMode == "1"){
+        	oController.onSelectAddress(selectedData.zipNo,selectedData.roadAddr,selectedData.siNm,selectedData.engAddr);
+        }else{
+        	oController.onSelectAddress2(selectedData.zipNo,selectedData.roadAddr,selectedData.siNm,selectedData.engAddr);
+        }
+		oZipSearchDialog.close();
+   },
+   
+   onClearAddress : function(oEvent){
+	   var oController = common.ZipSearch.oController;
+	   var oZipSearchDialog = sap.ui.getCore().byId(oController.PAGEID + "_ZipSearchDialog");
+       if(!oController._ZipMode || oController._ZipMode === undefined || oController._ZipMode == "1"){
+    	   oController.onSelectAddress( "","","","");
+       }else{
+       	   oController.onSelectAddress2( "","","","");
+       }
+       oZipSearchDialog.close();
+   },
+	
+	onInit : function(oEvent){
+		var oController = common.ZipSearch.oController;
+		var oTable = sap.ui.getCore().byId(oController.PAGEID + "_ZipTable");
+		var oFilter = sap.ui.getCore().byId(oController.PAGEID + "_Filter");
+		var oResult = sap.ui.getCore().byId(oController.PAGEID + "_Result");
+		var oZipButtonLayout = sap.ui.getCore().byId(oController.PAGEID + "_ZipButtonLayout");
+		var vData = { Data : []};
+		
+		oTable.getModel().setData(vData);
+		oTable.removeSelections(true);
+		oFilter.setValue("");
+		common.ZipSearch._vTotalResult = 0 ; 
+		oResult.setVisible(false);
+		oZipButtonLayout.setVisible(false);
+	},
+	
+	
+};

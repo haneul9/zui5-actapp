@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;Holdover.fragment.js&apos; to &apos;fragment&apos;&#x0D;&#x0A;- Original project: &apos;ZUI5_HR_TILE&apos;&#x0D;&#x0A;- Destination element: &apos;fragment&apos;&#x0D;&#x0A;- Original element: &apos;Holdover.fragment.js&apos;" description="Copy file" element1="WebContent/zui5_hrxx_rss/fragment/Holdover.fragment.js" files="1" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1576480060517" target="/ZUI5_HR_ESSAPP/WebContent/ZUI5_HR_Portal/fragment" units="0" version="1.0"/>
+</session>

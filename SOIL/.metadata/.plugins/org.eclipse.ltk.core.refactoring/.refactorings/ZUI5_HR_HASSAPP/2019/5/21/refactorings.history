@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;ActRecPInfo_POP_Natio.fragment.js&apos; to &apos;fragment&apos;&#x0D;&#x0A;- Original project: &apos;ZUI5_HR_HASSAPP&apos;&#x0D;&#x0A;- Destination element: &apos;fragment&apos;&#x0D;&#x0A;- Original element: &apos;ActRecPInfo_POP_Natio.fragment.js&apos;" description="Copy file" element1="WebContent/zui5_hrxx_actapp2/fragment/ActRecPInfo_POP_Natio.fragment.js" files="1" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1558596749950" target="/ZUI5_HR_COMMON/WebContent/fragment" units="0" version="1.0"/>
+</session>

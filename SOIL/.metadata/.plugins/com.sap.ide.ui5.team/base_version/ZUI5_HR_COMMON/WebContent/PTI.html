@@ -1,0 +1,232 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta http-equiv='Content-Type' content='text/html; charset=euc-kr'/>
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+        <meta http-equiv="Pragma" content="no-cache" />
+        <meta http-equiv="Expires" content="0" />
+        
+        <title>::: S-OIL Corporation Card System :::</title>
+		<script type="text/javascript" src="/sap/bc/ui5_ui5/sap/ZUI5_HR_COMMON/plugin/spin/spin.min.js"></script>
+		
+		<script src="resources/sap-ui-cachebuster/sap-ui-core.js"
+				id="sap-ui-bootstrap"
+				data-sap-ui-libs="sap.m, sap.ui.commons, sap.ui.layout, sap.ui.table"
+				data-sap-ui-theme="sap_belize"
+				data-sap-ui-xx-bindingSyntax="complex"
+				data-sap-ui-preload="sync"
+				data-sap-ui-appCacheBuster="./"></script>
+
+		
+		<script>
+				$( window ).ready(function() {
+					sap.ui.getCore().getEventBus().publish("app", "OpenWindow", {
+						windowHeight : window.innerHeight
+					});	
+				});
+				
+				$( window ).resize(function() {
+					sap.ui.getCore().getEventBus().publish("app", "ResizeWindow", {
+						windowHeight : window.innerHeight
+					});
+				});
+				
+				var  strServer   = ""; // 운영
+				
+				try {
+ 					var vHostName = location.hostname;
+ 					if(vHostName.indexOf("hcm.") > -1) {
+ 						strServer = "PRD";
+ 					}else{
+ 						strServer = "DEV";
+ 					} 
+ 				} catch(ex) {
+ 					console.log(ex);
+ 				}
+ 				
+				
+				var  strMode     = jQuery.sap.getUriParameters().get("Mode");
+				var  strPartNo   = jQuery.sap.getUriParameters().get("PartNo");
+				var  strPartName = jQuery.sap.getUriParameters().get("PartName");
+				var  strUserId   = jQuery.sap.getUriParameters().get("UserID");
+				var  strUserName = jQuery.sap.getUriParameters().get("UserName");  
+				var  strApplID   = jQuery.sap.getUriParameters().get("ApplID");
+
+				console.log(strMode);
+				
+				// 증빙뷰어의 생성
+				function OnInit(){
+				    SLIP_Create( strServer, strMode, strPartNo, strPartName, strUserId, strUserName );
+			        SLIP_Load( strApplID );
+				};
+				
+			    ////////////////////////////////////////////////////////////////////////////////
+			    //      증빙뷰어의 생성
+			    //      strServer : DEV(개발서버), QAS(테스트 서버), Default(운영서버)
+			    //      strMode     : EDIT(편집모드), VIEW(보기모드), AFTER(후첨 편집모드)
+			    //      strPartNo : 사용자 부서코드, strPartName : 사용자 부서명
+			    //      strUserID : 사용자 사번, strUserName : 사용자명
+				function SLIP_Create( strServer, strMode, strPartNo, strPartName, strUserID, strUserName ) {
+					if( SLIP_Update( strServer, strPartNo, strPartName, strUserID, strUserName ) ){
+						 OfficeXPI.OpiSet( "TITLE",    "증빙보기" );
+			             OfficeXPI.OpiSet( "SHOW",           "SHOW");
+			             OfficeXPI.OpiSet( "MODE",       strMode);
+
+			             var ret = OfficeXPI.OpiCreate( "SlipACTOR", "", 0 );
+			             if (ret)
+			             {
+			                if (ret == "")
+			                {
+			                var strError = OfficeXPI.OpiGet( "ERROR" );
+			                alert( strError );
+			                }
+			             }
+					}
+					
+				};
+				
+////////////////////////////////////////////////////////////////////////////////
+			    //      증빙 시스템 자동 업데이트 관련 
+			    //      증빙뷰어 생성시 호출 
+			    function SLIP_Update( strServer, strPartNo, strPartName, strUserID, strUserName )
+			    {
+			        var strRegKey   = "SOIL@C:\\WNS Files\\SOIL";
+			        var strUpdateURL    = "http://192.168.21.45/UpdateFiles/UpdateSOIL.XVS";
+			    var strUpdateTTL= "전자증빙관리시스템";
+			    if( OfficeXPI.OpiUpdate( strRegKey, strUpdateURL, strUpdateTTL ))
+			    {
+			            var today = get_today();    
+			                OfficeXPI.OpiSet( "SVRMODE",    strServer );
+			                OfficeXPI.OpiSet( "KEY",       "SOIL" );
+			                OfficeXPI.OpiSet( "DATE",       today );
+			                OfficeXPI.OpiSet( "USER",       strUserID + "-" + strUserName );
+			                OfficeXPI.OpiSet( "COMPANY",    "01-soil" );
+			                OfficeXPI.OpiSet( "PART",       strPartNo + "-" + strPartName );
+			                OfficeXPI.OpiSet( "DOCUMENT",   "증빙서" );
+			                            
+			        return true;
+			    }
+			    
+			    return false;
+			    }  
+			    
+			    ////////////////////////////////////////////////////////////////////////////////
+			    // 증빙 Load
+			    // strParam : 개별결재번호
+			    // 그룹결재 번호 일경우 @ + 그룹결재번호
+			    function SLIP_Load( strValue )
+			    {
+			        var strParam = "sdocno_doc=" + strValue;
+			        document.OfficeXPI.OpiCommand( "LOAD", strParam );
+			    }
+			    
+			    ////////////////////////////////////////////////////////////////////////////////
+			    //  증빙 화면 초기화
+			    function SLIP_Init()
+			    {
+			        document.OfficeXPI.OpiCommand( "NEW", "" );
+			    }
+			    
+			    ////////////////////////////////////////////////////////////////////////////////
+			    //  개별결재번호를 그룹결재번호와 연결
+			    //      strGroupNo  : 그룹결재번호
+			    //      strSlipNo       ; 개별결재번호( 멀티시 ';' 로 구분 )
+			    function SLIP_Group( strGroupNo, strSlipNo )
+			    {
+			        var strParam = "GROUP="+ strGroupNo+ ":" + strSlipNo;
+			        document.OfficeXPI.OpiCommand( "GROUP", strParam );
+			    }
+			    
+			    ////////////////////////////////////////////////////////////////////////////////
+			    //  그룹으로 등록된 개별결재번호를 해제
+			    //  strGroupNo  : 그룹결재번호
+			    //  strSlipNO       : ALL(그룹결재번호에 등록된 모든 개별결재번호 해제)
+			    //                              개별결제번호( 그룹번호에 특정 개벌결재번호만 해제, 멀티시 ';'로 구분 )
+			    function SLIP_UnGroup( strGroupNo, strSlipNo )
+			    {
+			        var strParam = "UNGROUP=" + strGroupNo + ":" + strSlipNo;
+			        document.OfficeXPI.OpiCommand( "UNGROUP", strParam );
+			    }
+			    
+			    ////////////////////////////////////////////////////////////////////////////////
+			    //  증빙 삭제
+			    //  strSlipNo       : 결재번호( 그룹결재번호시 @ + 그룹결재번호 )
+			    //  strLineKey  : 삭제할 증빙의 라인키( Null일 경우 해당 결재번호의 모든 증빙 삭제)
+			    function SLIP_Delete( strSlipNo, strLineKey )
+			    {
+			        var strParam = "SDOCNO=" + strSlipNO + ";LINE=" + strLineKey + ";SVRDEL=";
+			        document.OfficeXPI.OpiCommand( "REMOVE", strParam );
+			    }
+			    
+			    ////////////////////////////////////////////////////////////////////////////////
+			    //  PTI로 등록
+			    //  웹페이지를 PTI로 등록( http://, HTML, HTM, MHTML, MHT, XML )
+			    function SLIP_PTI_URL( strURL, strNeFlag, strSlipCode, strSlipName, strLineKey, strGroup      )
+			    {
+			        
+			    }
+			    
+			    ////////////////////////////////////////////////////////////////////////////////
+			    //  증빙 뷰어에 나타나 있는 증빙 및 첨부파일의 갯수
+			    function SLIP_Getcount()
+			    {
+			        var strCnt = document.OfficeXPI.OpiGet( "COUNT(ALL)" );
+			        return strCnt;
+			    }
+			    
+			    ////////////////////////////////////////////////////////////////////////////////
+			    //  DB상에 존재하고 있는 증빙 및 첨부파일의 갯수
+			    function SLIP_GetDBCount( strSlipNo )
+			    {
+			        var strCnt = document.OfficeXPI.OpiGet( "COUNT(DB)" );
+			        return strCnt;
+			    } 
+			    
+			    ////////////////////////////////////////////////////////////////////////////////
+			    // 오픈된 증빙 뷰어의 모드 반환
+			    //  return : EDIT(편집모드), VIEW(뷰어모드), ADD( 후첨 편집모드 )
+			    function SLIP_GetMode()
+			    {
+			        var strMode = document.OfficeXPI.OpiGet( "MODE" );
+			        return strMode;
+			    }
+			    
+			    ////////////////////////////////////////////////////////////////////////////////
+			    //      기타 참조 함수 
+			    function get_today()
+			    {
+			        var d = new Date();
+			    
+			        var year    =   two(d.getFullYear());
+			        var month   = two(d.getMonth()+1);
+			        var day     = two(d.getDate());
+
+			        var today   =   year+''+month+''+day;       
+			        return today;
+			    }
+			    
+			    function two(num)
+			    {
+			        if (num<10) num = '0'+num;
+			        return num;
+			    }
+			    
+		</script> 
+		
+	</head>
+	<body onload="OnInit()" width="100%" height="100%" topmargin="0" leftmargin="0" marginwidth="0" marginheight="0">
+    <Table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">       
+        <tr>
+            <td>
+                <object classid="clsid:295B7B16-4E5B-4143-8031-476EA2911C36" id="OfficeXPI" codebase="http://192.168.21.45/UpdateFiles/OfficeXPI.cab#version=52,12,3,3" width="100%" height="600px" vspace="0">           
+                    <param name="_Version" value="65536">
+                    <param name="_ExtentX" value="2646">
+                    <param name="_ExtentY" value="1323">
+                    <param name="_StockProps" value="0">
+                </object>  
+            </td>
+        </tr>       
+    </Table>
+</body>
+</html>

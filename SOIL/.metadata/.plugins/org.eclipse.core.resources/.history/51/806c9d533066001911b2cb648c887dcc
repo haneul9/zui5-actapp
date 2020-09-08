@@ -1,0 +1,327 @@
+// Copyright (c) 2009-2014 SAP SE, All Rights Reserved
+
+
+
+(function(){
+	"use strict";
+	sap.ui.jsview("zui5_hrxx_mss_chart.chart",{
+//(function(){"use strict";sap.ui.jsview("sap.ushell.components.tiles.zui5_hrxx_mss_chart.chart",{
+	getControllerName:function(){
+		return"zui5_hrxx_mss_chart.chart";
+//		return "sap.ushell.components.tiles.zui5_hrxx_mss_chart.chart"
+	},
+	createContent:function(c){
+		this.setHeight('100%');
+		this.setWidth('100%');
+	},
+	
+	getTileControl:function(){
+		jQuery.sap.require('sap.m.GenericTile');
+		jQuery.sap.require('sap.m.CustomTile');
+		jQuery.sap.require('sap.m.Tile');
+		jQuery.sap.require('sap.m.Text');
+		jQuery.sap.require("sap.m.Toolbar", "sap.m.ToolbarSpacer", "sap.ui.commons.TextView", "sap.ui.commons.Image" , "sap.ui.core.Icon");
+		jQuery.sap.require("sap.ui.commons.layout.MatrixLayout", "sap.ui.commons.layout.VerticalLayout", "sap.ui.core.HTML", "sap.ui.core.CustomData");
+		jQuery.sap.includeStyleSheet("/sap/bc/ui5_ui5/sap/ZUI5_HR_TILE/css/actapp.css");
+
+		jQuery.sap.registerModulePath("plugin", "/sap/bc/ui5_ui5/sap/ZUI5_HR_TILE/plugin");
+		jQuery.sap.require("plugin.Chart");
+		
+		var oController = this.getController();
+
+		var surfix = "?" + new Date().getTime();
+		
+		var oBundleText = jQuery.sap.resources({
+			url : "/sap/bc/ui5_ui5/sap/ZHRXX_TMAPP/translation/i18n.properties" + surfix, //번역파일 주소
+			locale : sap.ui.getCore().getConfiguration().getLanguage()
+		});
+		
+		var oView = oController.getView();
+		var V = oView.getViewData();
+		var t = V.chip;
+		var c = sap.ushell.components.tiles.utilsRT.getConfiguration(t,t.configurationUi.isEnabled(),false);
+		var oSemanticObject = c.navigation_semantic_object;
+		var oAction = c.navigation_semantic_action;
+		
+		var oId = oSemanticObject + "-" + oAction;
+		
+		var curDate = new Date();
+		var prevDate = new Date(curDate.getFullYear(), curDate.getMonth() - 1, curDate.getDate());
+		var nextDate = new Date(curDate.getFullYear(), curDate.getMonth() + 1, curDate.getDate());
+		
+		var vReqCntAll = 0, vReqCnt1 = 0, vReqCnt2 = 0, vReqCnt3 = 0, vReqCnt4 = 0, vReqCnt5 = 0;
+		
+		var oCell = null , oRow = null;
+		
+		var oMainContent = new sap.ui.commons.layout.MatrixLayout({
+			layoutFixed : false,
+			widths : ['80px','65px'],
+			columns : 2,
+			width : "145px"
+		}).setModel(oController._JSonModel).bindElement("/results");
+//		oMainContent.bindElement("/results");.setModel(oController.getView().getModel()).bindElement("/data") //.setModel(oController.getView().getModel()).bindElement("/results");
+		
+		oRow = new sap.ui.commons.layout.MatrixLayoutRow();
+		oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+			colSpan : 2,
+//			content : new sap.m.Text({text : oBundleText.getText("TILE_APPROVAL")}).addStyleClass("L2PTitle1")	// 결재함
+			content : new sap.m.Text({text : "HR 결재함"}).addStyleClass("L2PTitle1")	// 결재함
+		});
+		oRow.addCell(oCell);
+		oMainContent.addRow(oRow);
+		
+		oRow = new sap.ui.commons.layout.MatrixLayoutRow();
+		oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+			hAlign : sap.ui.commons.layout.HAlign.Center,
+			vAlign : sap.ui.commons.layout.VAlign.Middle,
+			colSpan : 2,
+			content : [new sap.ui.core.HTML({
+				preferDOM  : false,
+				content : "<div style='height:5px'> </div>"
+			})]
+		});
+		oRow.addCell(oCell);
+		oMainContent.addRow(oRow);
+		
+		var oChart = new sap.ui.commons.layout.VerticalLayout({
+			content : new sap.ui.core.HTML({preferDOM : false, content : "<canvas id='chart-" + oId + "' width='70' height='70' style='padding-right:2px'/>"})
+		});
+		
+		oRow = new sap.ui.commons.layout.MatrixLayoutRow();
+		oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+			hAlign : sap.ui.commons.layout.HAlign.Left,
+			vAlign : sap.ui.commons.layout.VAlign.Middle,
+			content : [oChart]
+		});
+		oRow.addCell(oCell);
+		oMainContent.addRow(oRow);
+		
+		var oCnt1 = new sap.ui.commons.Label({text : "{Cnt01}", width : "100%" ,textAlign : "End"}).addStyleClass("L2PStatusFont");
+		
+		var oCnt2 = new sap.ui.commons.Label({text : "{Cnt02}", width : "100%" ,textAlign : "End"}).addStyleClass("L2PStatusFont");
+		
+		var oCnt3 = new sap.ui.commons.Label({text : "{Cnt03}", width : "100%" ,textAlign : "End"}).addStyleClass("L2PStatusFont");
+		
+		var oCnt4 = new sap.ui.commons.Label({text : "{Cnt04}", width : "100%" ,textAlign : "End"}).addStyleClass("L2PStatusFont");
+		
+		var oCnt5 = new sap.ui.commons.Label({text : "{Cnt05}", width : "100%" ,textAlign : "End"}).addStyleClass("L2PStatusFont");
+		
+		var oLegendLayout = new sap.ui.commons.layout.MatrixLayout({
+			width : "55px",
+			widths : ['14px','25px',''],
+			columns : 3,
+			layoutFixed : false,
+		
+		}).setModel(oController.getView().getModel()).bindElement("/data") //.setModel(oController._JSonModel).bindElement("/results");
+		
+		oRow = new sap.ui.commons.layout.MatrixLayoutRow({height : "25px"});
+		oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+			hAlign : sap.ui.commons.layout.HAlign.Center,
+			vAlign : sap.ui.commons.layout.VAlign.Middle,
+			content : [new sap.ui.core.Icon({src: "sap-icon://color-fill", size : "12px", color: "#FABD64"})]
+//			content : [new sap.ui.core.Icon({src: "sap-icon://color-fill", size : "12px", color: "#ffcc00"})]
+		});
+		oRow.addCell(oCell);
+		oCell = new sap.ui.commons.layout.MatrixLayoutCell({	// 신청
+			hAlign : sap.ui.commons.layout.HAlign.Left,
+			vAlign : sap.ui.commons.layout.VAlign.Middle,
+//			content : [new sap.ui.commons.Label({text : oBundleText.getText("TILE_CHART1"), tooltip : oBundleText.getText("TILE_CHART1")}).addStyleClass("L2PStatusFont")]
+			content : [new sap.ui.commons.Label({text : "신청", tooltip : "신청"}).addStyleClass("L2PStatusFont")]
+		
+		});
+		oRow.addCell(oCell);
+		oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+			hAlign : sap.ui.commons.layout.HAlign.Center,
+			vAlign : sap.ui.commons.layout.VAlign.End,
+			content : [oCnt1]
+		});
+		oRow.addCell(oCell);
+		oLegendLayout.addRow(oRow);
+		
+		oRow = new sap.ui.commons.layout.MatrixLayoutRow({height : "25px"});
+		oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+			hAlign : sap.ui.commons.layout.HAlign.Center,
+			vAlign : sap.ui.commons.layout.VAlign.Middle,
+//			content : [new sap.ui.core.Icon({src: "sap-icon://color-fill", color: "#52a7e0"})]
+			content : [new sap.ui.core.Icon({src: "sap-icon://color-fill", color: "#2ecc71"})]
+		
+		});
+		oRow.addCell(oCell);
+		oCell = new sap.ui.commons.layout.MatrixLayoutCell({	// 승인
+			hAlign : sap.ui.commons.layout.HAlign.Left,
+			vAlign : sap.ui.commons.layout.VAlign.Middle,
+//			content : [new sap.ui.commons.Label({text : oBundleText.getText("TILE_CHART2"), tooltip : oBundleText.getText("TILE_CHART2")}).addStyleClass("L2PStatusFont")]
+			content : [new sap.ui.commons.Label({text : "승인", tooltip : "승인"}).addStyleClass("L2PStatusFont")]
+		});
+		oRow.addCell(oCell);
+		oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+			hAlign : sap.ui.commons.layout.HAlign.Center,
+			vAlign : sap.ui.commons.layout.VAlign.End,
+			content : [oCnt2]
+		});
+		oRow.addCell(oCell);
+		oLegendLayout.addRow(oRow);
+		
+		oRow = new sap.ui.commons.layout.MatrixLayoutRow({height : "25px"});
+		oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+			hAlign : sap.ui.commons.layout.HAlign.Center,
+			vAlign : sap.ui.commons.layout.VAlign.Middle,
+			content : [new sap.ui.core.Icon({src: "sap-icon://color-fill", color: "#FF8888"})]
+		});
+		oRow.addCell(oCell);
+		oCell = new sap.ui.commons.layout.MatrixLayoutCell({	// 반려
+			hAlign : sap.ui.commons.layout.HAlign.Left,
+			vAlign : sap.ui.commons.layout.VAlign.Middle,
+//			content : [new sap.ui.commons.Label({text : oBundleText.getText("TILE_CHART3"), tooltip : oBundleText.getText("TILE_CHART3")}).addStyleClass("L2PStatusFont")]
+			content : [new sap.ui.commons.Label({text : "반려", tooltip : "반려"}).addStyleClass("L2PStatusFont")]
+		});
+		oRow.addCell(oCell);
+		oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+			hAlign : sap.ui.commons.layout.HAlign.Center,
+			vAlign : sap.ui.commons.layout.VAlign.End,
+			content : [oCnt3]
+		});
+		oRow.addCell(oCell);
+		oLegendLayout.addRow(oRow);
+		
+		oRow = new sap.ui.commons.layout.MatrixLayoutRow({height : "25px"});
+		oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+			hAlign : sap.ui.commons.layout.HAlign.Center,
+			vAlign : sap.ui.commons.layout.VAlign.Middle,
+//			content : [new sap.ui.core.Icon({src: "sap-icon://color-fill", color: "#c4c1c1"})]
+			content : [new sap.ui.core.Icon({src: "sap-icon://color-fill", color: "#999999"})]
+			
+		});
+		oRow.addCell(oCell);
+		oCell = new sap.ui.commons.layout.MatrixLayoutCell({ //참조
+			hAlign : sap.ui.commons.layout.HAlign.Left,
+			vAlign : sap.ui.commons.layout.VAlign.Middle,
+//			content : [new sap.ui.commons.Label({text : oBundleText.getText("TILE_CHART4"), tooltip : oBundleText.getText("TILE_CHART4") }).addStyleClass("L2PStatusFont")]
+			content : [new sap.ui.commons.Label({text : "참조", tooltip : "참조"}).addStyleClass("L2PStatusFont")]
+		});
+		oRow.addCell(oCell);
+		oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+			hAlign : sap.ui.commons.layout.HAlign.Center,
+			vAlign : sap.ui.commons.layout.VAlign.End,
+			content : [oCnt4]
+		});
+		oRow.addCell(oCell);
+		oLegendLayout.addRow(oRow);
+		
+		oRow = new sap.ui.commons.layout.MatrixLayoutRow();
+		oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+			hAlign : sap.ui.commons.layout.HAlign.Center,
+			vAlign : sap.ui.commons.layout.VAlign.Middle,
+			content : [new sap.ui.core.HTML({
+				preferDOM  : false,
+				content : "<div style='height:5px'> </div>"
+			})]
+		});
+		oRow.addCell(oCell);
+		oMainContent.addRow(oRow);
+		
+		oRow = new sap.ui.commons.layout.MatrixLayoutRow();
+		oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+			hAlign : sap.ui.commons.layout.HAlign.Center,
+			vAlign : sap.ui.commons.layout.VAlign.Middle,
+			content : [oChart]
+		});
+		oRow.addCell(oCell);
+		oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+			hAlign : sap.ui.commons.layout.HAlign.Center,
+			vAlign : sap.ui.commons.layout.VAlign.Middle,
+			content : [oLegendLayout]
+		});
+		oRow.addCell(oCell);
+		oMainContent.addRow(oRow);
+		
+		
+//		function getCookie(cname) {
+//	        var name = cname + "=";
+//	        var decodedCookie = decodeURIComponent(document.cookie);
+//	        var ca = decodedCookie.split(';');
+//	        for(var i = 0; i <ca.length; i++) {
+//	            var c = ca[i];
+//	            while (c.charAt(0) == ' ') {
+//	                c = c.substring(1);
+//	            }
+//	            if (c.indexOf(name) == 0) {
+//	                return c.substring(name.length, c.length);
+//	            }
+//	        }
+//	        return "";
+//	    }
+//		
+//		var contexts = getCookie("sap-usercontext");
+//		
+//		if(contexts && contexts.indexOf("sap-language") != -1){
+//			var tmp = contexts.indexOf("=") + 1;
+//			
+//			contexts = contexts.substring(tmp, (tmp+2));
+//			
+//		}
+//		
+//		if(contexts != "EN"){
+//			oRow = new sap.ui.commons.layout.MatrixLayoutRow();
+//			oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+//				hAlign : sap.ui.commons.layout.HAlign.Center,
+//				vAlign : sap.ui.commons.layout.VAlign.Middle,
+//				content : [new sap.ui.core.HTML({
+//					preferDOM  : false,
+//					content : "<div style='height:15px'> </div>"
+//				})]
+//			});
+//			oRow.addCell(oCell);
+//			oMainContent.addRow(oRow);
+//		}
+		
+		oRow = new sap.ui.commons.layout.MatrixLayoutRow();
+		oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+			hAlign : sap.ui.commons.layout.HAlign.Center,
+			vAlign : sap.ui.commons.layout.VAlign.Middle,
+			content : [new sap.ui.core.HTML({
+				preferDOM  : false,
+				content : "<div style='height:10px'> </div>"
+			})]
+		});
+		oRow.addCell(oCell);
+		oMainContent.addRow(oRow);
+		
+		oRow = new sap.ui.commons.layout.MatrixLayoutRow({});
+		oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+			content : new sap.ui.commons.TextView({
+		        	   text : "{Prdtx}",
+		        	   width : "100%",
+		        	   textAlign : "End"
+				   }).addStyleClass("L2PFontSubTitle"),
+			colSpan : 2
+		});
+		oRow.addCell(oCell);
+		
+//		oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+//			hAlign : sap.ui.commons.layout.HAlign.Center,
+//			vAlign : sap.ui.commons.layout.VAlign.End,
+//			content : [oCnt5]
+//		});
+//		oRow.addCell(oCell);
+		oMainContent.addRow(oRow);
+		
+		var oCustomTile = new sap.m.CustomTile({ 
+			  content : [oMainContent],
+			  press : [oController.onPress, oController]
+		}).addStyleClass("L2PTilePadding Tile TileLayout");
+		
+		
+		return oCustomTile;
+	},
+	
+	getLinkControl:function(){
+		jQuery.sap.require('sap.m.Link');
+		return new sap.m.Link({text:"{/config/display_title_text}",href:"{/nav/navigation_target_url}"});
+	}
+	
+  });
+}());
+
+
+

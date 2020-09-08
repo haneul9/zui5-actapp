@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;SgnstepPopover.fragment.js&apos; to &apos;fragment&apos;&#x0D;&#x0A;- Original project: &apos;ZUI5_HR_ESSAPP&apos;&#x0D;&#x0A;- Destination element: &apos;fragment&apos;&#x0D;&#x0A;- Original element: &apos;SgnstepPopover.fragment.js&apos;" description="Copy file" element1="WebContent/ZUI5_HR_ApprovalBox/fragment/SgnstepPopover.fragment.js" files="1" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1579173627347" target="/ZUI5_HR_ESSAPP/WebContent/ZUI5_HR_ApplyBox/fragment" units="0" version="1.0"/>
+</session>

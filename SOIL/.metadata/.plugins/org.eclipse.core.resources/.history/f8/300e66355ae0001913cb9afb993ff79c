@@ -1,0 +1,111 @@
+sap.ui.jsfragment("ZUI5_HR_ApprovalBox.fragment.Detail02", {
+	/** Specifies the Controller belonging to this View. 
+	* In the case that it is not implemented, or that "null" is returned, this View does not have a Controller.
+	* @memberOf fragment.SelectMassn
+	*/
+
+	createContent : function(oController) {
+		jQuery.sap.require("common.Common");
+		jQuery.sap.require("common.SearchUser1");
+		jQuery.sap.require("common.ZNK_TABLES");
+		
+		var oTable = new sap.ui.table.Table(oController.PAGEID + "_DetailTable", {
+			enableColumnReordering : false,
+			enableColumnFreeze : false,
+//			columnHeaderHeight  : 35,
+			showNoData : true,
+			selectionMode: sap.ui.table.SelectionMode.Multitoggle,
+			showOverlay : false,
+			enableBusyIndicator : true,
+			visibleRowCount : 1,
+			enableGrouping : false,
+			enableColumnFreeze : false,
+			cellClick : oController.onClickTable,
+			fixedColumnCount : 7,
+			extension : new sap.m.Toolbar({	//
+								height : "40px",
+								content : [new sap.m.Text({ text : {
+									path : "ZreqForx",
+									formatter : function(fVal){
+										if(common.Common.checkNull(fVal)) return "";
+										else return fVal;
+									}
+								  }
+								}).setModel(oController._ListCondJSonModel)
+								.bindElement("/Data")
+								.addStyleClass("L2P15FontBold")]
+						}).addStyleClass("L2PToolbarNoBottomLine"),
+			rowActionCount : 1,
+			rowActionTemplate : new sap.ui.table.RowAction({
+				items : [
+					new sap.ui.table.RowActionItem({
+						type : "Navigation",
+						customData : [new sap.ui.core.CustomData({key : "", value : "{Appno}"})],
+						press : oController.onPressRowAction,
+						visible : {
+							path : "Idx",
+							formatter : function(fVal){
+								if(fVal && fVal != "") return true;
+								else return false;
+							}
+						}
+					})
+				]
+			})
+		}).addStyleClass("L2P14Font");
+		oTable.setModel(new sap.ui.model.json.JSONModel());
+		oTable.bindRows("/Data");	
+		
+//		var col_info1 = [{id: "Idx", label : "No", plabel : "", span : 0, type : "string", sort : true, filter : true, width : "4%"},
+//			 			 {id: "ZappStxtAl", label : "상태", plabel : "", span : 0, type : "string", sort : true, filter : true, width : "6%"},
+//			 			 {id: "ZappEname", label : "결제 예정자", plabel : "", span : 0, type : "string", sort : true, filter : true, width : "8%"},
+//			 			 {id: "Perid", label : "사번", plabel : "", span : 0, type : "string", sort : true, filter : true, width : "6%"},
+//			 			 {id: "Ename", label : "성명", plabel : "", span : 0, type : "string", sort : true, filter : true, width : "8%"},
+//			 			 {id: "Zzjiklnt", label : "직위", plabel : "", span : 0, type : "string", sort : true, filter : true, width : "8%"},
+//			 			 {id: "Orgtx", label : "조직", plabel : "", span : 0, type : "string", sort : true, filter : true, width : "12%"},
+//			 			 {id: "ZreqForx", label : "신청유형", plabel : "", span : 0, type : "string", sort : true, filter : true, width : "10%"},
+//			 			 {id: "ZappTitl", label : "신청내역", plabel : "", span : 0, type : "string", sort : true, filter : true, width : "12%"},
+//			 			 {id: "Apename", label : "신청자", plabel : "", span : 0, type : "string", sort : true, filter : true, width : "8%"},
+//			 			 {id: "ZreqDate", label : "신청일", plabel : "", span : 0, type : "date", sort : true, filter : true, width : "8%"},
+//			 			 {id: "ZappDate", label : "결재일", plabel : "", span : 0, type : "date", sort : true, filter : true, width : "8%"},
+//			 			 {id: "Appno", label : "문서번호", plabel : "", span : 0, type : "string", sort : true, filter : true, width : "6%"},
+//			 			 {id: "Zstep", label : "단계", plabel : "", span : 0, type : "string", sort : true, filter : true, width : "6%"}];
+//		
+		var col_info1 = [{id: "Idx", label : "No", plabel : "", span : 0, type : "string", sort : true, filter : true, width : "50px"},
+						 {id: "ZappStxtAl", label : "상태", plabel : "", span : 0, type : "string", sort : true, filter : true, width : "80px"},
+						 {id: "ZappEname", label : "결제 예정자", plabel : "", span : 0, type : "string", sort : true, filter : true, width : "80px"},
+						 {id: "Perid", label : "사번", plabel : "", span : 0, type : "string", sort : true, filter : true, width : "80px"},
+						 {id: "Ename", label : "성명", plabel : "", span : 0, type : "string", sort : true, filter : true, width : "100px"},
+						 {id: "Zzjiklnt", label : "직위", plabel : "", span : 0, type : "string", sort : true, filter : true, width : "150px"},
+						 {id: "Orgtx", label : "조직", plabel : "", span : 0, type : "string", sort : true, filter : true, width : "180px"},
+						 {id: "ZreqForx", label : "신청유형", plabel : "", span : 0, type : "string", sort : true, filter : true, width : "180px"},
+						 {id: "ZappTitl", label : "신청내역", plabel : "", span : 0, type : "string", sort : true, filter : true, width : "200px"},
+						 {id: "Apename", label : "신청자", plabel : "", span : 0, type : "string", sort : true, filter : true, width : "120px"},
+						 {id: "ZreqDate", label : "신청일", plabel : "", span : 0, type : "date", sort : true, filter : true, width : "100px"},
+						 {id: "ZappDate", label : "결재일", plabel : "", span : 0, type : "date", sort : true, filter : true, width : "100px"},
+						 {id: "Appno", label : "문서번호", plabel : "", span : 0, type : "string", sort : true, filter : true, width : "120px"},
+						 {id: "Zstep", label : "단계", plabel : "", span : 0, type : "string", sort : true, filter : true, width : "100px"}];
+		
+		common.ZNK_TABLES.makeColumn(oController, oTable, col_info1);
+		// Excel column info
+		oController._Columns = common.Common.convertColumnArrayForExcel(col_info1);
+		
+		var oMatrix = new sap.ui.commons.layout.MatrixLayout({
+			columns : 2,
+			width : "100%",
+			widths : ["10px", ""]
+		});
+		
+		oRow = new sap.ui.commons.layout.MatrixLayoutRow();
+	
+		oCell = new sap.ui.commons.layout.MatrixLayoutCell();
+		oRow.addCell(oCell);
+		
+		oCell = new sap.ui.commons.layout.MatrixLayoutCell({content : oTable});
+		oRow.addCell(oCell);
+		
+		oMatrix.addRow(oRow);
+			
+		return oMatrix;
+	}
+});

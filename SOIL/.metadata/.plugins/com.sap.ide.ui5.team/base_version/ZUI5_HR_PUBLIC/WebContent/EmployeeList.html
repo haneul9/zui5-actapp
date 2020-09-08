@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>내 팀 동료</title>
+		
+		<script src="resources/sap-ui-cachebuster/sap-ui-core.js"
+				id="sap-ui-bootstrap"
+				data-sap-ui-libs="sap.m, sap.ui.commons, sap.ui.ux3, sap.ui.layout, sap.ui.table, sap.suite.ui.commons, sap.ui.unified, sap.tnt, sap.uxap"
+				data-sap-ui-theme = "sap_belize_plus"
+				data-sap-ui-xx-bindingSyntax="complex"
+				data-sap-ui-preload="sync"
+				data-sap-ui-compatVersion="1.16"
+				data-sap-ui-appCacheBuster="./"></script>
+					
+	    <style>
+	    .LaunchpadBackground {
+				background-image: linear-gradient(to bottom,#2a4f67,#9ec5de);
+				background-repeat:no-repeat;
+				background-position:center;
+				background-size:cover
+			}
+		.L2PFontFamily {
+		 	font-family: 'Malgun Gothic' !important;
+		    font-size: 0.875rem !important;
+			font-weight : normal !important;
+			color: white !important;
+		}
+		.L2PToolbarNoBottomLine {
+			border-bottom: 0px solid #cccccc !important;
+		}
+				
+	    </style>			
+		<script>
+			jQuery.sap.require("sap.m.MessageBox");
+			
+			var oServiceURL = "/sap/opu/odata/sap/ZL2P01GW9000_SRV/";
+			
+			var oHeader = ({ "X-Requested-With" : "X" });
+			var oModel = new sap.ui.model.odata.ODataModel(oServiceURL, true, "ZHANA60", "k!41100171", undefined, undefined, undefined, false);
+		
+			var getUrlParameter = function getUrlParameter(sParam) {
+			    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+			    sURLVariables = sPageURL.split('&'),
+			    sParameterName,
+			    i;
+			
+			    for (i = 0; i < sURLVariables.length; i++) {
+			        sParameterName = sURLVariables[i].split('=');
+			
+			        if (sParameterName[0] === sParam) {
+			            return sParameterName[1] === undefined ? true : sParameterName[1];
+				        }
+			    	}
+			};
+
+			var _orgcd = getUrlParameter('Orgcd');
+			
+			function formatDate(date) {
+			    var d = new Date(date),
+			        month = '' + (d.getMonth() + 1),
+			        day = '' + d.getDate(),
+			        year = d.getFullYear();
+
+			    if (month.length < 2) month = '0' + month;
+			    if (day.length < 2) day = '0' + day;
+
+			    return [year, month, day].join('-');
+			};
+			
+			var curDate = new Date();
+			var vActda = formatDate(curDate);
+			
+			if(!_orgcd || _orgcd == "") _orgcd = "10000012";
+			
+			var filterString = "?$filter=Persa eq '1000' and Actda eq datetime'" + vActda + "T00:00:00%27%20and%20(Orgeh%20eq%20%27" + _orgcd + "%27)%20and%20Stat1%20eq%20%273%27%20and%20Zzjobgr%20eq%20%27%27";
+			
+			var oMatrix = new sap.ui.commons.layout.MatrixLayout({
+				columns : 4,
+				widths : [,'100px','200px',]
+			});
+			
+			function Search() {
+				oModel.read("/EmpSearchResultSet" + filterString, 
+						null, 
+						null, 
+						false,
+						function(oData, oResponse) {
+							if(oData && oData.results) {
+								for(var i=0; i<oData.results.length; i++) {								
+									var oneData = oData.results[i];
+									
+									oRow = new sap.ui.commons.layout.MatrixLayoutRow();
+									oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+										rowSpan : 2 ,
+									}); 
+									oRow.addCell(oCell);
+									oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+										rowSpan : 2 ,
+										
+										content : new sap.m.Image({ src : oneData.Photo ,
+										                            width : "80px"	
+										})
+									}); 
+									oRow.addCell(oCell);
+									oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+										vAlign : "Middle",
+										content : new sap.m.Text({ text : "이름 : " + oneData.Ename }).addStyleClass("L2PFontFamily")
+									}); 
+									oRow.addCell(oCell);
+									oMatrix.addRow(oRow);
+									
+									oRow = new sap.ui.commons.layout.MatrixLayoutRow();
+									oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+										vAlign : "Middle",
+										content : new sap.m.Text({ text : "직급 : " + oneData.Zzjiktlt }).addStyleClass("L2PFontFamily")
+									}); 
+									oRow.addCell(oCell);
+									oMatrix.addRow(oRow);
+								}
+							}
+						},
+						function(oResponse) {
+							common.Common.log(oResponse);
+						}
+				);
+				
+				
+				// oLayout.addContent(oMatrix);
+				// oController.BusyDialog.close();
+			}	
+			// oController.BusyDialog.open();
+			setTimeout(Search, 100);
+			
+			
+			
+			
+			oMatrix.placeAt("content");
+			oMatrix.addStyleClass("sapUiSizeCompact");
+			
+			$( window ).ready(function() {
+				onResize();
+			});
+			
+			$( window ).resize(function() {
+				onResize();
+			});
+			
+			function onResize(){
+				
+				oMatrixLayout.setHeight(window.innerHeight + "px");
+			}
+			
+		    function closeWindow(){
+		    	document.write('CLOSE');
+// 		    	window.open('/sap/bc/ui5_ui5/sap/zui5_hr_public/none.html', '_self', '');
+// 		    	window.close();
+		    };
+		</script>
+	</head>
+	<body class="sapUiBody" role="application">
+			<div id="content"  class="LaunchpadBackground">
+			</div>
+	</body>
+</html>

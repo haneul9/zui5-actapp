@@ -1,0 +1,17 @@
+{
+	"welcomeFile": "/ZHR_OVP_TM/test/flpSandbox.html",
+	"authenticationMethod": "none",
+	"logout": {
+		"logoutEndpoint": "/do/logout"
+	},
+	"routes": [{
+		"source": "^/" + oConnectionData.destination.name + "/(.*)$",
+		"target": "$1",
+		"destination": "kyj",
+		"csrfProtection": false
+	}, {
+		"source": "^/ZHR_OVP_TM/(.*)$",
+		"target": "$1",
+		"localDir": "webapp"
+	}]
+}

@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv='Content-Type' content='text/html;charset=UTF-8'/>
+    <title></title>
+
+    <link rel="stylesheet" type="text/css" href="/sap/bc/ui5_ui5/sap/ZUI5_HR_HCOMMON/css/dhtmlxtree.css" />
+    <script type="text/javascript" src="/sap/bc/ui5_ui5/sap/ZUI5_HR_HCOMMON/plugin/dhtmlxtree.js"></script>
+
+    <script src="resources/sap-ui-cachebuster/sap-ui-core.js"
+        id="sap-ui-bootstrap"
+        data-sap-ui-libs="sap.m, sap.ui.commons, sap.suite.ui.commons, sap.ui.unified, sap.uxap" 
+        data-sap-ui-xx-bindingSyntax="complex" 
+        data-sap-ui-theme="sap_bluecrystal"
+        data-sap-ui-preload="auto"
+        data-sap-ui-appCacheBuster="./"> 
+    </script>   
+
+    <script type="text/javascript" src="/sap/bc/ui5_ui5/sap/ZUI5_HR_HCOMMON/IBSheet/ibsheet.js"></script>
+    <script type="text/javascript" src="/sap/bc/ui5_ui5/sap/ZUI5_HR_HCOMMON/IBSheet/ibsheetinfo.js"></script>
+
+    <script type="text/javascript" src="/sap/bc/ui5_ui5/sap/ZUI5_HR_HCOMMON/plugin/InitTel/intlTelInput.js"></script>
+    <link rel="stylesheet" type="text/css" href="/sap/bc/ui5_ui5/sap/ZUI5_HR_HCOMMON/plugin/InitTel/intlTelInput.css" />
+
+    <script type="text/javascript" src="/sap/bc/ui5_ui5/sap/ZUI5_HR_HCOMMON/plugin/jquery-maskedinput.js"></script>
+    		<script type="text/javascript" src="/sap/bc/ui5_ui5/sap/ZUI5_HR_HCOMMON/plugin/bootstrap-table/bootstrap-table.js"></script>
+		<link rel="stylesheet" type="text/css" href="/sap/bc/ui5_ui5/sap/ZUI5_HR_HCOMMON/plugin/bootstrap-table/bootstrap-table.css" />
+
+    <script>
+        sap.ui.core.AppCacheBuster.register("/sap/bc/ui5_ui5/sap/ZUI5_HR_HCOMMON/");
+
+        sap.ui.localResources("zui5_hrxx_actapp");
+        jQuery.sap.registerModulePath("util", "/sap/bc/ui5_ui5/sap/ZUI5_HR_HCOMMON/util");
+        jQuery.sap.registerModulePath("fragment", "/sap/bc/ui5_ui5/sap/ZUI5_HR_HCOMMON/fragment");
+        jQuery.sap.registerModulePath("common", "/sap/bc/ui5_ui5/sap/ZUI5_HR_HCOMMON/common");
+        jQuery.sap.registerModulePath("control", "/sap/bc/ui5_ui5/sap/ZUI5_HR_HCOMMON/control");
+        jQuery.sap.registerModulePath("zui5_hrxx_actrec", "/sap/bc/ui5_ui5/sap/zhrxx2_hassapp/zui5_hrxx_actrec");
+
+        $( window ).resize(function() {
+          sap.ui.getCore().getEventBus().publish("app", "ResizeWindow", {
+            windowHeight : window.innerHeight
+          });
+        }); 
+
+//         var surfix = "?" + new Date().getTime();
+//         var oBundleText = jQuery.sap.resources({
+//               url : "/sap/bc/ui5_ui5/sap/ZUI5_HR_HCOMMON/translation/i18n.properties"  + surfix, //번역파일 주소
+//               locale : sap.ui.getCore().getConfiguration().getLanguage()
+//             });
+
+        jQuery.sap.includeStyleSheet("/sap/bc/ui5_ui5/sap/ZUI5_HR_HCOMMON/css/L2P2SAP1.css");
+        jQuery.sap.includeStyleSheet("/sap/bc/ui5_ui5/sap/ZUI5_HR_HCOMMON/css/L2PBasic.css");
+
+//         document.title = oBundleText.getText("TITLE_ACT_REQUEST");
+        try {
+          var vHostName = location.hostname;
+          if(vHostName.indexOf(".corp.") > 0) {
+            document.domain = "corp.doosan.com";
+          } else {
+            document.domain = "doosan.com";
+          }
+          top.document.title = document.title;
+        } catch(ex) {
+          console.log(ex);
+        } 
+
+        var gPersa = "";
+        var gMolga = "";
+        var gDtfmt = "";
+        var gDcpfm = "";
+        var gEeapp = "";
+
+        var oView = sap.ui.view({id:"zui5_hrxx_actapp.AppMain", viewName:"zui5_hrxx_actapp.AppMain", type:"JS"});
+        oView.placeAt("content");
+
+        //sap.ui.getCore().attachInit(function() {
+        //  jQuery.sap.includeStyleSheet("/sap/bc/ui5_ui5/sap/ZUI5_HR_HCOMMON/css/L2P2SAP1.css" + surfix);
+        //  jQuery.sap.includeStyleSheet("/sap/bc/ui5_ui5/sap/ZUI5_HR_HCOMMON/css/L2PBasic.css" + surfix);
+
+        //  var oView = sap.ui.view({id:"zui5_hrxx_actapp2.AppMain", viewName:"zui5_hrxx_actapp2.AppMain", type:"JS"});
+        //  oView.placeAt("content");
+        //});
+
+    </script>
+
+  </head>
+  <body class="sapUiBody" role="application">
+    <div id="content"></div>
+
+    <div id="HelpOverlayBackLayout" class="L2POverlayBackLayout"></div>
+    <div id="HelpOvrelay" class="L2POverlay">
+      <div id="HelpOvrelay-close" class="close"></div>
+      <div id="HelpOvrelay-inner" class="inner"></div>
+    </div>
+    <div style="display:none" id="ActAppDownlaodSheet">
+    </div>
+  </body>
+</html>

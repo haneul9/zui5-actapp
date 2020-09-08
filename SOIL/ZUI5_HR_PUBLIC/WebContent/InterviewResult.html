@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>입사지원서</title>
+		
+		<script src="resources/sap-ui-cachebuster/sap-ui-core.js"
+				id="sap-ui-bootstrap"
+				data-sap-ui-libs="sap.m, sap.ui.commons, sap.ui.ux3, sap.ui.layout, sap.ui.table, sap.suite.ui.commons, sap.ui.unified, sap.tnt, sap.uxap"
+				data-sap-ui-theme = "sap_belize_plus"
+				data-sap-ui-xx-bindingSyntax="complex"
+				data-sap-ui-preload="sync"
+				data-sap-ui-compatVersion="1.16"
+				data-sap-ui-appCacheBuster="./"></script>	
+		
+	    <style>
+	    .LaunchpadBackground {
+				background-image: linear-gradient(to bottom,#2a4f67,#9ec5de);
+				background-repeat:no-repeat;
+				background-position:center;
+				background-size:cover
+			}
+		.L2PFontFamily {
+		 	font-family: 'Malgun Gothic' !important;
+		    font-size: 0.875rem !important;
+			font-weight : normal !important;
+			color: white !important;
+		}
+		.L2PToolbarNoBottomLine {
+			border-bottom: 0px solid #cccccc !important;
+		}
+				
+	    </style>			
+		<script>
+			var sServiceURL = "/sap/opu/odata/sap/ZSFINTERFACE_SRV/";
+			
+			var oHeader = ({ "X-Requested-With" : "X" });
+			var oModel = new sap.ui.model.odata.ODataModel(sServiceURL, true, undefined, undefined, oHeader, undefined, undefined, false);
+			
+			var vApplicationid = jQuery.sap.getUriParameters().get("Applicationid");
+			var vUrl= "";
+			if(vApplicationid == "" || vApplicationid == null || vApplicationid == "NaN"){
+				
+			}else{
+				try{
+					var oPath = "/PersonalityTestSet?$filter=Applicationid eq '" + vApplicationid + "'";
+					oModel.read(
+							oPath,
+							null,
+							null,
+							false,
+							function(data,res){
+								if(data && data.results.length){
+									vUrl = data.results[0].Url;
+								}else{
+									window.close();
+								}
+							},
+							function(res){console.log(res);}
+					);	
+				}catch(Ex){
+					window.close();
+				}
+				
+				// window.open(vUrl, '_self', "width=700,height=700");
+				window.open(vUrl, '_blank', "width=700,height=700");
+				window.close();
+			}
+			
+			
+			
+		</script>
+	</head>
+	<body class="sapUiBody" role="application">
+			<div id="content"  class="LaunchpadBackground">
+			</div>
+	</body>
+</html>

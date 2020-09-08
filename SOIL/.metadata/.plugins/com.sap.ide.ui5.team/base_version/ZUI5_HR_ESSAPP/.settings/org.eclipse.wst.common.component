@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="ZUI5_HR_ESSAPP">
+        <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <dependent-module archiveName="ZUI5_HR_COMMON.war" deploy-path="/WEB-INF/lib" handle="module:/resource/ZUI5_HR_COMMON/ZUI5_HR_COMMON">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <property name="context-root" value="ZUI5_HR_ESSAPP"/>
+        <property name="java-output-path" value="/ZUI5_HR_ESSAPP/build/classes"/>
+    </wb-module>
+</project-modules>

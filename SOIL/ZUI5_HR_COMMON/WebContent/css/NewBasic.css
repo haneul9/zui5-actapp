@@ -1,0 +1,720 @@
+@charset "utf-8";
+/* @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css); */
+@import url(/sap/bc/ui5_ui5/sap/zui5_hr_common/css/notosanskr.css);
+/*
+------------------------------------------------------------
+file name: NewBasic.css
+Author: Yeonjun.kang
+date: 2016.06.23 
+PSNC Custom CSS
+------------------------------------------------------------*/
+/*
+L2PFontFamily -> FontFamily
+*/
+.FontFamily {
+	font-size: 14px !important;
+	font-family: 'Noto Sans KR', sans-serif !important;
+	color: #666666 !important;
+}
+
+.FontPrivacyHeader {
+	font-size: 14px !important;
+	font-family: 'Noto Sans KR', sans-serif !important;
+	font-weight: bold !important;
+	color: #4f4ade !important;
+}
+
+.FontFamilyNoColor {
+	font-family: 'Noto Sans KR', sans-serif !important;
+	font-size: 0.875rem !important;
+	font-weight : normal !important;
+}
+/*
+L2PFontFamily -> FontFamily
+*/
+.L2PFontFamily {
+	font-size: 14px !important;
+	font-family: 'Noto Sans KR', sans-serif !important;
+	color: #666666 !important;
+}
+
+.Font13px {
+	font-size: 13px !important;
+	font-family: 'Noto Sans KR', sans-serif !important;
+	color: #000000 !important;
+}
+
+.FontBold {
+	font-weight : bold !important;
+}
+
+.FontFamilyRed {
+ 	font-family: 'Noto Sans KR', sans-serif !important;
+	font-size: 14px !important;
+	font-weight : normal !important;
+	color: red !important;
+}
+
+input:focus {outline : none !important;}
+
+/*
+L2PFontFamilyBold -> FontFamilyBold
+*/
+.FontFamilyBold {
+	font-size: 14px !important;
+	font-family: 'Noto Sans KR', sans-serif !important;
+	color: #333333 !important;
+	font-weight : bold !important;
+}
+
+.TitleFont {
+	font-size: 18px !important;
+	font-family: 'Noto Sans KR', sans-serif !important;
+	color: #000000 !important;
+}
+
+.MiddleTitle {
+	font-size: 16px !important;
+	font-family: 'Noto Sans KR', sans-serif !important;
+	color: #666666 !important;
+	font-weight : bold !important;
+}
+
+/*
+ 기존 L2PToolbarNoBottomLine -> ToolbarNoBottomLin
+*/
+.ToolbarNoBottomLine {
+	border-bottom: 0px solid #cccccc !important;
+}
+/*
+ 기존 L2PFilterLayout -> FilterLayout
+*/
+.FilterLayout {
+	border : 1px solid #82c2a5 !important;
+	background-color : #ebf5f0;
+}
+
+.BorderLayout {
+	border : 1px solid #e9e9e9;
+}
+
+.WhiteBackground {
+ 	background: white !important; 
+}
+
+.sapUiTableRowAction{
+	border-right : none !important;
+}
+
+/*
+  input , combo, select 등 editable 이 false 인 경우
+*/
+/* .sapMInputBaseReadonly .sapMInputBaseContentWrapper{ */
+/* 	background :  */
+/* } */
+
+.MatrixLabel {	
+	background-color: #f7f7f7;
+	border : 1px solid #dddddd;
+	padding-left: 15px !important;
+}
+
+.MatrixLabel2 {	
+	background-color: #f7f7f7;
+	border : 1px solid #dddddd;
+	padding-left: 10px !important;
+	padding-right: 10px !important;
+}
+
+.MatrixLabel3 {	
+	background-color: #f7f7f7;
+	border : 1px solid #dddddd;
+}
+
+.MatrixLabel11 {	
+	background-color: #f4dda6;
+	border : 1px solid #dddddd;
+	padding-left: 10px !important;
+	padding-right: 10px !important;
+}
+
+.MatrixData {	
+	background-color:rgb(255,255,255);
+	border : 1px solid #dddddd;
+	padding-left: 10px !important;
+	padding-right: 10px !important;
+}
+
+.MatrixData1 {	
+	background-color:rgb(255,255,255);
+	border : 1px solid #dddddd;
+	padding-left: 14px !important;
+}
+
+.MatrixData2 {	
+	background-color: #f2f2f2 !important;
+	border-top : 1px solid #e7e7e7 !important;
+	border-right : 1px solid #e7e7e7 !important;
+	border-bottom : 1px solid #e7e7e7 !important;
+	padding-top: 20px !important;
+	padding-right: 20px !important;
+	padding-bottom: 20px !important;
+}
+
+.MatrixData3 {	
+	background-color: #f2f2f2 !important;
+	border-top : 1px solid #e7e7e7 !important;
+	border-left : 1px solid #e7e7e7 !important;
+	border-bottom : 1px solid #e7e7e7 !important;
+ 	padding-top: 20px !important; 
+ 	padding-left: 20px !important; 
+/* 	padding-bottom: 20px !important; */
+}
+
+.MatrixData4 {	
+	background-color:rgb(255,255,255);
+	border : 1px solid #dddddd;
+}
+
+.MatrixData5 {	
+	background-color: #ebf5f0 !important;
+	border : 1px solid #d9d9d9 !important;
+	padding-top : 15px !important;
+	padding-bottom : 15px !important;
+}
+
+.MatrixData6 {	
+	border-top : 1px solid #c9c9c9 !important;
+	border-right : 1px solid #c9c9c9 !important;
+	border-bottom : 0px solid #c9c9c9 !important;
+	border-left : 1px solid #c9c9c9 !important;
+}
+
+.MatrixData7 {	
+	border-top : 0px solid #c9c9c9 !important;
+	border-right : 1px solid #c9c9c9 !important;
+	border-bottom : 1px solid #c9c9c9 !important;
+	border-left : 1px solid #c9c9c9 !important;
+}
+
+.MatrixData10 {	
+	background-color: #f4dda6;
+	border : 1px solid #dddddd;
+	padding-left: 10px !important;
+}
+
+
+
+.PaddingLeft3 {
+    padding-left:3px !important;
+}
+
+.PaddingLeft5 {
+    padding-left:5px !important;
+}
+
+.PaddingLeft7 {
+    padding-left:7px !important;
+}
+
+.PaddingLeft10 {
+    padding-left:10px !important;
+}
+
+.PaddingLeft20 {
+    padding-left:20px !important;
+}
+.PaddingLeft70 {
+    padding-left:70px !important;
+}
+
+.PaddingRight5{
+	padding-Right :5px !important;
+}
+
+.PaddingRight5px{
+	padding-Right :5px !important;
+}
+
+.PaddingRight10{
+	padding-Right :10px !important;
+}
+
+.PaddingRight10px{
+	padding-Right :10px !important;
+}
+
+.PaddingRight15{
+	padding-Right :15px !important;
+}
+
+.PaddingRight20 {
+    padding-right:20px !important;
+}
+
+.PaddingRight30 {
+    padding-right:30px !important;
+}
+
+.PaddingRight40 {
+    padding-right:40px !important;
+}
+
+.PaddingRight70 {
+    padding-right:70px !important;
+}
+
+.PaddingTop2{
+	padding-top : 2px !important;
+}
+
+.PaddingTop5px {
+	padding-top : 5px;
+}
+
+.PaddingTop5 {
+	padding-top : 5px;
+}
+
+.PaddingTop10{
+	padding-top : 10px !important;
+}
+
+.PaddingTop20{
+	padding-top : 20px !important;
+}
+
+.PaddingBottom10 {
+	padding-bottom : 10px !important;
+}
+
+.MarginRight10{
+	margin-right : 10px !important;	
+}
+
+.FilterItem {
+	padding-right : 20px;
+	padding-top : 5px;
+	padding-bottom : 5px;
+	vertical-align: bottom !important;
+}
+
+.OrangeBackground {
+ 	background: #ffb400 !important; 
+}
+
+.CursorPointer {
+	cursor : pointer;
+}
+
+.Pointer {
+	cursor : pointer;
+}
+
+.LinkFontFamilyBold {
+	font-size: 16px !important;
+	font-family: 'Noto Sans KR', sans-serif !important;
+	color: #888888 !important;
+	font-weight : bold !important;
+	text-decoration : none !important;
+}
+
+.TopMenuButton {
+	background-color : #ffffff;
+	border : none;
+}
+
+.LinkFontFamilyBoldActive { 
+	font-size: 16px !important;
+	font-family: 'Noto Sans KR', sans-serif !important;
+	color: #008549 !important;
+	font-weight : bold !important;
+	text-decoration : none !important;
+}
+
+.Font12px{
+	font-size: 12px !important;
+	font-family: 'Noto Sans KR', sans-serif !important;
+}
+
+.Font12px2{
+	font-size: 12px !important;
+	font-family: 'Noto Sans KR', sans-serif !important;
+	color : #555555;
+}
+
+.Font12px3{
+	font-size: 12px !important;
+	font-family: 'Noto Sans KR', sans-serif !important;
+	color : #666666 !important;
+}
+
+.Font12px4{
+	font-size: 12px !important;
+	font-family: 'Noto Sans KR', sans-serif !important;
+	color : #333333;
+}
+
+.Font16px{
+	font-size: 16px !important;
+	font-family: 'Noto Sans KR', sans-serif !important;
+}
+
+.Font24px{
+	font-size: 24px !important;
+	font-family: 'Noto Sans KR', sans-serif !important;
+}
+
+.Font20px{
+	font-size: 20px !important;
+	font-family: 'Noto Sans KR', sans-serif !important;
+}
+
+
+.Font22px{
+	font-size: 22px !important;
+	font-family: 'Noto Sans KR', sans-serif !important;
+}
+
+.Font30px{
+	font-size: 30px !important;
+	font-family: 'Noto Sans KR', sans-serif !important;
+}
+
+.Font14px{
+	font-size: 14px !important;
+	font-family: 'Noto Sans KR', sans-serif !important;
+}
+
+.Font18px{
+	font-size: 18px !important;
+	font-family: 'Noto Sans KR', sans-serif !important;
+}
+
+.Font60px{
+	font-size: 60px !important;
+	font-family: 'Noto Sans KR', sans-serif !important;
+}
+
+.FontColor0{
+	color : #000000 !important;
+}
+
+.FontColor6{
+	color : #666666 !important;
+}
+
+.FontColor3{
+	color : #333333 !important;
+}
+
+.FontColor9{
+	color : #999999 !important;
+}
+
+.FontColorApply{
+	color : #4bc0c0 !important;
+}
+
+.FontColorApproval{
+	color : #36a2eb !important;
+}
+
+.FontColorReject{
+	color : #ff6384 !important;
+}
+
+.TileLayout{ 
+ 	border-radius : 0.5rem ;  
+ 	border : 1px solid #c6c6c6;
+/* 	cursor : pointer; */
+	background-color : white;
+	border-collapse : separate !important;
+} 
+
+.ProfileTileLayout{ 
+ 	border-radius : 0.5rem ;  
+ 	border : 2px solid #ffd777;
+/* 	cursor : pointer; */
+	background-color : white;
+	border-collapse : separate !important;
+} 
+
+.TileLayout:hover { 
+	border : 1px solid #82c2a5; 
+}
+
+.Overflow{
+	overflow : hidden ;
+}
+
+.Height25px {
+	height : 25px !important;
+}
+
+.NoMarginLeft {
+	margin-left : 0px !important;
+}
+
+.NoPadding{
+	padding : 0px !important;
+}
+
+.NoTopPadding{
+	padding-top :0px !important;
+}
+
+.NoBottomPadding{
+	padding-bottom :0px !important;
+}
+
+
+
+.paddingBottom5px {
+	padding-bottom : 5px !important;
+}
+
+.MarginTop40px {
+	margin-Top : 40px !important;
+}
+
+.MarginTop20{
+	margin-top : 20px !important;
+}
+
+.BottomLine {
+	border-bottom: 1px solid #a9a9a9 !important;
+}
+
+.LaunchpadBackground{
+	background-color : #e3ece8 !important;
+}
+
+.Linknounderline{
+	text-decoration : none !important;
+}
+
+.FontColorIconTab1{
+	color : #147dd9 !important;
+}
+
+.FontColorIconTab2{
+	color : #36c135 !important;
+}
+
+.FontColorIconTab3{
+	color : #28c2f1 !important;
+}
+
+.FontColorIconTab4{
+	color : #faa51f !important;
+}
+
+.FontColorIconTab5{
+	color : #e6362d !important;
+}
+
+.icontabbar{
+	border : 1px solid #c1d9eb;
+	background-color : #f1f5f8;	
+}
+
+.marginTop20px {
+	margin-top : 20px !important;
+}
+
+.marginTop15px{
+	margin-top : 15px !important;
+}
+
+.marginBottom10px {
+	margin-bottom : 10px !important;
+}
+
+.marginBottom8px{
+	margin-bottom : 8px !important;
+}
+
+.noOutline{
+	outline: none !important;
+}
+
+.DisplayNone {
+	display: none;
+}
+
+.borderTop2 {
+	border-Top : 2px solid #333333 !important;
+}
+
+.borderTop0 {
+	border-Top : 0px solid #333333 !important;
+}
+
+.colorRed {
+	color : #E74C3C !important;
+}
+
+.colorBlue {
+	color : #2A80B9 !important;
+}
+
+.colorGreen {
+	color : #27AE60 !important;
+}
+
+.colorGreen2{
+	color : #2b7d2b !important; 
+}
+
+.colorBlack{
+	color : #000000 !important;
+}
+
+.colorOrange{
+	color : #e78c07 !important;
+}
+
+.TextAlignCenter{
+	text-align : center !important;
+}
+
+.FontLev1Select{
+	font-size: 12px !important;
+	font-family: 'Noto Sans KR', sans-serif !important;
+	font-weight : bold !important;
+	color : #008549 !important;
+	outline: none !important;
+}
+
+.FontLev1Normal{
+	font-size: 12px !important;
+	font-family: 'Noto Sans KR', sans-serif !important;
+	font-weight : bold !important;
+	color : #333333 !important;
+	outline: none !important;
+} 
+
+.PSNCSkyBackground{
+	background-color : #66CCFF !important;;
+}
+
+.PSNCBlueBackground{
+	background-color : #78f081 !important;;
+}
+
+.FavoriteGubun {	
+	background-color: #f2f2f2;
+	border : 1px solid #e7e7e7;
+	padding-left: 10px !important;
+}
+
+.overflowScroll {
+	overflow-y : auto !important;
+}
+
+.RewardLayout { 
+	border : 1px solid #38a238; 
+	border-radius : 10px;
+	height : 100px;
+	width : calc(100% - 5px) !important;
+	height : calc(100% - 5px) !important;
+}
+
+.SummaryLayout { 
+	border : 1px solid #ffb400; 
+	border-radius : 10px;
+	background-color : #fffaef;
+	height : 100px;
+	width : calc(100% - 5px) !important;
+	height : calc(100% - 5px) !important;
+}
+
+.Backgroundyellow { 
+	background-color : #ffd777;
+}
+
+.FontRed {
+	color: red !important;
+}
+
+.FontBlue {
+	color: blue !important;
+}
+
+.FontBlack {
+	color: #333333 !important;
+}
+
+.TileCenter {
+	height : calc(100vh - 200px);	
+}
+
+.TileButton{
+	background-color : #ffb400 !important;
+	border-color : #ffb400 !important;
+	color : #666666 !important;
+	font-weight : bold !important;
+	text-shadow : none !important;
+}
+
+.MinWidth0{
+	min-width : 0px !important;
+}
+
+.Left20{
+	left : 20px !important;
+}
+
+.NoLeftSpace {
+	margin-left : 0px !important;
+	/* padding-left : 0px !important; */
+}
+
+.tableNotHover .sapUiTableRowHvr>td{
+	background-color: #ffffff !important;
+}
+
+.tableNotHover tr.sapUiTableRowHvr{
+	background-color: #ffffff !important;
+}
+
+@font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 100;src: url(/sap/bc/ui5_ui5/sap/zui5_hr_common/css/notosans/NotoSansKR-Thin.woff2) format('woff2'),url(/sap/bc/ui5_ui5/sap/zui5_hr_common/css/notosans/NotoSansKR-Thin.woff) format('woff'),url(/sap/bc/ui5_ui5/sap/zui5_hr_common/css/notosans/NotoSansKR-Thin.otf) format('opentype');}
+@font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 300;src: url(/sap/bc/ui5_ui5/sap/zui5_hr_common/css/notosans/NotoSansKR-Light.woff2) format('woff2'),url(/sap/bc/ui5_ui5/sap/zui5_hr_common/css/notosans/NotoSansKR-Light.woff) format('woff'),url(/sap/bc/ui5_ui5/sap/zui5_hr_common/css/notosans/NotoSansKR-Light.otf) format('opentype');}
+@font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 400;src: url(/sap/bc/ui5_ui5/sap/zui5_hr_common/css/notosans/NotoSansKR-Regular.woff2) format('woff2'),url(/sap/bc/ui5_ui5/sap/zui5_hr_common/css/notosans/NotoSansKR-Regular.woff) format('woff'),url(/sap/bc/ui5_ui5/sap/zui5_hr_common/css/notosans/NotoSansKR-Regular.otf) format('opentype');}
+@font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 500;src: url(/sap/bc/ui5_ui5/sap/zui5_hr_common/css/notosans/NotoSansKR-Medium.woff2) format('woff2'),url(/sap/bc/ui5_ui5/sap/zui5_hr_common/css/notosans/NotoSansKR-Medium.woff) format('woff'),url(/sap/bc/ui5_ui5/sap/zui5_hr_common/css/notosans/NotoSansKR-Medium.otf) format('opentype');}
+@font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 700;src: url(/sap/bc/ui5_ui5/sap/zui5_hr_common/css/notosans/NotoSansKR-Bold.woff2) format('woff2'),url(/sap/bc/ui5_ui5/sap/zui5_hr_common/css/notosans/NotoSansKR-Bold.woff) format('woff'),url(/sap/bc/ui5_ui5/sap/zui5_hr_common/css/notosans/NotoSansKR-Bold.otf) format('opentype');}
+/* @font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 900;src: url(/sap/bc/ui5_ui5/sap/zui5_hr_common/css/notosans/NotoSansKR-Black.woff2) format('woff2'),url(/sap/bc/ui5_ui5/sap/zui5_hr_common/css/notosans/NotoSansKR-Black.woff) format('woff'),url(/sap/bc/ui5_ui5/sap/zui5_hr_common/css/notosans/NotoSansKR-Black.otf) format('opentype');} */
+
+/* @font-face { */
+/*   font-family: 'icomoon'; */
+/*   src:url('icomoon.eot'); */
+/*   src:url('icomoon.eot') format('embedded-opentype'), */
+/*   url('icomoon.ttf') format('truetype'), */
+/*   url('icomoon.woff') format('woff'), */
+/*   url('icomoon.svg#icomoon') format('svg'); */
+/*   font-weight: normal; */
+/*   font-style: normal; */
+/*   } */
+/*   [class^="icon-"], [class*=" icon-"] { */
+/*   font-family: 'icomoon'; */
+/*   speak: none; */
+/*   font-size : 30px !important; */
+/*   font-style: normal; */
+/*   font-weight: normal; */
+/*   font-variant: normal; */
+/*   text-transform: none; */
+/*   line-height: 1; */
+/*   Better Font Rendering =========== */
+/*   -webkit-font-smoothing: antialiased; */
+/*   -moz-osx-font-smoothing: grayscale; */
+/*   } */
+/*   .icon-fontnameTab1:before { */
+/*   content: "\e900"; */
+/*   } */
+/*   .icon-oven:before { */
+/*   content: "\e901"; */
+/*   } */
+/*   .icon-refridgerator:before { */
+/*   content: "\e902"; */
+/*   } */

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;EmployeeProfile.js&apos; to &apos;common&apos;&#x0D;&#x0A;- Original project: &apos;ZUI5_HR_COMMON&apos;&#x0D;&#x0A;- Destination element: &apos;common&apos;&#x0D;&#x0A;- Original element: &apos;EmployeeProfile.js&apos;" description="Copy file" element1="WebContent/common/EmployeeProfile.js" files="1" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1571034950640" target="/ZUI5_HR_COMMON/WebContent/common" units="0" version="1.0"/>
+</session>

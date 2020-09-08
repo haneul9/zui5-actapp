@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta http-equiv='Content-Type' content='text/html;charset=UTF-8'/>
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />
+		<link rel="icon" href="/sap/bc/ui5_ui5/sap/zui5_hr_common/images/logo.png">
+		<title>주택자금 중도상환 신청</title>
+
+		<script src="resources/sap-ui-cachebuster/sap-ui-core.js"
+				id="sap-ui-bootstrap"
+				data-sap-ui-libs="sap.m, sap.ui.commons, sap.ui.ux3, sap.ui.layout, sap.ui.table, sap.suite.ui.commons, sap.ui.unified, sap.tnt, sap.uxap"
+				data-sap-ui-theme="sap_belize"
+				data-sap-ui-xx-bindingSyntax="complex"
+				data-sap-ui-preload="sync"
+				data-sap-ui-appCacheBuster="./">
+		</script>
+		
+		<script src="/sap/bc/ui5_ui5/sap/ZUI5_HR_COMMON/plugin/JSXLSX/shim.js"></script>
+		<script type="text/javascript" src="/sap/bc/ui5_ui5/sap/ZUI5_HR_COMMON/plugin/spin/spin.min.js"></script>
+		
+		<script>
+				sap.ui.core.AppCacheBuster.register("/sap/bc/ui5_ui5/sap/ZUI5_HR_COMMON");
+				jQuery.sap.registerModulePath("common", "/sap/bc/ui5_ui5/sap/ZUI5_HR_COMMON/common");
+				jQuery.sap.registerModulePath("control", "/sap/bc/ui5_ui5/sap/ZUI5_HR_COMMON/control"); 
+				jQuery.sap.registerModulePath("fragment", "/sap/bc/ui5_ui5/sap/ZUI5_HR_COMMON/fragment");
+				
+				$( window ).ready(function() {
+					sap.ui.getCore().getEventBus().publish("app", "OpenWindow", {
+						windowHeight : window.innerHeight
+					});	
+				});
+				
+				$( window ).resize(function() {
+					sap.ui.getCore().getEventBus().publish("app", "ResizeWindow", {
+						windowHeight : window.innerHeight
+					});
+				});
+				
+				// 사원검색을 위한 필드 
+				var gDtfmt = "yyyy.MM.dd";
+				var gPersa = "";
+				var gReqAuth = "";
+				var _gZworktyp = "HR26";
+				var _gLangu = "";
+				_gLangu = jQuery.sap.getUriParameters().get("_gLangu") || "3";
+				var _gMncod = jQuery.sap.getUriParameters().get("_gMncod") || "";
+				var _gAuth = ""; // 권한 
+				_gAuth = jQuery.sap.getUriParameters().get("_gAuth");
+				if(!_gAuth) _gAuth = "E";
+				
+				var _Appno = "";
+				_Appno = jQuery.sap.getUriParameters().get("_Appno");
+				
+				var surfix = "?" + new Date().getTime();
+ 				var oBundleText = jQuery.sap.resources({
+					url : "/sap/bc/ui5_ui5/sap/ZUI5_HR_COMMON/translation/i18n.properties"  + surfix, //번역파일 주소
+					locale : _gLangu == "E" ? "EN" : "KO"
+				}); 
+				
+				var oCore = sap.ui.getCore();
+				oCore.attachInit(function() {
+					var surfix = "?" +  new Date().getTime();
+
+					jQuery.sap.includeStyleSheet("/sap/bc/ui5_ui5/sap/ZUI5_HR_COMMON/css/L2PSAP.css");
+					jQuery.sap.includeStyleSheet("/sap/bc/ui5_ui5/sap/ZUI5_HR_COMMON/css/L2PBasic.css");
+					jQuery.sap.includeStyleSheet("/sap/bc/ui5_ui5/sap/ZUI5_HR_COMMON/css/NewSAP.css");
+ 					jQuery.sap.includeStyleSheet("/sap/bc/ui5_ui5/sap/ZUI5_HR_COMMON/css/NewBasic.css");
+
+					sap.ui.localResources("ZUI5_HR_HousingFundRepayment");
+					
+					var oview = sap.ui.jsview("app", "ZUI5_HR_HousingFundRepayment.AppMain")
+					$("body").fadeOut("slow",function(){
+						$("#content").empty();
+						$("#content").removeAttr('style');
+						oview.placeAt("content");
+						$(this).fadeIn("slow");
+					});
+				});
+				
+				$( document ).ready(function() {
+					var opts = {
+						lines: 16, // The number of lines to draw
+						length: 0, // The length of each line
+						width: 4, // The line thickness
+						radius: 14, // The radius of the inner circle
+						color: '#007C85', // #rgb or #rrggbb
+						speed: 1.1, // Rounds per second
+						trail: 72, // Afterglow percentage
+						shadow: false // Whether to render a shadow
+					};
+
+				 	var target = document.getElementById('content');
+					var spinner = new Spinner(opts).spin(target);
+				});
+		</script> 
+		
+		
+	</head>
+	<body class="sapUiBody" role="application">
+		<div class="LaunchpadBackground" id="content" oncontextmenu='return false'></div>
+		<iframe id="iWorker" name="iWorker"  height="100" width="100" style="display:none"></iframe>
+		<div id="DownloadExcel"></div>
+	</body>
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta http-equiv='Content-Type' content='text/html;charset=UTF-8'/>
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+        <meta http-equiv="Pragma" content="no-cache" />
+        <meta http-equiv="Expires" content="0" />
+        <link rel="icon" href="/sap/bc/ui5_ui5/sap/zui5_hr_common/images/logo.png">
+        <title>HR 결재함</title>
+		
+		<script src="resources/sap-ui-cachebuster/sap-ui-core.js"
+				id="sap-ui-bootstrap"
+				data-sap-ui-libs="sap.m, sap.ui.commons, sap.ui.ux3, sap.ui.layout, sap.ui.table, sap.tnt, sap.suite.ui.commons" 
+				data-sap-ui-theme="sap_belize"
+				data-sap-ui-xx-bindingSyntax="complex"
+				data-sap-ui-preload="sync"
+				data-sap-ui-appCacheBuster="./">
+		</script>
+				
+		<script src="/sap/bc/ui5_ui5/sap/ZUI5_HR_COMMON/plugin/JSXLSX/shim.js"></script>
+		<script type="text/javascript" src="/sap/bc/ui5_ui5/sap/ZUI5_HR_COMMON/plugin/spin/spin.min.js"></script>
+		<script src="/sap/bc/ui5_ui5/sap/ZUI5_HR_COMMON/plugin/Number/jquery.mask.min.js" type="text/javascript"></script>
+		
+		<script>
+				sap.ui.core.AppCacheBuster.register("/sap/bc/ui5_ui5/sap/ZUI5_HR_COMMON");
+				jQuery.sap.registerModulePath("common", "/sap/bc/ui5_ui5/sap/ZUI5_HR_COMMON/common");
+				jQuery.sap.registerModulePath("control", "/sap/bc/ui5_ui5/sap/ZUI5_HR_COMMON/control"); 
+				jQuery.sap.registerModulePath("fragment", "/sap/bc/ui5_ui5/sap/ZUI5_HR_COMMON/fragment");
+				
+				
+				$( window ).ready(function() {
+					sap.ui.getCore().getEventBus().publish("app", "OpenWindow", {
+						windowHeight : window.innerHeight
+					});	
+				});
+				
+				$( window ).resize(function() {
+					sap.ui.getCore().getEventBus().publish("app", "ResizeWindow", {
+						windowHeight : window.innerHeight
+					});
+				});
+				
+				// 사원검색을 위한 필드 
+				var gDtfmt = "yyyy.MM.dd";
+				var gPersa = "";\\Rvar _gMncod = jQuery.sap.getUriParameters().get("_gMncod") || "";
+				var _gLangu = "";
+				_gLangu = jQuery.sap.getUriParameters().get("_gLangu") || "3";
+				var _gAuth = ""; // 권한 
+				_gAuth = jQuery.sap.getUriParameters().get("_gAuth");
+				if(!_gAuth ||_gAuth == "" ) _gAuth = "E";
+				
+				var surfix = "?" + new Date().getTime();
+ 				var oBundleText = jQuery.sap.resources({
+					url : "/sap/bc/ui5_ui5/sap/ZUI5_HR_COMMON/translation/i18n.properties"  + surfix, //번역파일 주소
+					locale : _gLangu == "E" ? "EN" : "KO"
+				});
+				
+				var oCore = sap.ui.getCore();
+				oCore.attachInit(function() {
+					var surfix = "?" +  new Date().getTime();
+
+					jQuery.sap.includeStyleSheet("/sap/bc/ui5_ui5/sap/ZUI5_HR_COMMON/css/L2PSAP.css");
+					jQuery.sap.includeStyleSheet("/sap/bc/ui5_ui5/sap/ZUI5_HR_COMMON/css/L2PBasic.css");
+					jQuery.sap.includeStyleSheet("/sap/bc/ui5_ui5/sap/ZUI5_HR_COMMON/css/NewSAP.css");
+					jQuery.sap.includeStyleSheet("/sap/bc/ui5_ui5/sap/ZUI5_HR_COMMON/css/NewBasic.css");
+					
+// 					_DocumentPage : [{ ZreqForm : "HR01" , DetailPage : "ZUI5_HR_Medical.ZUI5_HR_MedicalDetail" },  // 의료비 신청
+// 						 { ZreqForm : "HR02" , DetailPage : "ZUI5_HR_Scholarship.ZUI5_HR_ScholarshipDetail" },  // 학자금 신청
+// 						 { ZreqForm : "HR03" , DetailPage : "ZUI5_HR_Expenditure.ZUI5_HR_ExpenditureDetail" },  // 경조금 신청
+// 						 { ZreqForm : "HR04" , DetailPage : "ZUI5_HR_DomesticBTrip.ZUI5_HR_DomesticBTripDetail" },  // 국내출장명령서(국문)
+// 						 { ZreqForm : "HR05" , DetailPage : "ZUI5_HR_DomesticBTrip.ZUI5_HR_DomesticBTripDetail" },  // 국내출장명령서(영문)
+// 					 	 { ZreqForm : "HR06" , DetailPage : "ZUI5_HR_DomesticBTripChange.ZUI5_HR_DomesticBTripChangeDetail" },  // 국내출장명령서(국문)-변경/취소
+// 					 	 { ZreqForm : "HR07" , DetailPage : "ZUI5_HR_DomesticBTripChange.ZUI5_HR_DomesticBTripChangeDetail" },  // 국내출장명령서(영문)-변경/취소
+// 					 	 { ZreqForm : "HR08" , DetailPage : "ZUI5_HR_OverseaBTrip.ZUI5_HR_OverseaBTripDetail" },  // 해외출장명령서
+// 					 	 { ZreqForm : "HR09" , DetailPage : "ZUI5_HR_DomesticBTripCal.ZUI5_HR_DomesticBTripCalDetail" },  // 국내출장비 신청서 
+// 					 	 { ZreqForm : "HR10" , DetailPage : "ZUI5_HR_OverseaBTripCal.ZUI5_HR_OverseaBTripCalDetail" },  // 해외출장비 신청서
+// //					 	 { ZreqForm : "HR11" , DetailPage : "ZUI5_HR_Team.ZUI5_HR_TeamDetail" },  // 해외출장명령서 변경/취소
+// 					 	 { ZreqForm : "HR12" , DetailPage : "ZUI5_HR_Certificate.ZUI5_HR_CertificateDetail" },  // 제증명 신청
+// 					 	 { ZreqForm : "HR22" , DetailPage : "ZUI5_HR_TaxAdjustment.ZUI5_HR_TaxAdjustmentDetail" },	// 원천징수 세액조정 신청
+// 					 	 { ZreqForm : "HR23" , DetailPage : "ZUI5_HR_LifeSafety.ZUI5_HR_LifeSafetyDetail" },  // 생활안정자금 신청
+// 					 	 { ZreqForm : "HR24" , DetailPage : "ZUI5_HR_LifeStableRepayment.ZUI5_HR_LifeStableRepaymentDetail" },  // 생활안정자금 중도상환 신청
+// 					 	 { ZreqForm : "HR25" , DetailPage : "ZUI5_HR_HousingLoan.ZUI5_HR_HousingLoanDetail" },  // 주택자금 신청
+// 					 	 { ZreqForm : "HR26" , DetailPage : "ZUI5_HR_HousingFundRepayment.ZUI5_HR_HousingFundRepaymentDetail" },  // 주택자금 중도상환 신청
+// 					 	 { ZreqForm : "HR27" , DetailPage : "ZUI5_HR_LicensePay.ZUI5_HR_LicensePayDetail" },  // 자격수당 신청
+// 					 	 { ZreqForm : "HR28" , DetailPage : "ZUI5_HR_ConGoods.ZUI5_HR_ConGoodsDetail" },  // 경조화환 신청
+// 					 	 { ZreqForm : "HR29" , DetailPage : "ZUI5_HR_PreparedAmount.ZUI5_HR_PreparedAmountDetail" },  // 부임준비금 신청
+// 					 	 { ZreqForm : "HR30" , DetailPage : "ZUI5_HR_MoveAmount.ZUI5_HR_MoveAmountDetail" },	// 이사비 신청
+// 					 	 { ZreqForm : "HR31" , DetailPage : "ZUI5_HR_InfantCare.ZUI5_HR_InfantCareDetail" },  // 영유아 보육지원 신청
+// 					 	 { ZreqForm : "HR32" , DetailPage : "ZUI5_HR_PregnancyRegistration.ZUI5_HR_PregnancyRegistrationDetail" },  // 임신직원 등록신청
+// 					 	 { ZreqForm : "HR33" , DetailPage : "ZUI5_HR_PregnancyCheck.ZUI5_HR_PregnancyCheckDetail" },  // 태아검진 외출신청
+// 					 	 { ZreqForm : "HR34" , DetailPage : "ZUI5_HR_Lunch.ZUI5_HR_LunchDetail" },  // 중식비 예외자 신청 (전표생성코드 : 290)
+// 					 	 { ZreqForm : "HR35" , DetailPage : "ZUI5_HR_EmTransport.ZUI5_HR_EmTransportDetail" },  // 긴급업무 수행교통비
+// 					 	 { ZreqForm : "HR36" , DetailPage : "ZUI5_HR_VisitTransport.ZUI5_HR_VisitTransportDetail" },  // 방문교통비
+// 					 	 { ZreqForm : "HR37" , DetailPage : "ZUI5_HR_DeductionItem.ZUI5_HR_DeductionItemDetail" },  // 고정/변동 공제항목 신청
+// 					 	 { ZreqForm : "HR38" , DetailPage : "ZUI5_HR_Deduction.ZUI5_HR_DeductionDetail" },	// [공장] 고정공제 신청
+// 					 	 { ZreqForm : "HR39" , DetailPage : "ZUI5_HR_CompanyHousingSupport.ZUI5_HR_CompanyHousingSupportDetail" },  // 사택지원신청
+// 					 	 { ZreqForm : "HR40" , DetailPage : "ZUI5_HR_EndCompanyHousingSupport.ZUI5_HR_EndCompanyHousingSupportDetail" },  // 사택종료신청
+// 					 	 { ZreqForm : "HR41" , DetailPage : "ZUI5_HR_DeductionChange.ZUI5_HR_DeductionChangeDetail" },  // 변동공제 신청
+// 					 	 { ZreqForm : "PA01" , DetailPage : "ZUI5_HR_Resignation.ZUI5_HR_ResignationDetail" },  // 사직원 신청서
+// 					 	 { ZreqForm : "PA02" , DetailPage : "ZUI5_HR_RecRequest.ZUI5_HR_RecRequestDetail" },  // 충원요청서
+// 					 	 { ZreqForm : "PA03" , DetailPage : "ZUI5_HR_ActionRequest.ZUI5_HR_ActionRequestDetail" },  // 내신서
+// 					 	 { ZreqForm : "PD01" , DetailPage : "ZUI5_HR_Transition.ZUI5_HR_TransitionDetail" },  // 인수인계서 작성
+// 					 	 { ZreqForm : "TM01" , DetailPage : "ZUI5_HR_ChangeShift.ZUI5_HR_ChangeShiftDetail" },	// 근무편제변경 신청
+// 					 	 { ZreqForm : "TM02" , DetailPage : "ZUI5_HR_ExcWork.ZUI5_HR_ExcWorkDetail" },  // 예외근무신청
+// 					 	 { ZreqForm : "TM03" , DetailPage : "ZUI5_HR_AnnualLeave.ZUI5_HR_AnnualLeaveDetail" },  // 연간휴가신청
+// 					 	 { ZreqForm : "TM04" , DetailPage : "ZUI5_HR_VacationRequest.ZUI5_HR_VacationRequestDetail" },  // 휴가신청
+// 					 	 { ZreqForm : "TM05" , DetailPage : "ZUI5_HR_VacationRequest.ZUI5_HR_VacationRequestDetail" },  // 휴가신청(영문)
+// 					 	 { ZreqForm : "TM06" , DetailPage : "ZUI5_HR_VacationChange.ZUI5_HR_VacationChangeDetail" },	// 휴가 변경/취소 신청
+// 					 	 { ZreqForm : "TM11" , DetailPage : "ZUI5_HR_SickLeave.ZUI5_HR_SickLeaveDetail" },  // 병가신청서
+// 					 	 { ZreqForm : "TM21" , DetailPage : "ZUI5_HR_VacationSickAndBabyChange.ZUI5_HR_VacationSickAndBabyChangeDetail" },  // 출산휴가/육아휴직 신청서
+// //					 	 { ZreqForm : "TM22" , DetailPage : "ZUI5_HR_BusinessTrip.ZUI5_HR_BusinessTripDetail" },  // 파견직 근태 변경/취소 신청서
+// 					 	 { ZreqForm : "TM31" , DetailPage : "ZUI5_HR_VacationSickAndBabyChange.ZUI5_HR_VacationSickAndBabyChangeDetail" },  // 출산휴가/육아휴직 신청서
+// 					 	 { ZreqForm : "TM32" , DetailPage : "ZUI5_HR_VacationSickAndBabyChange.ZUI5_HR_VacationSickAndBabyChangeDetail" },	// 병가/출산휴가/육아휴직 변경/취소
+// 					 	 { ZreqForm : "TM41" , DetailPage : "ZUI5_HR_OvertimeOrder.ZUI5_HR_OvertimeOrderDetail" },  // 특근명령서
+// 					 	 { ZreqForm : "TM42" , DetailPage : "ZUI5_HR_OvertimeOrderCancel.ZUI5_HR_OvertimeOrderCancelDetail" },  // 특근명령 취소신청서
+// 					 	 { ZreqForm : "TM43" , DetailPage : "ZUI5_HR_OvertimeConfirm.ZUI5_HR_OvertimeConfirmDetail" },  // 특근확인서
+// 					 	 { ZreqForm : "TM51" , DetailPage : "ZUI5_HR_OverseasBusinessTrip.ZUI5_HR_OverseasBusinessTripDetail" },  // 휴일대근 신청서
+// 					 	 { ZreqForm : "TM61" , DetailPage : "ZUI5_HR_FlexWork.ZUI5_HR_FlexWorkDetail" },	// 근무시간 사후확인서
+// 					 	 { ZreqForm : "TM71" , DetailPage : "ZUI5_HR_Family.ZUI5_HR_FamilyDetail" },  // 근태기록부(예외자)
+// 					 	 { ZreqForm : "BE01" , DetailPage : "ZUI5_HR_ForeignLanguage.ZUI5_HR_ForeignLanguageLesson" },  // 외국어 학습비 신청
+// 					 	 { ZreqForm : "BE02" , DetailPage : "ZUI5_HR_ForeignLanguage.ZUI5_HR_ForeignLanguageExam" },  // 외국어 시험 신청
+// 					 	 { ZreqForm : "BE05" , DetailPage : "ZUI5_HR_Resort.ZUI5_HR_ResortDetail" },  // 휴양소 신청
+// 					 	 { ZreqForm : "BE06" , DetailPage : "ZUI5_HR_Resort.ZUI5_HR_ResortDetail" },	// 공장 휴양소 신청			
+// 					 	 { ZreqForm : "BE11" , DetailPage : "ZUI5_HR_CompanyHouse.ZUI5_HR_CompanyHouseDetail" },  // 사택 입주신청서
+// 					 	 { ZreqForm : "BE12" , DetailPage : "ZUI5_HR_CompanyHouse.ZUI5_HR_CompanyHouseDetail1" },  // 사택 퇴거신청서
+// 					 	 { ZreqForm : "BE13" , DetailPage : "ZUI5_HR_Smock.ZUI5_HR_SmockDetail" },  // 방염 작업복 신청 
+// 					 	 { ZreqForm : "BE14" , DetailPage : "ZUI5_HR_ChangeAccount.ZUI5_HR_ChangeAccountDetail" },  // 계좌변경 신청 
+// //					 	 { ZreqForm : "BE15" , DetailPage : "ZUI5_HR_OverseasBusinessTrip.ZUI5_HR_OverseasBusinessTripDetail" },  // 주택보조금
+// 					 	 { ZreqForm : "GA01" , DetailPage : "ZUI5_HR_Volunteer.ZUI5_HR_VolunteerDetail" },	// 	사회봉사계획서		
+// 					 	 { ZreqForm : "GA02" , DetailPage : "ZUI5_HR_Volunteer.ZUI5_HR_VolunteerDetail" },  // 사회봉사보고서
+// 					 	 { ZreqForm : "GA03" , DetailPage : "ZUI5_HR_Card.ZUI5_HR_CardDetail" },  // 자원봉사 활동 결과보고서
+					 	 
+ 					sap.ui.localResources("ZUI5_HR_ApprovalBox");
+// 					sap.ui.localResources("ZUI5_HR_Scholarship");
+// 					sap.ui.localResources("ZUI5_HR_Medical");
+// 					sap.ui.localResources("ZUI5_HR_Expenditure");
+// 					sap.ui.localResources("ZUI5_HR_DomesticBTrip");
+// 					sap.ui.localResources("ZUI5_HR_DomesticBTripCal");
+// 					sap.ui.localResources("ZUI5_HR_DomesticBTripChange");
+// 					sap.ui.localResources("ZUI5_HR_Certificate");;
+// 					sap.ui.localResources("ZUI5_HR_Resort");
+					
+// 					sap.ui.localResources("ZUI5_HR_ChangeShift");  //근무편제변경
+// 					sap.ui.localResources("ZUI5_HR_OverseaBTrip");  //해외출장 명령서
+// 					sap.ui.localResources("ZUI5_HR_OverseaBTripCal");  //해외출장비 신청서
+// 					sap.ui.localResources("ZUI5_HR_TaxAdjustment");  //원천징수 세액조정 신청
+// 					sap.ui.localResources("ZUI5_HR_LifeSafety");  // 생활안정자금 신청
+// 					sap.ui.localResources("ZUI5_HR_LifeStableRepayment");  // 생활안정자금 중도상환 신청
+// 					sap.ui.localResources("ZUI5_HR_HousingLoan");  // 주택자금 신청
+// 					sap.ui.localResources("ZUI5_HR_HousingFundRepayment");  //주택자금 중도상환 신청
+// 					sap.ui.localResources("ZUI5_HR_LicensePay");  //자격수당 신청
+// 					sap.ui.localResources("ZUI5_HR_ConGoods");  //경조화환 신청
+// 					sap.ui.localResources("ZUI5_HR_PreparedAmount");  //부임준비금 신청
+// 					sap.ui.localResources("ZUI5_HR_MoveAmount");  //  이사비 신청
+// 					sap.ui.localResources("ZUI5_HR_InfantCare");  // 영유아 보육지원 신청
+// 					sap.ui.localResources("ZUI5_HR_PregnancyRegistration");  // 임신직원 등록신청
+// 					sap.ui.localResources("ZUI5_HR_PregnancyCheck");  //태아검진 외출신청
+// 					sap.ui.localResources("ZUI5_HR_Lunch");  //중식비 예외자 신청
+// 					sap.ui.localResources("ZUI5_HR_EmTransport");  //긴급업무 수행교통비
+// 					sap.ui.localResources("ZUI5_HR_VisitTransport");  // 방문교통비
+// 					sap.ui.localResources("ZUI5_HR_DeductionItem");  // 고정/변동 공제항목 신청
+// 					sap.ui.localResources("ZUI5_HR_Deduction");  	// [공장] 고정공제 신청
+// 					sap.ui.localResources("ZUI5_HR_CompanyHousingSupport");  //  사택지원신청
+// 					sap.ui.localResources("ZUI5_HR_EndCompanyHousingSupport");  	// 사택종료신청
+// 					sap.ui.localResources("ZUI5_HR_DeductionChange");  // 변동공제 신
+					
+
+				 	 
+					
+					var oBundleText ;
+					var oview = sap.ui.jsview("app", "ZUI5_HR_ApprovalBox.AppMain")
+					$("body").fadeOut("slow",function(){
+						$("#content").empty();
+						$("#content").removeAttr('style');
+						oview.placeAt("content");
+						$(this).fadeIn("slow");
+					});
+				});
+				
+						
+				$( document ).ready(function() {
+					var opts = {
+						lines: 16, // The number of lines to draw
+						length: 0, // The length of each line
+						width: 4, // The line thickness
+						radius: 14, // The radius of the inner circle
+						color: '#007C85', // #rgb or #rrggbb
+						speed: 1.1, // Rounds per second
+						trail: 72, // Afterglow percentage
+						shadow: false // Whether to render a shadow
+					};
+
+				 	var target = document.getElementById('content');
+					var spinner = new Spinner(opts).spin(target);
+					
+					$(document).on("keyup", "DIV.Number>INPUT", function() {
+						$(this).mask('#,##0', {reverse: true});
+					});
+				});
+		</script> 
+		
+	</head>
+	<body class="sapUiBody" role="application">
+		<div id="content" class="LaunchpadBackground" oncontextmenu='return false'></div>
+		<iframe id="iWorker" name="iWorker"  height="100" width="100" style="display:none"></iframe>
+		<div id="DownloadExcel"></div>
+	</body>
+</html>

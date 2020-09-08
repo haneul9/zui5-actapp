@@ -1,0 +1,204 @@
+sap.ui.jsfragment("ZUI5_HR_BookRental.fragment.BookPage01", {
+	
+	createContent : function(oController) {
+		jQuery.sap.require("common.Common");
+		jQuery.sap.require("common.Formatter");
+		jQuery.sap.require("common.ZNK_TABLES");
+		var c = sap.ui.commons;
+		var displayYn = false ;
+		if(_gAuth == "E"){
+			displayYn = false;
+		}else displayYn = true ;
+		var oFilterLayout1 = new sap.ui.layout.HorizontalLayout({
+			allowWrapping :true
+		}).addStyleClass("L2PFilterLayout");
+			
+		
+		oFilterLayout1.addContent(
+				new sap.ui.layout.VerticalLayout({
+					content: [
+						new sap.m.Text({text: "조회기간"}),
+						new sap.m.Input(oController.PAGEID + "_YearFr",{
+							value: "{YearFr}",
+							width : "100px",
+							submit: oController.onPressSearch
+						}).addStyleClass("L2PFontFamily")
+					]
+				}).addStyleClass("L2PFilterItem")
+		);
+		
+		oFilterLayout1.addContent(
+				new sap.ui.layout.VerticalLayout({
+					content: [
+						//new sap.m.Text({text: "조회기간"}),
+						new sap.m.Input(oController.PAGEID + "_YearTo",{
+							value: "{YearTo}",
+							width : "100px",
+							submit: oController.onPressSearch
+						}).addStyleClass("L2PFontFamily")
+					]
+				}).addStyleClass("L2PFilterItem")
+		);		
+		
+		oFilterLayout1.addContent(
+				new sap.ui.layout.VerticalLayout({
+					content : [new sap.m.Text({text : "대출상태"}),
+					           new sap.m.ComboBox(oController.PAGEID+"_Bstatus",{
+						            items : {
+						            	path: "ZHR_BOOK_SRV>/BstatusCodeListSet/?$filter=Key eq 'A' or Key eq '20' or Key eq '30'",
+						            	template: new sap.ui.core.ListItem({
+						            		key: "{ZHR_BOOK_SRV>Key}",
+						            		text: "{ZHR_BOOK_SRV>Value}"
+						            	})
+						            },
+						            selectedKey: "{selectKeyStatus}",
+									width : "200px"
+							   }).addStyleClass("L2PFontFamily")]
+				}).addStyleClass("L2PFilterItem")
+		).setModel(oController._ListCondJSonModel).bindElement("/Data");;
+		  
+		oFilterLayout1.addContent(
+				new sap.ui.layout.VerticalLayout({
+					content : [new sap.m.Label(),
+					           new sap.m.Button({
+									text: "검색",
+									icon : "sap-icon://search",
+									press : oController.onPressSearch ,
+							   }).addStyleClass("L2PFontFamily")]
+				}).addStyleClass("L2PFilterItem")
+			).setModel(oController._ListCondJSonModel).bindElement("/Data");		
+
+		
+		var oFilterLayout2 = new sap.ui.layout.HorizontalLayout({
+			allowWrapping :true
+		}).addStyleClass("L2PFilterLayout");
+			
+	
+		oFilterLayout2.addContent(
+				new sap.ui.layout.VerticalLayout({
+					content : [
+							   new sap.m.MessageStrip({
+							    	   text : "{StatusText1} 미반납 건수",
+						        	   type : "Error",
+									   showIcon : false ,
+									   customIcon : "sap-icon://message-information", 
+									   showCloseButton : false,
+						       })
+					.addStyleClass("L2PFontFamily")]
+				}).addStyleClass("L2PFilterItem")
+		).setModel(oController._ListCondJSonModel).bindElement("/Data");
+		
+		oFilterLayout2.addContent(
+				new sap.ui.layout.VerticalLayout({
+					content : [
+							   new sap.m.MessageStrip({
+							    	   text : "{StatusText2} 전체대여건수",
+						        	   type : "Success",
+									   showIcon : false ,
+									   customIcon : "sap-icon://message-information", 
+									   showCloseButton : false,
+						       })
+					.addStyleClass("L2PFontFamily")]
+				}).addStyleClass("L2PFilterItem")
+		).setModel(oController._ListCondJSonModel).bindElement("/Data");
+			
+		oFilterLayout2.addContent(
+				new sap.ui.layout.VerticalLayout({
+					content : [
+							   new sap.m.MessageStrip({
+							    	   text : "{StatusText3} 반납건수",
+						        	   type : "Success",
+									   showIcon : false ,
+									   customIcon : "sap-icon://message-information", 
+									   showCloseButton : false,
+						       })
+					.addStyleClass("L2PFontFamily")]
+				}).addStyleClass("L2PFilterItem")
+		).setModel(oController._ListCondJSonModel).bindElement("/Data");		
+		
+		var oFilterLayout = new sap.ui.layout.VerticalLayout({
+			content:[
+				oFilterLayout1,
+				oFilterLayout2
+			]
+		});
+		
+		var oTable = new sap.ui.table.Table(oController.PAGEID + "_Table", {
+			enableColumnReordering : false,
+			enableColumnFreeze : false,
+			columnHeaderHeight  : 35,
+			showNoData : true,
+			selectionMode: sap.ui.table.SelectionMode.None,
+			showOverlay : false,
+			enableBusyIndicator : true,
+			noData : "No data found"
+		});
+		oTable.setModel(oController._ListJSonModel);
+		oTable.bindRows("ZHR_BOOK_SRV>/BookRentalListSet");	
+		oTable.attachCellClick(oController.onSelectRow);
+
+
+		var col_info1 = [{id: "ZHR_BOOK_SRV>Idx", label : "No.", plabel : "", span : 0, type : "string", sort : true, filter : true, width : "3%"},
+						 {id: "ZHR_BOOK_SRV>Zbkdt", label : "도서구분", plabel : "", span : 0, type : "string", sort : true, filter : true, width: "5%"},
+			 			 {id: "ZHR_BOOK_SRV>Zbname", label : "도서명", plabel : "", span : 0, type : "string", sort : true, filter : true, width: "10%"},
+			 			 {id: "ZHR_BOOK_SRV>Zbkkt", label : "분류명", plabel : "", span : 0, type : "string", sort : true, filter : true, width: "5%"},
+			 			 {id: "ZHR_BOOK_SRV>Zbkdet", label : "분류 세부명", plabel : "", span : 0, type : "string", sort : true, filter : true, width: "7%"},
+			 			 {id: "ZHR_BOOK_SRV>Zbauthor", label : "저자명", plabel : "", span : 0, type : "string", sort : true, filter : true, width : "10%"},
+			 			 {id: "ZHR_BOOK_SRV>Zbpub", label : "출판사", plabel : "", span : 0, type : "string", sort : true, filter : true, width : "10%"},
+			 			 {id: "ZHR_BOOK_SRV>Begda", label : "대출일", plabel : "", span : 0, type : "date", sort : true, filter : true, width: "5%"},
+			 			 {id: "ZHR_BOOK_SRV>Endda", label : "반납예정일", plabel : "", span : 0, type : "date", sort : true, filter : true, width: "5%"},
+			 			 {id: "ZHR_BOOK_SRV>Retdt", label : "반납일", plabel : "", span : 0, type : "date", sort : true, filter : true, width: "5%"},
+			 			 {id: "ZHR_BOOK_SRV>Overdays", label : "초과일", plabel : "", span : 0, type : "string", sort : true, filter : true, width: "5%"},
+			 			 {id:  "ZHR_BOOK_SRV>Visible", label : "대출연장", plabel : "", span : 0, type : "DocIcon", sort : true, filter : true, width: "4%"},
+			 			 {id: "ZHR_BOOK_SRV>Mas", label : "메세지", plabel : "", span : 0, type : "string", sort : true, filter : true, width: "5%"}];
+		common.ZNK_TABLES.makeColumn(oController, oTable, col_info1);
+		oTable.setVisibleRowCount(10);
+
+		var oCell, oRow;						
+		var oContentMatrix = new sap.ui.commons.layout.MatrixLayout({
+			columns : 1,
+			width : "100%"
+		});
+		 
+		
+		var oContents = [new sap.ui.core.HTML({content : "<div style='height : 7px;'/>"}), oTable];
+		
+		oRow = new sap.ui.commons.layout.MatrixLayoutRow();
+		oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+			content : new sap.ui.core.HTML({content : "<div style='height : 10px;'/>"})
+		});
+		oRow.addCell(oCell);
+		oContentMatrix.addRow(oRow)
+		for(var i=0;i<oContents.length;i++){
+//			oRow = new sap.ui.commons.layout.MatrixLayoutRow();
+//			oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+//				content : new sap.ui.core.HTML({content : "<div style='height : 10px;'/>"})
+//			});
+//			oRow.addCell(oCell);
+			oContentMatrix.addRow(oRow);
+			oRow = new sap.ui.commons.layout.MatrixLayoutRow();
+			oCell = new sap.ui.commons.layout.MatrixLayoutCell({
+				content : oContents[i]
+			});
+			oRow.addCell(oCell);
+			oContentMatrix.addRow(oRow);
+		}
+		
+			
+		var oLayout = new sap.ui.commons.layout.VerticalLayout({
+			width : "100%",
+		content : [ new sap.ui.core.HTML({content : "<div style='height : 11px;'/>"}),
+			oFilterLayout,
+			oContentMatrix
+			]		
+		});
+		
+//		if (!jQuery.support.touch) {
+			oLayout.addStyleClass("sapUiSizeCompact");
+//		};
+
+		return oLayout;
+
+	
+	}
+});

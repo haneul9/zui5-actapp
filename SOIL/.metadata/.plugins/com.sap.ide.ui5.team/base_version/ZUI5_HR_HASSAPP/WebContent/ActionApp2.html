@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta http-equiv='Content-Type' content='text/html;charset=UTF-8'/>
+		<title>발령품의서</title>
+		<script type="text/javascript" src="/sap/bc/ui5_ui5/sap/ZUI5_HR_HCOMMON/plugin/dhtmlx.js"></script>
+		<script src="resources/sap-ui-cachebuster/sap-ui-core.js"
+				id="sap-ui-bootstrap"
+				data-sap-ui-libs="sap.m, sap.ui.commons, sap.suite.ui.commons, sap.ui.unified, sap.uxap, sap.ui.table" 
+ 				data-sap-ui-xx-bindingSyntax="complex" 
+ 				data-sap-ui-theme="sap_belize"
+ 				data-sap-ui-appCacheBuster="./"> 
+ 		</script>   
+		<script type="text/javascript" src="/sap/bc/ui5_ui5/sap/ZUI5_HR_HCOMMON/plugin/jquery.cookie.js"></script>
+		<script type="text/javascript" src="/sap/bc/ui5_ui5/sap/ZUI5_HR_HCOMMON/plugin/InitTel/intlTelInput.js"></script>
+		<link rel="stylesheet" type="text/css" href="/sap/bc/ui5_ui5/sap/ZUI5_HR_HCOMMON/plugin/InitTel/intlTelInput.css" />
+		<script type="text/javascript" src="/sap/bc/ui5_ui5/sap/ZUI5_HR_HCOMMON/plugin/jquery-maskedinput.js"></script>
+		<script src="/sap/bc/ui5_ui5/sap/ZUI5_HR_HCOMMON/plugin/JSXLSX/shim.js"></script>
+		<script src="/sap/bc/ui5_ui5/sap/ZUI5_HR_HCOMMON/plugin/JSXLSX/jszip.js"></script>
+		<script src="/sap/bc/ui5_ui5/sap/ZUI5_HR_HCOMMON/plugin/JSXLSX/xlsxHeader.js"></script>
+		<script src="/sap/bc/ui5_ui5/sap/ZUI5_HR_HCOMMON/plugin/JSXLSX/dist/ods.js"></script>
+		<script src="/sap/public/bc/ui2/logon/tripledes.js"></script>
+		
+		<script>
+				sap.ui.core.AppCacheBuster.register("/sap/bc/ui5_ui5/sap/ZUI5_HR_HCOMMON/");
+				sap.ui.core.AppCacheBuster.register("/sap/bc/ui5_ui5/sap/ZUI5_HR_HASSAPP/");
+				
+				jQuery.sap.registerModulePath("util", "/sap/bc/ui5_ui5/sap/ZUI5_HR_HCOMMON/util");
+				jQuery.sap.registerModulePath("fragment", "/sap/bc/ui5_ui5/sap/ZUI5_HR_HCOMMON/fragment");
+				jQuery.sap.registerModulePath("common", "/sap/bc/ui5_ui5/sap/ZUI5_HR_HCOMMON/common");
+				jQuery.sap.registerModulePath("control", "/sap/bc/ui5_ui5/sap/ZUI5_HR_HCOMMON/control");
+				jQuery.sap.registerModulePath("zui5_hrxx_actrec", "/sap/bc/ui5_ui5/sap/zhrxx2_hassapp/zui5_hrxx_actrec");
+				jQuery.sap.registerModulePath("zui5_hrxx_actann", "/sap/bc/ui5_ui5/sap/zhrxx2_hassapp/zui5_hrxx_actann");
+				
+				$( window ).resize(function() {
+					sap.ui.getCore().getEventBus().publish("app", "ResizeWindow", {
+						windowHeight : window.innerHeight
+					});	
+				}); 
+				
+// 				var surfix = "?" + new Date().getTime();				
+// 				var oBundleText = jQuery.sap.resources({
+// 		        	url : "/sap/bc/ui5_ui5/sap/ZUI5_HR_HCOMMON/translation/i18n.properties" , //+ surfix, //번역파일 주소
+// 		        	locale : "KO"
+// 		        });
+				
+//  				document.title = oBundleText.getText("TITLE_ACT_REQUEST");
+ 				
+				var gPersa = "";
+				var gMolga = "";
+				var gDtfmt = "";
+				var gDcpfm = "";
+				var gEeapp = "";
+				
+				var _gAuth = ""; // 권한 
+				_gAuth = jQuery.sap.getUriParameters().get("_gAuth");
+				
+
+				// var oView = sap.ui.view({id:"zui5_hrxx_actapp2.AppMain", viewName:"zui5_hrxx_actapp2.AppMain", type:"JS"});
+				// oView.placeAt("content");
+				
+				sap.ui.getCore().attachInit(function() {
+					jQuery.sap.includeStyleSheet("/sap/bc/ui5_ui5/sap/ZUI5_HR_HCOMMON/css/L2P2SAP1.css");
+					jQuery.sap.includeStyleSheet("/sap/bc/ui5_ui5/sap/ZUI5_HR_HCOMMON/css/L2PBasic2.css");
+					sap.ui.localResources("zui5_hrxx_actapp2");
+					var oview = sap.ui.view({id:"zui5_hrxx_actapp2.AppMain", viewName:"zui5_hrxx_actapp2.AppMain", type:"JS"});
+					$("body").fadeOut("slow",function(){
+						$("#content").empty();
+						$("#content").removeAttr('style');
+						oview.placeAt("content");
+						$(this).fadeIn("slow");
+					});
+				});
+				
+		</script>
+
+	</head>
+	<body class="sapUiBody" role="application">
+		<div id="content" class="LaunchpadBackground"></div>
+		
+		<div id="HelpOverlayBackLayout" class="L2POverlayBackLayout"></div>
+		<div id="HelpOvrelay" class="L2POverlay">
+			<div id="HelpOvrelay-close" class="close"></div>
+			<div id="HelpOvrelay-inner" class="inner"></div>
+		</div>
+		<div style="display:none" id="ActAppDownlaodSheet">
+		</div>
+	</body>
+</html>
+

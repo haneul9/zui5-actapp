@@ -1,0 +1,255 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta http-equiv='Content-Type' content='text/html;charset=UTF-8'/>
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+        <meta http-equiv="Pragma" content="no-cache" />
+        <meta http-equiv="Expires" content="0" />
+        <link rel="icon" href="/sap/bc/ui5_ui5/sap/zui5_hr_common/images/logo.png">
+        <title>세무자료 조회</title>
+
+		<script type="text/javascript" src="/sap/bc/ui5_ui5/sap/ZUI5_HR_COMMON/plugin/spin/spin.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="/sap/bc/ui5_ui5/sap/ZUI5_HR_COMMON/plugin/dhtmlx/css/dhtmlxtree.css" />		
+		<script type="text/javascript" src="/sap/bc/ui5_ui5/sap/ZUI5_HR_COMMON/plugin/dhtmlx/dhtmlxtree.js"></script>
+	
+		<script src="resources/sap-ui-cachebuster/sap-ui-core.js"
+				id="sap-ui-bootstrap"
+				data-sap-ui-libs="sap.m, sap.ui.commons, sap.ui.ux3, sap.ui.layout, sap.ui.table, sap.suite.ui.commons, sap.ui.unified, sap.tnt, sap.uxap"
+				data-sap-ui-theme="sap_belize"
+				data-sap-ui-xx-bindingSyntax="complex"
+				data-sap-ui-preload="sync"
+				data-sap-ui-appCacheBuster="./"></script>
+	<script>
+		jQuery.sap.includeStyleSheet("/sap/bc/ui5_ui5/sap/ZUI5_HR_COMMON/css/NewBasic.css");
+		
+// 				var toolHeaderButtons = new sap.tnt.ToolHeader({
+// 			content: [
+// 			new sap.m.Button({
+// 					type: sap.m.ButtonType.Transparent,
+// 					text: "File",
+// 					press: function() {
+
+// 					},
+// 					layoutData: new sap.m.OverflowToolbarLayoutData({
+// 						priority: sap.m.OverflowToolbarPriority.Low
+// 					})
+// 				}).addStyleClass("TopMenuButton LinkFontFamilyBold CursorPointer PaddingRight70"),
+// 				new sap.m.Button({
+// 					type: sap.m.ButtonType.Transparent,
+// 					text: "Edit",
+// 					press: function() {
+
+// 					},
+// 					layoutData: new sap.m.OverflowToolbarLayoutData({
+// 						priority: sap.m.OverflowToolbarPriority.Low
+// 					})
+// 				}).addStyleClass("TopMenuButton LinkFontFamilyBold CursorPointer PaddingRight70"),
+// 				new sap.m.Button({
+// 					type: sap.m.ButtonType.Transparent,
+// 					text: "Edit",
+// 					enabled: false,
+// 					press: function() {
+
+// 					},
+// 					layoutData: new sap.m.OverflowToolbarLayoutData({
+// 						priority: sap.m.OverflowToolbarPriority.Low
+// 					})
+// 				}).addStyleClass("TopMenuButton LinkFontFamilyBold CursorPointer PaddingRight70"),
+// 				new sap.m.Button({
+// 					type: sap.m.ButtonType.Transparent,
+// 					text: "Add Item",
+// 					icon: sap.ui.core.IconPool.getIconURI("add")
+// 				}).addStyleClass("TopMenuButton LinkFontFamilyBold CursorPointer PaddingRight70"),
+// 				new sap.m.Button({
+// 					type: sap.m.ButtonType.Transparent,
+// 					enabled: false,
+// 					text: "Add Item",
+// 					icon: sap.ui.core.IconPool.getIconURI("add")
+// 				}).addStyleClass("TopMenuButton LinkFontFamilyBold CursorPointer PaddingRight70"),
+// 				new sap.m.Button("imageButton", {
+// 					type: sap.m.ButtonType.Transparent,
+// 					icon: "images/avatar.png",
+// 					press: function() {
+
+// 					},
+// 					layoutData: new sap.m.OverflowToolbarLayoutData({
+// 						priority: sap.m.OverflowToolbarPriority.Low
+// 					})
+// 				}).addStyleClass("TopMenuButton LinkFontFamilyBold CursorPointer PaddingRight70"),
+// 				new sap.m.Button({
+// 					type: sap.m.ButtonType.Transparent,
+// 					text: "Navigate",
+// 					layoutData: new sap.m.OverflowToolbarLayoutData({
+// 						priority: sap.m.OverflowToolbarPriority.Low
+// 					})
+// 				}).addStyleClass("TopMenuButton LinkFontFamilyBold CursorPointer PaddingRight70"),
+// 				new sap.m.Button({
+// 					type: sap.m.ButtonType.Transparent,
+// 					text: "Navigate",
+// 					buttonMode: "Split",
+// 					layoutData: new sap.m.OverflowToolbarLayoutData({
+// 						priority: sap.m.OverflowToolbarPriority.Low
+// 					})
+// 				}).addStyleClass("TopMenuButton LinkFontFamilyBold CursorPointer PaddingRight70"),
+// 				new sap.m.Button({
+// 					type: sap.m.ButtonType.Transparent,
+// 					enabled: false,
+// 					text: "Navigate",
+// 					layoutData: new sap.m.OverflowToolbarLayoutData({
+// 						priority: sap.m.OverflowToolbarPriority.Low
+// 					})
+// 				}).addStyleClass("TopMenuButton LinkFontFamilyBold CursorPointer PaddingRight70")
+// 			]
+// 		}).addStyleClass("sapUiSizeCompact");
+// 		toolHeaderButtons.placeAt('content');
+
+		var toolHeader = new sap.tnt.ToolHeader({
+			content: [
+// 				new sap.m.ToolbarSpacer({
+// 					width: '8px',
+// 					layoutData : new sap.m.OverflowToolbarLayoutData({
+// 						priority: sap.m.OverflowToolbarPriority.Low
+// 					})
+// 				}),
+				new sap.m.Button('menuToggleButton', {
+					icon: 'sap-icon://menu2',
+					type: sap.m.ButtonType.Transparent,
+					layoutData : new sap.m.OverflowToolbarLayoutData({
+						priority: sap.m.OverflowToolbarPriority.Low
+					}),
+					tooltip: 'Small Size Navigation'
+				}),
+// 				new sap.m.ToolbarSpacer({
+// 					width: '10px',
+// 					layoutData : new sap.m.OverflowToolbarLayoutData({
+// 						priority: sap.m.OverflowToolbarPriority.Low
+// 					})
+// 				}),
+				
+				new sap.m.SearchField({
+					placeholder: "메뉴 검색",
+					width : "200px",
+					enableSuggestions: true,
+					layoutData : new sap.m.OverflowToolbarLayoutData({
+						priority: sap.m.OverflowToolbarPriority.NeverOverflow
+					}),
+				}),
+				
+//				new sap.tnt.ToolHeaderUtilitySeparator({}),
+				
+// 				new sap.m.ToolbarSpacer({
+// 					width: '10px',
+// 					layoutData : new sap.m.OverflowToolbarLayoutData({
+// 						priority: sap.m.OverflowToolbarPriority.Low
+// 					})
+// 				}),
+				new sap.ui.core.Icon({
+					size : "1.1rem",
+					src : "sap-icon://home",
+					tooltip : "Home",
+					color : "#999999",
+					layoutData : new sap.m.OverflowToolbarLayoutData({
+						priority: sap.m.OverflowToolbarPriority.Low
+					})
+				}),
+				new sap.ui.core.Icon({
+					size : "1.1rem",
+					src : "sap-icon://favorite",
+// 					press: function() {
+// 						ZUI5_HR_Portal.common.FavoriteController.openFavorite(oController);
+// 					},
+					color : "#999999",
+					layoutData : new sap.m.OverflowToolbarLayoutData({
+						priority: sap.m.OverflowToolbarPriority.Low
+					})
+				}),
+				
+// 				new sap.m.ToolbarSpacer({
+// 					width: '40px',
+// 					layoutData : new sap.m.OverflowToolbarLayoutData({
+// 						priority: sap.m.OverflowToolbarPriority.Low
+// 					})
+// 				}),
+				new sap.m.Button({
+					type : sap.m.ButtonType.Unstyled,
+					text : "A1",
+					layoutData : new sap.m.OverflowToolbarLayoutData({
+						priority: sap.m.OverflowToolbarPriority.Low
+					}),
+// 					press : oController.onSetSideMenu
+				}).addStyleClass("TopMenuButton LinkFontFamilyBold CursorPointer PaddingRight70"),
+				new sap.m.Button({
+					type : sap.m.ButtonType.Unstyled,
+					text : "A2",
+					layoutData : new sap.m.OverflowToolbarLayoutData({
+						priority: sap.m.OverflowToolbarPriority.Low
+					}),
+// 					press : oController.onSetSideMenu
+				}).addStyleClass("TopMenuButton LinkFontFamilyBold CursorPointer PaddingRight70"),
+				new sap.m.Button({
+					type : sap.m.ButtonType.Unstyled,
+					text : "A3",
+					layoutData : new sap.m.OverflowToolbarLayoutData({
+						priority: sap.m.OverflowToolbarPriority.Low
+					}),
+// 					press : oController.onSetSideMenu
+				}).addStyleClass("TopMenuButton LinkFontFamilyBold CursorPointer PaddingRight70"),
+				new sap.m.Button({
+					type : sap.m.ButtonType.Unstyled,
+					text : "A4",
+					layoutData : new sap.m.OverflowToolbarLayoutData({
+						priority: sap.m.OverflowToolbarPriority.Low
+					}),
+// 					press : oController.onSetSideMenu
+				}).addStyleClass("TopMenuButton LinkFontFamilyBold CursorPointer PaddingRight70"),
+				new sap.m.Button({
+					type : sap.m.ButtonType.Unstyled,
+					text : "A5",
+					layoutData : new sap.m.OverflowToolbarLayoutData({
+						priority: sap.m.OverflowToolbarPriority.Low
+					}),
+// 					press : oController.onSetSideMenu
+				}).addStyleClass("TopMenuButton LinkFontFamilyBold CursorPointer PaddingRight70"),
+				new sap.m.Button({
+					type : sap.m.ButtonType.Unstyled,
+					text : "A6",
+					layoutData : new sap.m.OverflowToolbarLayoutData({
+						priority: sap.m.OverflowToolbarPriority.Low
+					}),
+// 					press : oController.onSetSideMenu
+				}).addStyleClass("TopMenuButton LinkFontFamilyBold CursorPointer PaddingRight70"),
+				new sap.m.Button({
+					type : sap.m.ButtonType.Unstyled,
+					text : "A6",
+					layoutData : new sap.m.OverflowToolbarLayoutData({
+						priority: sap.m.OverflowToolbarPriority.Low
+					}),
+// 					press : oController.onSetSideMenu
+				}).addStyleClass("TopMenuButton LinkFontFamilyBold CursorPointer PaddingRight70"),
+				new sap.m.Button({
+					type : sap.m.ButtonType.Unstyled,
+					text : "A7",
+					layoutData : new sap.m.OverflowToolbarLayoutData({
+						priority: sap.m.OverflowToolbarPriority.Low
+					}),
+// 					press : oController.onSetSideMenu
+				}).addStyleClass("TopMenuButton LinkFontFamilyBold CursorPointer PaddingRight70"),
+//				new sap.tnt.ToolHeaderUtilitySeparator({
+//				}),
+//				new sap.m.ToolbarSpacer({
+//					layoutData : new sap.m.OverflowToolbarLayoutData({
+//						priority: sap.m.OverflowToolbarPriority.NeverOverflow,
+//						minWidth: "20px"
+//					})
+//				})
+			]
+		  }).addStyleClass("sapUiSizeCompact");
+		toolHeader.placeAt('content');
+	</script>
+
+</head>
+<body id="body" class="sapUiBody">
+	<div id="content"></div>
+</body>
+</html>

@@ -1,0 +1,244 @@
+sap.ui.jsfragment("ZUI5_HR_WorktimePostConfirm.fragment.WorktimePostConfirmPage01", {
+	
+	_colModel : [
+		{id: "Seqno", label : "No.", plabel : "", span : 0, type : "listText", sort : true, filter : true, width : "4%"},
+		{id: "ZappStxtAl", label : "상태", plabel : "", span : 0, type : "listText", sort : true, filter : true, width : "8%"},
+		{id: "Datum", label : "근무일", plabel : "", span : 0, type : "listdate", sort : true, filter : true, width : "11%"},
+		{id: "Beguztx", label : "시작시간", plabel : "", span : 0, type : "listtime", sort : true, filter : true, width : "11%"},
+		{id: "Enduztx", label : "종료시간", plabel : "", span : 0, type : "listtime", sort : true, filter : true, width : "11%"},
+		{id: "Duran", label : "기간(분)", plabel : "", span : 0, type : "listText", sort : true, filter : true, width : "11%"},
+		{id: "ZreqDate", label : "신청일", plabel : "", span : 0, type : "listdate", sort : true, filter : true, width : "10%"},
+		{id: "ZappDate", label : "최종 결재일", plabel : "", span : 0, type : "listdate", sort : true, filter : true, width : "10%"},
+		{id: "ZListComment", label : "담당자의견", plabel : "", span : 0, type : "commentpopover3", sort : true, filter : true, width : "24%", align : sap.ui.core.TextAlign.Begin}
+	],
+	
+	createContent : function(oController) {
+		jQuery.sap.require("common.Common");
+		jQuery.sap.require("common.SearchUser1");
+		jQuery.sap.require("common.ZNK_TABLES");
+		
+		// Excel column info
+		oController._Columns = common.Common.convertColumnArrayForExcel(this._colModel);
+		
+		return [
+			new sap.ui.commons.layout.VerticalLayout({
+				width : "100%",
+				content : [ 
+					new sap.ui.core.HTML({ content : "<div style='height : 11px;'/>" }),
+					this.getFilterLayoutRender(oController),
+					this.getListTableRender(oController)
+				]
+			})
+			.addStyleClass("sapUiSizeCompact")
+		];
+	},
+	
+	/**
+	 * 검색필터 rendering
+	 * 
+	 * @param oController
+	 * @return sap.ui.layout.HorizontalLayout
+	 */
+	getFilterLayoutRender : function(oController) {
+		return new sap.ui.layout.HorizontalLayout({
+			allowWrapping : true,
+			content : [
+				new sap.ui.layout.VerticalLayout({
+					content : [
+						new sap.m.Text({
+							text : "조회 시작일"
+						}),
+						new sap.m.DatePicker(oController.PAGEID + "_Apbeg", {
+							valueFormat : "yyyy-MM-dd",
+							displayFormat : "yyyy.MM.dd",
+							value : "{Apbeg}",
+							width : "150px",
+							change : oController.onChangeDate
+						}).addStyleClass("L2PFontFamily")
+					]
+				}).addStyleClass("L2PFilterItem"),
+				new sap.ui.layout.VerticalLayout({
+					content : [
+						new sap.m.Text({text : "조회 종료일"}),
+						new sap.m.DatePicker(oController.PAGEID + "_Apend", {
+							valueFormat : "yyyy-MM-dd",
+							displayFormat : "yyyy.MM.dd",
+							width : "150px",
+							value : "{Apend}",
+							change : oController.onChangeDate
+						}).addStyleClass("L2PFontFamily")
+					]
+				}).addStyleClass("L2PFilterItem"),
+				new sap.ui.layout.VerticalLayout({
+					content : [
+						new sap.m.Text({
+							text : "대상자 성명" 
+						}),
+						new sap.m.Input(oController.PAGEID + "_Ename", {
+							width : "150px",
+							showValueHelp: true,
+							valueHelpOnly: false,
+							value : "{Ename}",
+							customData : new sap.ui.core.CustomData({key : "Pernr", value : "{Pernr}"}),
+							change : oController.EmpSearchByTx,
+							valueHelpRequest: oController.displayEmpSearchDialog
+						}).addStyleClass("L2PFontFamily")
+					],
+					visible : (_gAuth == 'E') ? false : true
+				}).addStyleClass("L2PFilterItem"),
+				new sap.ui.layout.VerticalLayout({
+					content : [
+						new sap.m.Label(),
+						new sap.m.Button({
+							text: "검색",
+							icon : "sap-icon://search",
+							press : oController.onPressSearch ,
+						}).addStyleClass("L2PFontFamily")
+					]
+				}).addStyleClass("L2PFilterItem")
+			]
+		}).addStyleClass("L2PFilterLayout")
+		.setModel(oController._ListCondJSonModel)
+		.bindElement("/Data");
+	},
+	
+	/**
+	 * 목록테이블 rendering
+	 * 
+	 * @param oController
+	 * @return sap.ui.commons.layout.MatrixLayout
+	 */
+	getListTableRender : function(oController) {
+		
+		var oTable = new sap.ui.table.Table(oController.PAGEID + "_Table", {
+			enableColumnReordering : false,
+			enableColumnFreeze : false,
+			columnHeaderHeight : 35,
+			showNoData : true,
+			selectionMode: sap.ui.table.SelectionMode.None,
+			showOverlay : false,
+			enableBusyIndicator : true,
+			noData : "No data found",
+			rowActionCount : 1,
+			rowActionTemplate : new sap.ui.table.RowAction({
+				items : [
+					new sap.ui.table.RowActionItem({
+						icon : "sap-icon://navigation-right-arrow",
+						customData : [
+							new sap.ui.core.CustomData({
+								key : "Appno", 
+								value : "{Appno}"
+							})
+						],
+						press : oController.onPressRow
+					})
+				]
+			}),
+			extension : new sap.m.Toolbar({	
+				content : [
+					new sap.m.Text({text : "신청내역"}).addStyleClass("L2PFontFamilyBold"),
+					new sap.m.ToolbarSpacer(),
+					new sap.ui.core.Icon({
+						src : "sap-icon://excel-attachment",
+						size : "1.0rem", 
+						color : "#002060",
+						press : oController.onExport
+					}).addStyleClass("L2PPointer")
+				]
+			}).addStyleClass("L2PToolbarNoBottomLine"),
+			rowSettingsTemplate : new sap.ui.table.RowSettings({
+				highlight : {
+					parts : [
+						{path : "ZappStatAl"},
+						{path : "ZappDate"}
+					],
+					//Information : 파란색 , Warning : 주황색,  Success : 초록색, 											
+					formatter : function(fVal1, fVal2) {
+						switch(fVal1) {
+							case "20":
+								return sap.ui.core.ValueState.Warning;
+							case "30": case "35": case "40": case "50":
+								return (fVal2 == null || fVal2 == "") ? sap.ui.core.ValueState.Success : sap.ui.core.ValueState.Information;
+							case "31": case "36": case "45": case "55":
+								return sap.ui.core.ValueState.Error;
+							default:
+								return sap.ui.core.ValueState.None;
+						}
+					}
+				}
+			})
+		})
+		.setModel(oController._ListJSonModel)
+		.bindRows("/Data")
+		.attachCellClick(oController.onSelectRow);
+		
+		common.ZNK_TABLES.makeColumn(oController, oTable, this._colModel);
+		
+		return new sap.m.IconTabBar(oController.PAGEID + "_ICONBAR", {
+			content : new sap.ui.commons.layout.MatrixLayout({
+				columns : 1,
+				width : "100%",
+				rows : [
+					new sap.ui.commons.layout.MatrixLayoutRow({
+						cells : [
+							new sap.ui.commons.layout.MatrixLayoutCell({
+								content : oTable
+							})
+						]
+					})
+				]
+			}) ,
+			items : [ 
+				new sap.m.IconTabFilter(oController.PAGEID + "_IconTabFilter", {
+					showAll : true,
+					key : "All",
+					icon : "",
+					text : "건",
+					design : sap.m.IconTabFilterDesign.Horizontal,
+				}),
+				new sap.m.IconTabSeparator(), 
+				new sap.m.IconTabFilter(oController.PAGEID + "_IconTabFilter1", {
+					key : "10",
+					icon : "sap-icon://create",
+					iconColor : "Neutral",
+					text : "작성중",
+					design : sap.m.IconTabFilterDesign.Horizontal,
+				}), 
+				new sap.m.IconTabSeparator({icon : "sap-icon://process"}), 
+				new sap.m.IconTabFilter(oController.PAGEID + "_IconTabFilter2", {
+					key : "20",
+					icon : "sap-icon://approvals",
+					iconColor : "Critical",
+					text : "신청",
+					design : sap.m.IconTabFilterDesign.Horizontal,
+				}), 
+				new sap.m.IconTabSeparator({icon : "sap-icon://process"}), 
+				new sap.m.IconTabFilter(oController.PAGEID + "_IconTabFilter3", {
+					key : "30",
+					icon : "sap-icon://sys-enter",
+					iconColor : "Positive",
+					text : "진행중",
+					design : sap.m.IconTabFilterDesign.Horizontal,
+				}), 
+				new sap.m.IconTabSeparator({icon : "sap-icon://process"}),
+				new sap.m.IconTabFilter(oController.PAGEID + "_IconTabFilter4", {
+					key : "40",
+					icon : "sap-icon://accept",
+					iconColor : "Default",
+					text : "승인",
+					design : sap.m.IconTabFilterDesign.Horizontal,
+				}), 
+				new sap.m.IconTabSeparator({icon : "sap-icon://vertical-grip"}),
+				new sap.m.IconTabFilter(oController.PAGEID + "_IconTabFilter5", {
+					key : "50",
+					icon : "sap-icon://decline",
+					iconColor : "Negative",
+					text : "반려",
+					design : sap.m.IconTabFilterDesign.Horizontal,
+				}) 
+			],
+			selectedKey : "All",
+			select : oController.handleIconTabBarSelect
+		});
+	}
+});

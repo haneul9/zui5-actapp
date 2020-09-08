@@ -1,0 +1,130 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta http-equiv='Content-Type' content='text/html;charset=UTF-8'/>
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+        <meta http-equiv="Pragma" content="no-cache" />
+        <meta http-equiv="Expires" content="0" />
+        <link rel="icon" href="/sap/bc/ui5_ui5/sap/zui5_hr_common/images/logo.png">
+        <title>국내출장 신청</title>
+		<script type="text/javascript" src="/sap/bc/ui5_ui5/sap/ZUI5_HR_COMMON/plugin/spin/spin.min.js"></script>
+		
+		<script src="resources/sap-ui-cachebuster/sap-ui-core.js"
+				id="sap-ui-bootstrap"
+				data-sap-ui-libs="sap.m, sap.ui.commons, sap.ui.layout, sap.ui.table"
+				data-sap-ui-theme="sap_belize"
+				data-sap-ui-xx-bindingSyntax="complex"
+				data-sap-ui-preload="sync"
+				data-sap-ui-appCacheBuster="./"></script>
+
+		<script src="/sap/bc/ui5_ui5/sap/ZUI5_HR_COMMON/plugin/Number/jquery.mask.min.js" type="text/javascript"></script> 
+		
+		<script>
+				sap.ui.core.AppCacheBuster.register("/sap/bc/ui5_ui5/sap/ZUI5_HR_COMMON");
+				jQuery.sap.registerModulePath("common", "/sap/bc/ui5_ui5/sap/ZUI5_HR_COMMON/common");
+				jQuery.sap.registerModulePath("control", "/sap/bc/ui5_ui5/sap/ZUI5_HR_COMMON/control"); 
+				jQuery.sap.registerModulePath("fragment", "/sap/bc/ui5_ui5/sap/ZUI5_HR_COMMON/fragment");
+				
+				
+				$( window ).ready(function() {
+					sap.ui.getCore().getEventBus().publish("app", "OpenWindow", {
+						windowHeight : window.innerHeight
+					});	
+				});
+				
+				$( window ).resize(function() {
+					sap.ui.getCore().getEventBus().publish("app", "ResizeWindow", {
+						windowHeight : window.innerHeight
+					});
+				});
+				
+				// 사원검색을 위한 필드 
+				var gDtfmt = "yyyy.MM.dd";
+				var gPersa = "";\\Rvar _gMncod = jQuery.sap.getUriParameters().get("_gMncod") || "";
+				var _gAuth = ""; // 권한 
+				var _gAppty = "E"; // 신청 프로그램 
+				_gAuth = jQuery.sap.getUriParameters().get("_gAuth");
+				if(!_gAuth ||_gAuth == "" ) _gAuth = "E";
+				var oCore = sap.ui.getCore();
+				oCore.attachInit(function() {
+					var surfix = "?" +  new Date().getTime();
+
+					jQuery.sap.includeStyleSheet("/sap/bc/ui5_ui5/sap/ZUI5_HR_COMMON/css/L2PSAP.css");
+					jQuery.sap.includeStyleSheet("/sap/bc/ui5_ui5/sap/ZUI5_HR_COMMON/css/L2PBasic.css");
+
+					sap.ui.localResources("ZUI5_HR_BusinessTrip");
+					
+					var oview = sap.ui.jsview("app", "ZUI5_HR_BusinessTrip.AppMain")
+					$("body").fadeOut("slow",function(){
+						$("#content").empty();
+						$("#content").removeAttr('style');
+						oview.placeAt("content");
+						$(this).fadeIn("slow");
+					});
+				});
+				
+						
+				$( document ).ready(function() {
+					var opts = {
+						lines: 16, // The number of lines to draw
+						length: 0, // The length of each line
+						width: 4, // The line thickness
+						radius: 14, // The radius of the inner circle
+						color: '#007C85', // #rgb or #rrggbb
+						speed: 1.1, // Rounds per second
+						trail: 72, // Afterglow percentage
+						shadow: false // Whether to render a shadow
+					};
+
+				 	var target = document.getElementById('content');
+					var spinner = new Spinner(opts).spin(target);
+					
+					$(document).on("keyup", "DIV.Number>INPUT", function() {
+						$(this).mask('#,##0', {reverse: true});
+					});
+				});
+		</script> 
+		
+		<style type="text/css">
+		/* Page Header Line */
+		.L2PHeader5{
+			background-color : #ffffff !important; 
+		}
+		
+		.sapMITH{
+			background-color : #F8FFE5 !important;
+			box-shadow : inset 0 -0.25rem 0 -0.125rem #DBF0B6 !important;
+		}
+		
+		.sapMShellBrandingBar{
+/* 			background-color : #FFB400 !important; */
+			background-color : rgb(0,95,40) !important;
+		}
+		
+		.html.sap-desktop .sapContrast .sapMIBar.sapMFooter-CTX, html.sap-desktop .sapContrast.sapMIBar.sapMFooter-CTX{
+			background-color : #00331c !important;
+		}
+		
+		.sapContrast.sapMIBar-CTX.sapMFooter-CTX, .sapContrast .sapMIBar-CTX.sapMFooter-CTX{
+			background-color : #005F28 !important;
+			boarder-top : 1px solid #475b6d !important;
+		}
+		
+		.TitleFont5 {
+			font-size: 20px;
+			font-weight: bold;
+			font-family: 'Malgun Gothic' !important;
+			color: #787f88 !important;
+			vertical-align: middle !important;
+			text-shadow : none !important;
+		}
+		</style>
+		
+	</head>
+	<body class="sapUiBody" role="application">
+		<div id="content" class="LaunchpadBackground" oncontextmenu='return false'></div>
+		<iframe id="iWorker" name="iWorker"  height="100" width="100" style="display:none"></iframe>
+		<div id="DownloadExcel"></div>
+	</body>
+</html>
