@@ -1,0 +1,26 @@
+.sapMITBSelected.sapMITBFilterDefault>.sapMITBContentArrow {
+  border-bottom-color: #009de0 !important;
+}
+
+.L2PPaddingLeft20 {
+	padding-left : 20px !important;
+}
+
+.L2PPaddingLeft30 {
+	padding-left : 30px !important;
+}
+
+.L2PPaddingLeft40 {
+	padding-left : 40px !important;
+}
+
+.sapUiRbDis>label {
+  color: #333333 !important;
+}
+
+.L2PWarningMessage {
+	font: 16px 'Malgun Gothic', Arial !important;
+	color : red !important;
+	width : 100%;
+	text-align : Center  !important;
+}

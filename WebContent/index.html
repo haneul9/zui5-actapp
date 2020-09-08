@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta http-equiv='Content-Type' content='text/html;charset=UTF-8'/>
+		<title>HASS 메뉴</title>
+		
+		<script src="resources/sap-ui-cachebuster/sap-ui-core.js"
+				id="sap-ui-bootstrap"
+				data-sap-ui-libs="sap.m"
+				data-sap-ui-xx-bindingSyntax="complex"
+				data-sap-ui-theme=	"sap_bluecrystal"
+				data-sap-ui-appCacheBuster="./">
+		</script>
+			
+		<script>
+		var params = ["sap-client", "sap-ui-language", "sap-ui-appcache"]
+		var add_param = "?";
+		for(var i=0; i<params.length; i++) {
+			if(i != 0) add_param += "&";
+			add_param += params[i] + "=" + decodeURI(jQuery.sap.getUriParameters().get(params[i]));
+		}
+		
+		var links = [{url : "ActionApp.html", text : "발령품의서"},
+		             {url : "ActionAnnounce.html", text : "발령게시"},
+		             {url : "ActionRec.html", text : "채용이관"},
+		             {url : "ActionFamily.html", text : "가족등록관리"},
+		             {url : "ActionExam.html", text : "어학시험신청관리"},
+		             {url : "ActionRetire.html", text : "퇴직프로세스 관리"},
+		             {url : "RetireProcess.html", text : "퇴직프로세스 기준관리"},
+		             {url : "PhotoDownload.html", text : "직원사진 다운로드"},
+		             {url : "PhotoUpload.html", text : "직원사진 업로드"},
+		             {url : "ActionLoa.html", text : "휴직신청관리"},		             
+		             {url : "ActionCerti.html", text : "자격증 신청 관리"},
+		             {url : "ActionPayScale.html", text : "승봉대상자"},
+		             {url : "Project.html", text : "프로젝트 관리"},
+		             {url : "Project.html?page=exp", text : "프로젝트 수행이력 관리"},
+		             {url : "ActionDoc.html", text : "HR 서류 관리"},
+		             {url : "ActionCertiSupport.html", text : "자격증 응시료 지원 관리"},
+		             {url : "ActionJobChange.html", text : "직무 변경 신청 관리"},
+		             {url : "ActionPrevJob.html", text : "입사전 직무 변경 신청 관리"},
+		             {url : "ActionEducation.html", text : "학력등록 관리"},
+		             {url : "ProjectProcess.html", text : "프로젝트 기준 관리"},
+		             {url : "StaffAppoint.html", text : "담당자/수신자 관리"},
+		             {url : "ActionPersonalid.html", text : "신분증 신청 관리"},
+		             ]
+		var links2 = [{url : "ActionApp2.html", text : "발령품의서2"},
+		             {url : "ActionRetire2.html", text : "퇴직프로세스 관리2"},
+		             ]
+		</script>
+
+	</head>
+	<body class="sapUiBody">
+		<p>Wave 1 Menu</p>
+		<ul>
+		<script>		
+		for(var i=0; i<links.length; i++) {
+			var vLink = "";
+			if(links[i].url.indexOf("?") > 0) {
+				vLink = links[i].url + add_param.replace("?", "&");
+			} else {
+				vLink = links[i].url + add_param;
+			}
+			document.write("<li><a href='" + vLink + "'>" + links[i].text + "</a></li>");
+		}
+		</script>
+		</ul>
+		<br>
+		<p>Wave 2 New Menu</p>
+		<ul>
+		<script>		
+		for(var i=0; i<links2.length; i++) {
+			var vLink = "";
+			if(links2[i].url.indexOf("?") > 0) {
+				vLink = links2[i].url + add_param.replace("?", "&");
+			} else {
+				vLink = links2[i].url + add_param;
+			}
+			document.write("<li><a href='" + vLink + "'>" + links2[i].text + "</a></li>");
+		}
+		</script>
+		</ul>
+	</body>
+</html>

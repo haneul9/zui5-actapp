@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta http-equiv='Content-Type' content='text/html;charset=UTF-8'/>
+		<title>Print</title>
+		
+		<link rel="stylesheet" type="text/css" href="/sap/bc/ui5_ui5/sap/zhrxx_common/css/dhtmlxtree.css" />		 
+		<script type="text/javascript" src="/sap/bc/ui5_ui5/sap/zhrxx_common/plugin/dhtmlxtree.js"></script>  
+
+		<script src="resources/sap-ui-cachebuster/sap-ui-core.js"
+				id="sap-ui-bootstrap"
+				data-sap-ui-libs="sap.m,sap.ui.commons,sap.ui.core, sap.suite.ui.commons,sap.ui.ux3, 
+								  sap.ui.unified, sap.ui.layout, sap.ui.comp, sap.ca.ui, sap.ui.table"
+				data-sap-ui-xx-bindingSyntax="complex"
+				data-sap-ui-theme=	"sap_bluecrystal"
+				data-sap-ui-appCacheBuster="./">
+		</script>
+
+		<script>
+			var getUrl = function(sUrl) {
+				if (sUrl == "")
+					return sUrl;
+				if (window.location.hostname == "localhost") {
+					return "proxy" + sUrl;
+				} else {
+					return sUrl;
+				}
+			}
+			sap.ui.core.AppCacheBuster.register("/sap/bc/ui5_ui5/sap/zhrxx_common/");
+			
+			jQuery.sap.registerModulePath("common", "/sap/bc/ui5_ui5/sap/zhrxx_common/common");
+			jQuery.sap.includeStyleSheet("/sap/bc/ui5_ui5/sap/zhrxx_common/css/L2PBasic.css");
+		
+			var sServiceURL1 = getUrl("/sap/opu/odata/sap/ZL2P01GW0001_SRV/");
+			var oModel = new sap.ui.model.odata.ODataModel(sServiceURL1, true);
+			oModel.setCountSupported(false);
+			
+			var Docno = jQuery.sap.getUriParameters().get("Docno");
+			var oHtml = new sap.ui.core.HTML({preferDOM : true, sanitizeContent : false});
+			oHtml.addStyleClass("L2PBackgroundWhite");
+			var vAttyn = "";
+			try {
+				oModel.read("/ActionPostHtmlSet(Docno='" + Docno + "',Attyn='" + vAttyn + "',Actty='S2')", 
+				//oModel.read("/ActionPostHtmlSet(Docno='" + Docno + "')", 
+						null, 
+						null, 
+						false, 
+						function(oData, oResponse) {					
+							if(oData) {
+								oHtml.setContent(oData.Htmlc);
+								
+							}
+						},
+						function(oResponse) {
+							oHTML.setContent("<div><h3 style='color:darkred'>미리보기 HTML을 가져오는데 실패하였습니다.</h3></div>");
+							common.Common.log(oResponse);
+						}
+				);
+			} catch(ex) {
+				common.Common.log(ex);
+			}
+		
+			oHtml.placeAt("content");
+			
+			(function() {
+
+			    var beforePrint = function() {
+			        //alert('Functionality to run before printing.');
+			    };
+
+			    var afterPrint = function() {
+			        //alert('Functionality to run after printing');
+			        //window.close();
+			    };
+
+			    if (window.matchMedia) {
+			        var mediaQueryList = window.matchMedia('print');
+			        mediaQueryList.addListener(function(mql) {
+			            if (mql.matches) {
+			                beforePrint();
+			            } else {
+			                afterPrint();
+			            }
+			        });
+			    }
+
+			    window.onbeforeprint = beforePrint;
+			    window.onafterprint = afterPrint;
+
+			}())
+			
+		</script>
+
+	</head>
+	<body class="sapUiBody" onLoad="window.print();" style="background-color:#FFFFFF">
+		<div id="content" style="background-color:#FFFFFF"></div>
+	</body>
+</html>

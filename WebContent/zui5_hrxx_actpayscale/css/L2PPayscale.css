@@ -1,0 +1,6 @@
+@charset "utf-8";
+
+div.gridbox_dhx_web.gridbox table.hdr td div.hdrcell {
+	padding-left: 0px !important;
+    width: auto;
+}

@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta http-equiv='Content-Type' content='text/html;charset=UTF-8'/>
+		<title>HR Document</title> 
+		
+		<script src="resources/sap-ui-cachebuster/sap-ui-core.js"
+				id="sap-ui-bootstrap"
+				data-sap-ui-libs="sap.m,sap.ui.commons,sap.ui.core, sap.suite.ui.commons,sap.ui.ux3, 
+ 								  sap.ui.unified, sap.ui.layout, sap.ui.comp, sap.ca.ui, sap.ui.table" 
+ 				data-sap-ui-xx-bindingSyntax="complex" 
+ 				data-sap-ui-theme=	"sap_bluecrystal" 
+ 				data-sap-ui-appCacheBuster="./"> 
+ 		</script>
+
+		<script>
+		
+		var oModel = new sap.ui.model.odata.ODataModel("/sap/opu/odata/sap/ZHRXX_HRDOC_SRV/", true);
+		
+		var vHrdno = decodeURI(jQuery.sap.getUriParameters().get("i_hrdno"));
+		var vPernr = decodeURI(jQuery.sap.getUriParameters().get("i_pernr"));
+		var vPdfurl = decodeURI(jQuery.sap.getUriParameters().get("i_pdfurl"));
+		console.log(vHrdno);
+		var msg = "Sucess";
+		
+		if(vHrdno && vHrdno != "") {
+			var updateData = {};
+			updateData.Pernr = vPernr;
+			updateData.Hrdno = vHrdno;
+			updateData.Hduri = vPdfurl;
+			updateData.Actty = "P";
+			
+			var oPath = "/HrDocumentsDetailsSet(Hrdno='" + vHrdno + "',Pernr='" + vPernr + "')";
+			var process_result = true;
+			oModel.update(
+					oPath, 
+					updateData, 
+					null,
+				    function (oData, response) {
+						process_result = true;
+						console.log("Sucess HrDocumentsDetailsSet Update !!!");
+				    },
+				    function (oError) {
+				    	var Err = {};
+						if (oError.response) {
+							Err = window.JSON.parse(oError.response.body);
+							if(Err.error.innererror.errordetails && Err.error.innererror.errordetails.length > 0) {
+								msg = "Fail : " + Err.error.innererror.errordetails[0].message;
+							} else {
+								msg = "Fail : " + Err.error.message.value;
+							}
+						} else {
+							msg = "Fail : " + oError;
+						}
+						process_result = false;
+				    }
+		    );
+			
+			document.write(msg);
+		}
+		</script>
+
+	</head>
+	<body>
+	</body>
+</html>

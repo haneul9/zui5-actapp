@@ -1,0 +1,94 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta http-equiv='Content-Type' content='text/html;charset=UTF-8'/>
+		<title>사진 다운로드</title>
+		
+		<link rel="stylesheet" type="text/css" href="/sap/bc/ui5_ui5/sap/zhrxx_common/css/dhtmlxtree.css" />		 
+		<script type="text/javascript" src="/sap/bc/ui5_ui5/sap/zhrxx_common/plugin/dhtmlxtree.js"></script>  
+		
+		<script src="resources/sap-ui-cachebuster/sap-ui-core.js"
+				id="sap-ui-bootstrap"
+				data-sap-ui-libs="sap.m,sap.ui.commons,sap.ui.core, sap.suite.ui.commons,sap.ui.ux3, 
+								  sap.ui.unified, sap.ui.layout, sap.ui.comp, sap.ca.ui, sap.ui.table"
+				data-sap-ui-xx-bindingSyntax="complex"
+				data-sap-ui-theme=	"sap_bluecrystal"
+				data-sap-ui-appCacheBuster="./">
+		</script>
+		
+		<script type="text/javascript" src="/sap/bc/ui5_ui5/sap/zhrxx_common/IBSheet/ibsheet.js"></script>
+		<script type="text/javascript" src="/sap/bc/ui5_ui5/sap/zhrxx_common/IBSheet/ibsheetinfo.js"></script>
+		
+		<script>
+				sap.ui.core.AppCacheBuster.register("/sap/bc/ui5_ui5/sap/zhrxx_common/");
+				sap.ui.localResources("zui5_hrxx_photodown");
+				jQuery.sap.registerModulePath("util", "/sap/bc/ui5_ui5/sap/zhrxx_common/util");
+				jQuery.sap.registerModulePath("fragment", "/sap/bc/ui5_ui5/sap/zhrxx_common/fragment");
+				jQuery.sap.registerModulePath("common", "/sap/bc/ui5_ui5/sap/zhrxx_common/common");
+				jQuery.sap.registerModulePath("control", "/sap/bc/ui5_ui5/sap/zhrxx_common/control");
+				
+				$( window ).resize(function() {
+					sap.ui.getCore().getEventBus().publish("app", "ResizeWindow", {
+						windowHeight : window.innerHeight
+					});	
+				});
+				
+				//No Cache를 위한 파라메터 정의
+				var surfix = "?" + new Date().getTime();
+				                        
+				//번역기 파일 설정
+				//No Cache를 위해 NoCache 파라메터를 추가한다.
+				var oBundleText = jQuery.sap.resources({
+					url : "/sap/bc/ui5_ui5/sap/zhrxx_common/translation/i18n.properties" + surfix, //번역파일 주소
+					locale : sap.ui.getCore().getConfiguration().getLanguage()
+				});
+				
+// 				jQuery.sap.includeScript("/sap/bc/ui5_ui5/sap/zhrxx_common/common/Common.js" + surfix);
+// 				jQuery.sap.includeScript("/sap/bc/ui5_ui5/sap/zhrxx_common/common/SearchUser1.js" + surfix);
+				
+				document.title = oBundleText.getText("TITLE_PIC_DOWNLOAD");
+				try {
+ 					var vHostName = location.hostname;
+ 					if(vHostName.indexOf(".corp.") > 0) {
+ 						document.domain = "corp.doosan.com";
+ 					} else {
+ 						document.domain = "doosan.com";
+ 					}
+ 	 				top.document.title = document.title;
+ 				} catch(ex) {
+ 					console.log(ex);
+ 				}
+
+				//LoginEmpInfoSet 의 EntitySet을 읽은후 할당되는 파라메터를 정의한다.
+				//이 변수들은 Global Variable로서 어떤 페이지에서도 그냥 사용하면 된다.
+				var gPersa = "";
+				var gMolga = "";
+				var gDtfmt = "";
+				var gDcpfm = "";
+				var gLangu = "";
+
+				//Style Sheet 파일 설정
+				//No Cache를 위해 NoCache 파라메터를 추가한다.
+				jQuery.sap.includeStyleSheet("/sap/bc/ui5_ui5/sap/zhrxx_common/css/L2P2SAP1.css" + surfix);
+				jQuery.sap.includeStyleSheet("/sap/bc/ui5_ui5/sap/zhrxx_common/css/L2PBasic.css" + surfix);
+				
+				var oView = sap.ui.view({id:"zui5_hrxx_photodown.AppMain", viewName:"zui5_hrxx_photodown.AppMain", type:sap.ui.core.mvc.ViewType.JS});
+				oView.placeAt("content");
+			
+		</script>
+
+	</head>
+	<body class="sapUiBody" role="application">
+		<div id="content"></div>
+		
+		<div id="HelpOverlayBackLayout" class="L2POverlayBackLayout"></div>
+		<div id="HelpOvrelay" class="L2POverlay">
+			<div id="HelpOvrelay-close" class="close"></div>
+			<div id="HelpOvrelay-inner" class="inner"></div>
+		</div>
+		
+		<iframe name="IFRAMEDOWNLOAD" id="IFRAMEDOWNLOAD" width=0 height=0 frameborder=0 style="display:none"></iframe>
+		
+	</body>
+</html>
